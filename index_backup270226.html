@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ HeroLife — Прокачай свою жизнь</title>
+  <style>
+    :root {
+      --bg-main: #1a1a2e;
+      --bg-card: #16213e;
+      --accent: #e6c200;
+      --accent-soft: rgba(230, 194, 0, 0.2);
+      --accent-strong: rgba(230, 194, 0, 0.35);
+      --text-main: #f7f7ff;
+      --text-muted: #b5b5d6;
+      --error: #ff4b5c;
+      --border-radius-lg: 18px;
+      --border-radius-md: 12px;
+      --transition-fast: 0.18s ease-out;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
+      --shadow-inner: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #283049 0, #0f1020 40%, #050510 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .page-wrap { width: 100%; max-width: 520px; margin: 0 auto; }
+
+    .hero-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.5));
+      border-radius: var(--border-radius-lg);
+      padding: 26px 22px 24px;
+      box-shadow: var(--shadow-soft), var(--shadow-inner);
+      border: 1px solid rgba(230, 194, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at top left, rgba(230, 194, 0, 0.16), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(88, 101, 242, 0.13), transparent 55%);
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-title { text-align: center; margin-bottom: 18px; }
+
+    .hero-title h1 {
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-title span.accent { color: var(--accent); }
+
+    .hero-subtitle { margin-top: 6px; font-size: 0.9rem; color: var(--text-muted); }
+    .hero-subtitle strong { color: var(--accent); font-weight: 600; }
+
+    .form-section { margin-top: 14px; display: grid; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field-label {
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .field-label span { color: var(--accent); }
+
+    .text-input {
+      width: 100%;
+      border-radius: var(--border-radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 6, 25, 0.8);
+      color: var(--text-main);
+      padding: 11px 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .text-input::placeholder { color: rgba(181, 181, 214, 0.7); }
+
+    .text-input:focus {
+      border-color: var(--accent);
+      background: rgba(5, 6, 25, 0.95);
+      box-shadow: 0 0 0 1px rgba(230, 194, 0, 0.75), 0 0 24px rgba(230, 194, 0, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .choice-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .choice-card {
+      border-radius: var(--border-radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(9, 12, 38, 0.8);
+      padding: 10px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
+    }
+
+    .choice-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(230, 194, 0, 0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      z-index: 0;
+    }
+
+    .choice-card span.icon { font-size: 1.35rem; z-index: 1; }
+
+    .choice-card span.label {
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      z-index: 1;
+    }
+
+    .choice-card:hover {
+      border-color: var(--accent-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+      background: rgba(19, 22, 60, 0.92);
+    }
+
+    .choice-card:hover span.label { color: var(--text-main); }
+
+    .choice-card.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft), 0 12px 32px rgba(230, 194, 0, 0.3);
+      background: radial-gradient(circle at top, rgba(230, 194, 0, 0.26), rgba(10, 12, 40, 0.96));
+      transform: translateY(-2px);
+    }
+
+    .choice-card.selected::before { opacity: 1; }
+    .choice-card.selected span.label { color: var(--accent); font-weight: 600; }
+
+    .helper-text { font-size: 0.82rem; color: var(--text-muted); }
+    .helper-text strong { color: var(--accent); }
+
+    .error-text { display: none; font-size: 0.8rem; color: var(--error); margin-top: 3px; }
+
+    .error .text-input {
+      border-color: var(--error);
+      box-shadow: 0 0 0 1px rgba(255, 75, 92, 0.7);
+    }
+
+    .error .error-text { display: block; }
+
+    .cta-wrap { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+
+    .cta-button {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f4d03f, #e6b800, #f39c12);
+      color: #1a1300;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8), 0 0 24px rgba(230, 194, 0, 0.7);
+      transition: transform 0.13s ease-out, box-shadow 0.13s ease-out, filter 0.13s ease-out;
+    }
+
+    .cta-button span.icon { font-size: 1.2rem; }
+
+    .cta-button:active {
+      transform: translateY(2px) scale(0.99);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+      filter: brightness(0.95);
+    }
+
+    .cta-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+    .cta-note strong { color: var(--accent); }
+
+    .ornament-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+      opacity: 0.85;
+    }
+
+    .ornament-line span.line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(230, 194, 0, 0.6), transparent);
+    }
+
+    .ornament-line span.gem {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeaa7, #e6b800);
+      box-shadow: 0 0 10px rgba(230, 194, 0, 0.9);
+    }
+
+    .screen {
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    }
+
+    .screen-active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .screen-hidden {
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+    }
+
+    .screen-hidden-final { display: none; }
+
+    .character-card {
+      margin-top: 6px;
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      background: rgba(4, 6, 22, 0.9);
+      border: 1px solid rgba(230, 194, 0, 0.4);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-card::before {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      background:
+        radial-gradient(circle at top left, rgba(230, 194, 0, 0.14), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(72, 52, 212, 0.18), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .character-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 10px;
+    }
+
+    .character-main { display: flex; align-items: center; gap: 10px; }
+
+    .character-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.65rem;
+      background: radial-gradient(circle at 30% 20%, #fff7c5, #e6c200);
+      box-shadow: 0 0 0 2px rgba(26, 19, 0, 0.75), 0 10px 20px rgba(0, 0, 0, 0.85);
+      flex-shrink: 0;
+    }
+
+    .character-header-text { display: flex; flex-direction: column; gap: 3px; }
+
+    .character-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .character-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .character-level-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .character-level { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+
+    .character-subtitle-text { font-size: 0.8rem; color: var(--text-muted); }
+
+    .character-section { margin-top: 6px; display: grid; gap: 8px; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: minmax(0, 120px) auto;
+      align-items: center;
+      column-gap: 10px;
+      row-gap: 4px;
+      font-size: 0.84rem;
+    }
+
+    .stat-row-wide { grid-template-columns: minmax(0, 170px) auto; }
+
+    .stat-main { display: flex; flex-direction: column; gap: 2px; }
+    .stat-label { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+    .stat-value { font-size: 0.8rem; color: var(--text-muted); }
+    .stat-extra { font-size: 0.78rem; color: var(--text-muted); }
+
+    .progress {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.45);
+    }
+
+    .progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      border-radius: inherit;
+      transform-origin: left center;
+      transition: width 0.35s ease-out;
+    }
+
+    .progress-fill--xp { background: linear-gradient(90deg, #2ecc71, #00c853); }
+    .progress-fill--str { background: linear-gradient(90deg, #ff7675, #d63031); }
+    .progress-fill--int { background: linear-gradient(90deg, #74b9ff, #0984e3); }
+    .progress-fill--hp { background: linear-gradient(90deg, #ff9a9e, #ff6bcb); }
+    .progress-fill--cre { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
+    .progress-fill--cha { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+    .progress-fill--pet { background: linear-gradient(90deg, #ffeaa7, #fdcb6e); }
+
+    .alignment-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .alignment-row span strong { color: var(--accent); font-weight: 600; }
+
+    .character-divider-title {
+      margin-top: 8px;
+      margin-bottom: 2px;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .pet-block { margin-top: 4px; display: grid; gap: 6px; font-size: 0.86rem; }
+    .pet-main { display: flex; align-items: center; gap: 8px; }
+    .pet-icon { font-size: 1.3rem; }
+    .pet-name { font-weight: 500; }
+
+    .pet-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pet-hunger-row .progress { height: 7px; }
+
+    .quests-section {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .quests-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .quests-title span.icon { font-size: 1.1rem; }
+    .quests-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+    .quests-list { display: grid; gap: 6px; }
+
+    .quest-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(6, 8, 30, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .quest-main { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .quest-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .quest-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+    .quest-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .quest-category { font-size: 0.78rem; color: var(--text-muted); }
+
+    .quest-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background 0.15s ease-out, box-shadow 0.15s ease-out,
+        transform 0.1s ease-out, opacity 0.15s ease-out;
+    }
+
+    .quest-btn--good {
+      background: linear-gradient(135deg, #2ecc71, #00c853);
+      color: #041306;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.7);
+    }
+
+    .quest-btn--bad {
+      background: linear-gradient(135deg, #ff7675, #d63031);
+      color: #330203;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.7);
+    }
+
+    .quest-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .quest-btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .quest-btn--done, .quest-btn:disabled {
+      cursor: default;
+      background: rgba(40, 43, 72, 0.95);
+      color: var(--text-muted);
+      box-shadow: none;
+      opacity: 0.85;
+    }
+
+    .xp-bar-hit { animation: xpFlashBad 1s ease-out; }
+
+    @keyframes xpFlashBad {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6); filter: none; }
+      30%, 60% { box-shadow: 0 0 12px rgba(255, 75, 92, 0.9); filter: brightness(1.2); }
+    }
+
+    .levelup-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.96));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-out;
+      z-index: 40;
+    }
+
+    .levelup-overlay--visible { opacity: 1; pointer-events: auto; }
+
+    .levelup-inner {
+      text-align: center;
+      padding: 26px 20px 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(230, 194, 0, 0.8);
+      background: radial-gradient(circle at top, rgba(230, 194, 0, 0.45), rgba(7, 7, 20, 0.98));
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(230, 194, 0, 0.8);
+      color: var(--accent);
+      animation: levelUpPop 0.55s ease-out forwards;
+    }
+
+    .levelup-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-shadow: 0 0 16px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 215, 0, 0.9);
+      margin-bottom: 6px;
+    }
+
+    .levelup-subtitle { font-size: 1.05rem; color: #fff7d1; text-shadow: 0 0 12px rgba(0, 0, 0, 0.9); }
+    .levelup-subtitle span { font-weight: 700; color: #ffeaa7; }
+
+    @keyframes levelUpPop {
+      0% { opacity: 0; transform: scale(0.6) translateY(20px); }
+      55% { opacity: 1; transform: scale(1.05) translateY(0); }
+      80% { transform: scale(0.96) translateY(0); }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    .character-card-enter { animation: cardFadeInUp 0.4s ease-out forwards; }
+
+    @keyframes cardFadeInUp {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* XP popup animation */
+    .xp-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.8rem;
+      font-weight: 700;
+      pointer-events: none;
+      z-index: 30;
+      animation: xpPopUp 1.2s ease-out forwards;
+    }
+
+    .xp-popup--good { color: #2ecc71; text-shadow: 0 0 20px rgba(46, 204, 113, 0.8); }
+    .xp-popup--bad { color: #ff4b5c; text-shadow: 0 0 20px rgba(255, 75, 92, 0.8); }
+
+    @keyframes xpPopUp {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+      30% { opacity: 1; transform: translate(-50%, -70%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -120%) scale(0.8); }
+    }
+
+    /* Debug button */
+    .debug-section {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .debug-btn {
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .debug-btn:hover { background: rgba(255, 255, 255, 0.08); }
+
+    /* Reset button */
+    .reset-btn {
+      border: 1px dashed rgba(255, 75, 92, 0.3);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: rgba(255, 75, 92, 0.6);
+      background: rgba(255, 75, 92, 0.05);
+      cursor: pointer;
+      margin-left: 8px;
+      transition: background 0.15s;
+    }
+
+    .reset-btn:hover { background: rgba(255, 75, 92, 0.15); }
+
+    @media (max-width: 480px) {
+      body { padding: 14px; }
+      .hero-card { padding: 20px 16px 18px; border-radius: 16px; }
+      .hero-title h1 { font-size: 1.35rem; }
+      .form-section { gap: 12px; }
+      .choice-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .choice-row.pet-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .cta-button { font-size: 0.9rem; padding-block: 11px; }
+    }
+
+    @media (max-width: 360px) {
+      .choice-row { grid-template-columns: 1fr 1fr; }
+      .choice-row.pet-row { grid-template-columns: 1fr 1fr 1fr; }
+      .choice-card span.label { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="levelUpOverlay" class="levelup-overlay" aria-hidden="true">
+    <div class="levelup-inner">
+      <div class="levelup-title">🎉 LEVEL UP!</div>
+      <div class="levelup-subtitle">
+        Уровень <span id="levelUpLevelText">1</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <main class="hero-card">
+      <div id="creationScreen" class="screen screen-active">
+        <header class="hero-title">
+          <h1>⚔️ <span class="accent">HeroLife</span> — Прокачай свою жизнь</h1>
+          <p class="hero-subtitle">
+            Создай героя, выбери верного спутника и <strong>выйди на своё приключение</strong>.
+          </p>
+        </header>
+
+        <section class="form-section">
+          <div class="field" id="field-hero-name">
+            <label class="field-label" for="heroName"><span>Имя героя</span></label>
+            <input id="heroName" class="text-input" type="text" maxlength="24"
+              placeholder="Как зовут твоего героя?" autocomplete="off" />
+            <div class="error-text">Пусть у героя будет имя.</div>
+          </div>
+
+          <div class="field">
+            <div class="field-label"><span>Пол героя</span></div>
+            <div class="choice-row" role="radiogroup">
+              <button type="button" class="choice-card" data-group="gender" data-value="male">
+                <span class="icon">🧑</span>
+                <span class="label">Парень</span>
+              </button>
+              <button type="button" class="choice-card" data-group="gender" data-value="female">
+                <span class="icon">👩</span>
+                <span class="label">Девушка</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label"><span>Питомец</span></div>
+            <div class="choice-row pet-row" role="radiogroup">
+              <button type="button" class="choice-card" data-group="pet" data-value="cat">
+                <span class="icon">🐱</span>
+                <span class="label">Кот</span>
+              </button>
+              <button type="button" class="choice-card" data-group="pet" data-value="dog">
+                <span class="icon">🐶</span>
+                <span class="label">Пёс</span>
+              </button>
+              <button type="button" class="choice-card" data-group="pet" data-value="dragon">
+                <span class="icon">🐲</span>
+                <span class="label">Дракон</span>
+              </button>
+            </div>
+            <div class="helper-text">
+              Каждому герою нужен <strong>надёжный спутник</strong>. Кого позовёшь с собой?
+            </div>
+          </div>
+
+          <div class="field" id="field-pet-name">
+            <label class="field-label" for="petName"><span>Имя питомца</span></label>
+            <input id="petName" class="text-input" type="text" maxlength="24"
+              placeholder="Как ты его будешь звать?" autocomplete="off" />
+            <div class="error-text">Дай имя своему спутнику.</div>
+          </div>
+        </section>
+
+        <div class="cta-wrap">
+          <button id="startButton" class="cta-button" type="button">
+            <span class="icon">⚔️</span>
+            <span>Начать приключение</span>
+          </button>
+          <p class="cta-note">
+            Данные героя сохранятся в <strong>памяти хроник</strong> (localStorage).
+          </p>
+          <div class="ornament-line" aria-hidden="true">
+            <span class="line"></span>
+            <span class="gem"></span>
+            <span class="line"></span>
+          </div>
+        </div>
+      </div>
+
+      <section id="characterScreen" class="screen screen-hidden screen-hidden-final">
+        <article class="character-card" id="characterCard">
+          <header class="character-header">
+            <div class="character-main">
+              <div class="character-avatar" id="charAvatar">🧑</div>
+              <div class="character-header-text">
+                <div class="character-name-row">
+                  <span class="character-name" id="charName">Герой</span>
+                  <span class="character-level-label">Уровень</span>
+                  <span class="character-level" id="charLevel">1</span>
+                </div>
+                <div class="character-subtitle-text" id="charStatMax">
+                  Макс. стат: 10
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="character-section">
+            <div class="stat-row stat-row-wide">
+              <div class="stat-main">
+                <span class="stat-label">Опыт</span>
+                <span class="stat-extra" id="charXpText">0 / 100</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--xp" id="xpBar"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-main">
+                <span class="stat-label">💪 Сила</span>
+                <span class="stat-value" id="statStrengthValue">1</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--str" id="statStrengthBar"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-main">
+                <span class="stat-label">🧠 Интеллект</span>
+                <span class="stat-value" id="statIntelligenceValue">1</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--int" id="statIntelligenceBar"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-main">
+                <span class="stat-label">❤️ Здоровье</span>
+                <span class="stat-value" id="statHealthValue">1</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--hp" id="statHealthBar"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-main">
+                <span class="stat-label">🎨 Творчество</span>
+                <span class="stat-value" id="statCreativityValue">1</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--cre" id="statCreativityBar"></div>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-main">
+                <span class="stat-label">👥 Харизма</span>
+                <span class="stat-value" id="statCharismaValue">1</span>
+              </div>
+              <div class="progress">
+                <div class="progress-fill progress-fill--cha" id="statCharismaBar"></div>
+              </div>
+            </div>
+
+            <div class="alignment-row">
+              <span>😇 Ангел: <strong id="angelPoints">0</strong></span>
+              <span>😈 Чёрт: <strong id="devilPoints">0</strong></span>
+            </div>
+
+            <div class="character-divider-title">─── Питомец ───</div>
+
+            <div class="pet-block">
+              <div class="pet-main">
+                <span class="pet-icon" id="petIcon">🐱</span>
+                <span class="pet-name" id="petNameDisplay">Питомец</span>
+              </div>
+              <div class="pet-meta-row">
+                <span>Настроение: <span id="petMood">😐</span></span>
+              </div>
+              <div class="stat-row stat-row-wide pet-hunger-row">
+                <div class="stat-main">
+                  <span class="stat-label">Сытость</span>
+                  <span class="stat-extra" id="petHungerText">80%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-fill progress-fill--pet" id="petHungerBar"></div>
+                </div>
+              </div>
+            </div>
+
+            <section class="quests-section">
+              <div class="quests-title">
+                <span class="icon">📜</span>
+                <span>Ежедневные квесты</span>
+              </div>
+              <div class="quests-date" id="questsDate"></div>
+              <div class="quests-list" id="questsList">
+                <div class="quest-item" data-quest-id="good_workout" data-quest-type="good" data-stat="strength">
+                  <div class="quest-main">
+                    <span class="quest-icon">⚔️</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Зарядка</div>
+                      <div class="quest-category">Категория: Сила</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--good" type="button">✅ Выполнено</button>
+                </div>
+
+                <div class="quest-item" data-quest-id="good_reading" data-quest-type="good" data-stat="intelligence">
+                  <div class="quest-main">
+                    <span class="quest-icon">📖</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Чтение</div>
+                      <div class="quest-category">Категория: Интеллект</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--good" type="button">✅ Выполнено</button>
+                </div>
+
+                <div class="quest-item" data-quest-id="good_water" data-quest-type="good" data-stat="health">
+                  <div class="quest-main">
+                    <span class="quest-icon">💧</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Выпить воду</div>
+                      <div class="quest-category">Категория: Здоровье</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--good" type="button">✅ Выполнено</button>
+                </div>
+
+                <div class="quest-item" data-quest-id="bad_phone" data-quest-type="bad" data-stat="intelligence">
+                  <div class="quest-main">
+                    <span class="quest-icon">📱</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Залипание в телефон</div>
+                      <div class="quest-category">Категория: Интеллект</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--bad" type="button">❌ Сорвался</button>
+                </div>
+
+                <div class="quest-item" data-quest-id="bad_fastfood" data-quest-type="bad" data-stat="health">
+                  <div class="quest-main">
+                    <span class="quest-icon">🍔</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Фастфуд</div>
+                      <div class="quest-category">Категория: Здоровье</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--bad" type="button">❌ Сорвался</button>
+                </div>
+
+                <div class="quest-item" data-quest-id="bad_sleep_late" data-quest-type="bad" data-stat="health">
+                  <div class="quest-main">
+                    <span class="quest-icon">🌙</span>
+                    <div class="quest-text">
+                      <div class="quest-title">Поздно лёг спать</div>
+                      <div class="quest-category">Категория: Здоровье</div>
+                    </div>
+                  </div>
+                  <button class="quest-btn quest-btn--bad" type="button">❌ Сорвался</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="debug-section">
+              <button class="debug-btn" id="debugXpBtn">🧪 +90 XP (тест Level Up)</button>
+              <button class="reset-btn" id="resetBtn">🗑️ Сбросить всё</button>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "heroLifeProfile";
+
+      const QUEST_DEFS = [
+        { id: "good_workout", type: "good", statKey: "strength" },
+        { id: "good_reading", type: "good", statKey: "intelligence" },
+        { id: "good_water", type: "good", statKey: "health" },
+        { id: "bad_phone", type: "bad", statKey: "intelligence" },
+        { id: "bad_fastfood", type: "bad", statKey: "health" },
+        { id: "bad_sleep_late", type: "bad", statKey: "health" }
+      ];
+
+      let currentProfile = null;
+
+      // --- DOM refs ---
+      const heroNameInput = document.getElementById("heroName");
+      const petNameInput = document.getElementById("petName");
+      const startButton = document.getElementById("startButton");
+      const choiceCards = document.querySelectorAll(".choice-card");
+      const fieldHeroName = document.getElementById("field-hero-name");
+      const fieldPetName = document.getElementById("field-pet-name");
+      const creationScreen = document.getElementById("creationScreen");
+      const characterScreen = document.getElementById("characterScreen");
+      const characterCard = document.getElementById("characterCard");
+      const charAvatar = document.getElementById("charAvatar");
+      const charName = document.getElementById("charName");
+      const charLevel = document.getElementById("charLevel");
+      const charXpText = document.getElementById("charXpText");
+      const charStatMax = document.getElementById("charStatMax");
+      const xpBar = document.getElementById("xpBar");
+      const statStrengthValue = document.getElementById("statStrengthValue");
+      const statIntelligenceValue = document.getElementById("statIntelligenceValue");
+      const statHealthValue = document.getElementById("statHealthValue");
+      const statCreativityValue = document.getElementById("statCreativityValue");
+      const statCharismaValue = document.getElementById("statCharismaValue");
+      const statStrengthBar = document.getElementById("statStrengthBar");
+      const statIntelligenceBar = document.getElementById("statIntelligenceBar");
+      const statHealthBar = document.getElementById("statHealthBar");
+      const statCreativityBar = document.getElementById("statCreativityBar");
+      const statCharismaBar = document.getElementById("statCharismaBar");
+      const angelPointsEl = document.getElementById("angelPoints");
+      const devilPointsEl = document.getElementById("devilPoints");
+      const petIcon = document.getElementById("petIcon");
+      const petNameDisplay = document.getElementById("petNameDisplay");
+      const petMoodEl = document.getElementById("petMood");
+      const petHungerText = document.getElementById("petHungerText");
+      const petHungerBar = document.getElementById("petHungerBar");
+      const questsRoot = document.getElementById("questsList");
+      const questsDateEl = document.getElementById("questsDate");
+      const levelUpOverlay = document.getElementById("levelUpOverlay");
+      const levelUpLevelText = document.getElementById("levelUpLevelText");
+      const debugXpBtn = document.getElementById("debugXpBtn");
+      const resetBtn = document.getElementById("resetBtn");
+
+      // --- Helpers ---
+      function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+      function percent(v, max) { return max <= 0 ? 0 : clamp((v / max) * 100, 0, 100); }
+      function getStatMax(level) { return level * 10; }
+
+      function getTodayKey() {
+        const n = new Date();
+        return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0");
+      }
+
+      function formatDateRu(d) {
+        const m = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+        return d.getDate() + " " + m[d.getMonth()] + " " + d.getFullYear();
+      }
+
+      function setError(el, has) {
+        if (!el) return;
+        has ? el.classList.add("error") : el.classList.remove("error");
+      }
+
+      function selectCard(card) {
+        const g = card.getAttribute("data-group");
+        if (!g) return;
+        document.querySelectorAll('.choice-card[data-group="' + g + '"]').forEach(function (b) {
+          b.classList.remove("selected");
+          b.setAttribute("aria-pressed", "false");
+        });
+        card.classList.add("selected");
+        card.setAttribute("aria-pressed", "true");
+      }
+
+      function getSelectedValue(group) {
+        const s = document.querySelector('.choice-card[data-group="' + group + '"].selected');
+        return s ? s.getAttribute("data-value") : null;
+      }
+
+      choiceCards.forEach(function (c) { c.addEventListener("click", function () { selectCard(c); }); });
+
+      // --- XP popup ---
+      function showXpPopup(text, isGood) {
+        const el = document.createElement("div");
+        el.className = "xp-popup " + (isGood ? "xp-popup--good" : "xp-popup--bad");
+        el.textContent = text;
+        document.body.appendChild(el);
+        setTimeout(function () { el.remove(); }, 1300);
+      }
+
+      // --- Profile ---
+      function saveProfile(p) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch (e) {}
+      }
+
+      function createInitialCharacter(base) {
+        return {
+          heroName: base.heroName,
+          gender: base.gender || "unknown",
+          petType: base.petType || null,
+          petName: base.petName,
+          level: 1,
+          xp: 0,
+          xpToNext: 100,
+          stats: { strength: 1, intelligence: 1, health: 1, creativity: 1, charisma: 1 },
+          angelPoints: 0,
+          devilPoints: 0,
+          petMood: "😐",
+          petHunger: 80,
+          quests: {},
+          lastVisitDate: getTodayKey(),
+          createdAt: new Date().toISOString()
+        };
+      }
+
+      // --- Render ---
+      function renderCharacter(p) {
+        if (!p) return;
+
+        const level = p.level || 1;
+        const statMax = getStatMax(level);
+        const xpToNext = level * 100;
+        p.xpToNext = xpToNext;
+
+        const xp = clamp(p.xp || 0, 0, xpToNext * 10);
+        p.xp = xp;
+
+        const s = p.stats || {};
+
+        charAvatar.textContent = p.gender === "female" ? "👩" : "🧑";
+        charName.textContent = p.heroName || "Герой";
+        charLevel.textContent = String(level);
+        charStatMax.textContent = "Макс. стат: " + statMax;
+
+        charXpText.textContent = xp + " / " + xpToNext;
+        xpBar.style.width = percent(xp, xpToNext) + "%";
+
+        statStrengthValue.textContent = (s.strength || 0) + " / " + statMax;
+        statIntelligenceValue.textContent = (s.intelligence || 0) + " / " + statMax;
+        statHealthValue.textContent = (s.health || 0) + " / " + statMax;
+        statCreativityValue.textContent = (s.creativity || 0) + " / " + statMax;
+        statCharismaValue.textContent = (s.charisma || 0) + " / " + statMax;
+
+        statStrengthBar.style.width = percent(s.strength || 0, statMax) + "%";
+        statIntelligenceBar.style.width = percent(s.intelligence || 0, statMax) + "%";
+        statHealthBar.style.width = percent(s.health || 0, statMax) + "%";
+        statCreativityBar.style.width = percent(s.creativity || 0, statMax) + "%";
+        statCharismaBar.style.width = percent(s.charisma || 0, statMax) + "%";
+
+        angelPointsEl.textContent = String(p.angelPoints || 0);
+        devilPointsEl.textContent = String(p.devilPoints || 0);
+
+        const petTypes = { cat: "🐱", dog: "🐶", dragon: "🐲" };
+        petIcon.textContent = petTypes[p.petType] || "🐾";
+        petNameDisplay.textContent = p.petName || "Питомец";
+        petMoodEl.textContent = p.petMood || "😐";
+
+        const hunger = clamp(p.petHunger || 0, 0, 100);
+        petHungerText.textContent = hunger + "%";
+        petHungerBar.style.width = hunger + "%";
+      }
+
+      function showLevelUpOverlay(level) {
+        levelUpLevelText.textContent = String(level);
+        levelUpOverlay.classList.add("levelup-overlay--visible");
+        setTimeout(function () { levelUpOverlay.classList.remove("levelup-overlay--visible"); }, 3000);
+      }
+
+      function applyQuestEffects(p, def, isGood) {
+        if (!p || !def) return;
+        if (!p.stats) p.stats = { strength: 1, intelligence: 1, health: 1, creativity: 1, charisma: 1 };
+        if (!p.quests) p.quests = {};
+        if (p.quests[def.id]) return;
+
+        const prevLevel = p.level || 1;
+        const statMax = getStatMax(prevLevel);
+
+        if (isGood) {
+          p.xp = (p.xp || 0) + 10;
+          if (def.statKey && p.stats[def.statKey] != null) {
+            p.stats[def.statKey] = clamp((p.stats[def.statKey] || 0) + 2, 0, statMax);
+          }
+          p.angelPoints = (p.angelPoints || 0) + 1;
+          showXpPopup("+10 XP", true);
+        } else {
+          p.xp = clamp((p.xp || 0) - 5, 0, 999999);
+          if (def.statKey && p.stats[def.statKey] != null) {
+            p.stats[def.statKey] = clamp((p.stats[def.statKey] || 0) - 1, 0, statMax);
+          }
+          p.devilPoints = (p.devilPoints || 0) + 1;
+          showXpPopup("-5 XP", false);
+
+          xpBar.classList.add("xp-bar-hit");
+          setTimeout(function () { xpBar.classList.remove("xp-bar-hit"); }, 1000);
+        }
+
+        // Level up
+        let lvl = p.level || 1;
+        let xp = p.xp || 0;
+        let need = lvl * 100;
+        while (xp >= need) {
+          xp -= need;
+          lvl++;
+          need = lvl * 100;
+        }
+
+        if (lvl > prevLevel) {
+          // При повышении уровня — пересчитать максимум статов
+          showLevelUpOverlay(lvl);
+        }
+
+        p.level = lvl;
+        p.xp = xp;
+        p.xpToNext = lvl * 100;
+        p.quests[def.id] = true;
+      }
+
+      function updateQuestButtons(p) {
+        if (!questsRoot) return;
+        const qs = (p && p.quests) || {};
+        questsRoot.querySelectorAll(".quest-item").forEach(function (item) {
+          const id = item.getAttribute("data-quest-id");
+          const type = item.getAttribute("data-quest-type");
+          const btn = item.querySelector(".quest-btn");
+          if (!id || !btn || !type) return;
+          const isGood = type === "good";
+
+          if (qs[id]) {
+            btn.disabled = true;
+            btn.classList.add("quest-btn--done");
+            btn.classList.remove("quest-btn--good", "quest-btn--bad");
+            btn.textContent = isGood ? "Сделано ✓" : "Записано ✓";
+          } else {
+            btn.disabled = false;
+            btn.classList.remove("quest-btn--done");
+            if (isGood) {
+              btn.classList.add("quest-btn--good");
+              btn.classList.remove("quest-btn--bad");
+              btn.textContent = "✅ Выполнено";
+            } else {
+              btn.classList.add("quest-btn--bad");
+              btn.classList.remove("quest-btn--good");
+              btn.textContent = "❌ Сорвался";
+            }
+          }
+        });
+      }
+
+      function showCharacterScreen(p) {
+        currentProfile = p;
+        renderCharacter(p);
+        updateQuestButtons(p);
+
+        characterScreen.classList.remove("screen-hidden-final", "screen-hidden");
+        characterScreen.classList.add("screen-active");
+
+        creationScreen.classList.remove("screen-active");
+        creationScreen.classList.add("screen-hidden");
+        setTimeout(function () { creationScreen.classList.add("screen-hidden-final"); }, 400);
+
+        characterCard.classList.add("character-card-enter");
+        setTimeout(function () { characterCard.classList.remove("character-card-enter"); }, 450);
+      }
+
+      // --- Restore ---
+      function restoreProfile() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          if (!data || typeof data !== "object") return;
+
+          const today = getTodayKey();
+
+          if (typeof data.level === "number") {
+            // Existing character — check date reset
+            if (data.lastVisitDate !== today) {
+              data.lastVisitDate = today;
+              data.quests = {};
+              // Decrease pet hunger by 20% each new day
+              data.petHunger = clamp((data.petHunger || 80) - 20, 0, 100);
+            }
+            currentProfile = data;
+            saveProfile(data);
+            showCharacterScreen(data);
+            return;
+          }
+
+          // Only form data saved, restore form
+          if (data.heroName) heroNameInput.value = data.heroName;
+          if (data.petName) petNameInput.value = data.petName;
+          if (data.gender) {
+            const c = document.querySelector('.choice-card[data-group="gender"][data-value="' + data.gender + '"]');
+            if (c) selectCard(c);
+          }
+          if (data.petType) {
+            const c = document.querySelector('.choice-card[data-group="pet"][data-value="' + data.petType + '"]');
+            if (c) selectCard(c);
+          }
+        } catch (e) {}
+      }
+
+      // --- Start ---
+      function handleStart() {
+        const heroName = heroNameInput.value.trim();
+        const petName = petNameInput.value.trim();
+        const gender = getSelectedValue("gender");
+        const petType = getSelectedValue("pet");
+
+        let hasError = false;
+        if (!heroName) { setError(fieldHeroName, true); hasError = true; }
+        else { setError(fieldHeroName, false); }
+        if (!petName) { setError(fieldPetName, true); hasError = true; }
+        else { setError(fieldPetName, false); }
+
+        if (hasError) {
+          const first = document.querySelector(".field.error .text-input");
+          if (first) first.focus();
+          return;
+        }
+
+        const profile = createInitialCharacter({ heroName, gender, petType, petName });
+        currentProfile = profile;
+        saveProfile(profile);
+        showCharacterScreen(profile);
+      }
+
+      startButton.addEventListener("click", handleStart);
+
+      heroNameInput.addEventListener("input", function () {
+        if (heroNameInput.value.trim()) setError(fieldHeroName, false);
+      });
+
+      petNameInput.addEventListener("input", function () {
+        if (petNameInput.value.trim()) setError(fieldPetName, false);
+      });
+
+      // --- Quests date ---
+      if (questsDateEl) {
+        questsDateEl.textContent = "📅 " + formatDateRu(new Date());
+      }
+
+      // --- Quest clicks ---
+      if (questsRoot) {
+        questsRoot.addEventListener("click", function (e) {
+          const btn = e.target.closest(".quest-btn");
+          if (!btn || btn.disabled || !currentProfile) return;
+
+          const item = btn.closest(".quest-item");
+          if (!item) return;
+
+          const id = item.getAttribute("data-quest-id");
+          const type = item.getAttribute("data-quest-type");
+          if (!id || !type) return;
+
+          const def = QUEST_DEFS.find(function (q) { return q.id === id; });
+          if (!def) return;
+
+          applyQuestEffects(currentProfile, def, type === "good");
+          renderCharacter(currentProfile);
+          updateQuestButtons(currentProfile);
+          saveProfile(currentProfile);
+        });
+      }
+
+      // --- Debug buttons ---
+      if (debugXpBtn) {
+        debugXpBtn.addEventListener("click", function () {
+          if (!currentProfile) return;
+          currentProfile.xp = (currentProfile.xp || 0) + 90;
+
+          // Check level up
+          let lvl = currentProfile.level || 1;
+          let xp = currentProfile.xp;
+          let need = lvl * 100;
+          const prevLevel = lvl;
+          while (xp >= need) {
+            xp -= need;
+            lvl++;
+            need = lvl * 100;
+          }
+          if (lvl > prevLevel) showLevelUpOverlay(lvl);
+          currentProfile.level = lvl;
+          currentProfile.xp = xp;
+          currentProfile.xpToNext = lvl * 100;
+
+          renderCharacter(currentProfile);
+          saveProfile(currentProfile);
+          showXpPopup("+90 XP", true);
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+          if (confirm("Удалить персонажа и начать заново?")) {
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+          }
+        });
+      }
+
+      // --- Init ---
+      restoreProfile();
+    })();
+  </script>
+</body>
+</html>
