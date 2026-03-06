@@ -157,11 +157,10 @@
     .coins-row { margin-top: 4px; font-size: 0.9rem; text-align: center; }
     .coins-row strong { color: var(--accent); font-weight: 600; font-size: 1rem; }
     .shield-indicator { font-size: 0.8rem; text-align: center; color: #55efc4; margin-top: 4px; }
-    .path-scale-wrap { margin-top: 10px; width: 100%; }
-    .path-scale-caption { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 4px; }
-    .path-scale-bar { width: 100%; height: 12px; border-radius: 999px; overflow: hidden; background: #2d2d44; }
-    .path-scale-values { font-size: 0.8rem; text-align: center; margin-top: 4px; color: var(--text-muted); }
-    .path-scale-title { font-size: 0.85rem; font-weight: 600; text-align: center; margin-top: 4px; color: var(--accent); }
+    .path-scale-wrap { margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px; font-size: 0.86rem; }
+    .path-scale-left { color: var(--text-muted); }
+    .path-scale-mid { font-size: 0.78rem; color: var(--accent); font-style: italic; flex: 1; text-align: center; min-width: 0; }
+    .path-scale-right { color: var(--text-muted); }
 
     .character-divider-title { margin-top: 8px; margin-bottom: 2px; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; color: var(--text-muted); }
     .pet-block { margin-top: 4px; display: grid; gap: 6px; font-size: 0.86rem; }
@@ -205,9 +204,9 @@
     .inspiration-daily-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
     .inspiration-daily-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
     .inspiration-daily-btns { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 10px; text-align: center; }
-    .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 10px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-    .inspiration-btn-done { background: linear-gradient(135deg, #2ecc71, #00c853); color: white; }
-    .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
+    .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 13px 18px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.15s; width: 100%; display: flex; align-items: center; justify-content: center; }
+    .inspiration-btn-done { background: linear-gradient(135deg, #f4d03f, #e6b800, #f39c12); color: #1a1300; box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 16px rgba(230,194,0,0.5); }
+    .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; }
     .inspiration-btn-switch { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
     .inspiration-btn-switch:disabled { opacity: 0.5; cursor: default; }
     .inspiration-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
@@ -231,6 +230,7 @@
     .inspiration-detail-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
     .inspiration-detail-hint { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-bottom: 6px; }
     .inspiration-detail-actions { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 8px; }
+    .inspiration-detail-actions .inspiration-btn-done { width: 100%; }
     .inspiration-card--done { background: rgba(46,204,113,0.15) !important; border-color: rgba(46,204,113,0.4) !important; }
     .inspiration-card-mini--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); pointer-events: none; }
     .inspiration-detail-content--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); }
@@ -603,13 +603,11 @@
             <div class="stat-row"><div class="stat-main"><span class="stat-label">✨ Харизма</span><span class="stat-value" id="vCHA">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--cha" id="bCHA"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">🛡️ Дисциплина</span><span class="stat-value" id="vDISC">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--disc" id="bDISC"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">⚡ Энергия</span><span class="stat-value" id="vEN">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--energy" id="bEN"></div></div></div>
-            <div class="alignment-row"><span>😇 Ангел: <strong id="angelPts">0</strong></span><span>😈 Чёрт: <strong id="devilPts">0</strong></span></div>
             <div class="coins-row">💰 Монеты: <strong id="coinsDisplay">0</strong></div>
-            <div class="path-scale-wrap">
-              <div class="path-scale-caption">◄ 😈 ░░░░░░░░░░░░░░░░ 😇 ►</div>
-              <div class="path-scale-bar" id="pathScaleBar"></div>
-              <div class="path-scale-values" id="pathScaleValues">😈 0 | 😇 0</div>
-              <div class="path-scale-title" id="pathScaleTitle"></div>
+            <div class="path-scale-wrap" id="pathScaleWrap">
+              <span class="path-scale-left" id="pathScaleLeft">😈 0</span>
+              <span class="path-scale-mid" id="pathScaleTitle"></span>
+              <span class="path-scale-right" id="pathScaleRight">😇 0</span>
             </div>
             <div class="shield-indicator" id="shieldIndicator" style="display:none">🛡️ Щит активен</div>
 
@@ -629,6 +627,8 @@
             <div class="debug-section">
               <button class="debug-btn" id="dbgXP">🧪 +90 XP</button>
               <button class="debug-btn" id="dbgCoins">💰 +100 монет</button>
+              <button class="debug-btn" id="dbgAngel">😇 +50</button>
+              <button class="debug-btn" id="dbgDevil">😈 +50</button>
               <button class="reset-btn" id="dbgReset">🗑️ Сбросить всё</button>
             </div>
           </div>
@@ -1010,22 +1010,22 @@
       {id:"shield",icon:"🛡️",name:"Щит от штрафа",desc:"Защита от 1 штрафа",price:50,once:false}
     ];
     const SHOP_ANGEL = [
-      {id:"a_nimb",icon:"😇",name:"Нимб Милосердия",desc:"Золотое свечение аватара",price:50,currency:"angel",once:true},
-      {id:"a_wings",icon:"🕊️",name:"Крылья Рассвета",desc:"Крылышки у аватара",price:120,currency:"angel",once:true},
-      {id:"a_armor",icon:"🛡️",name:"Светлая броня",desc:"-1 к требованию босса",price:80,currency:"angel",once:true},
-      {id:"a_bless",icon:"💛",name:"Благословение",desc:"Питомец +10 настроения",price:30,currency:"angel",once:false},
-      {id:"a_tiara",icon:"👸",name:"Тиара Зари",desc:"Головной убор аватара",price:150,currency:"angel",once:true},
-      {id:"a_staff",icon:"🌟",name:"Посох Исцеления",desc:"Защитить 1 день streak",price:100,currency:"angel",once:false},
-      {id:"a_skin",icon:"☁️",name:"Светлый скин питомца",desc:"Небесный вид питомца",price:250,currency:"angel",once:true}
+      {id:"a_nimb",icon:"😇",name:"Нимб Милосердия",desc:"Золотое свечение аватара",price:15,currency:"angel",once:true},
+      {id:"a_wings",icon:"🕊️",name:"Крылья Рассвета",desc:"Крылышки у аватара",price:35,currency:"angel",once:true},
+      {id:"a_armor",icon:"🛡️",name:"Светлая броня",desc:"-1 к требованию босса",price:25,currency:"angel",once:true},
+      {id:"a_bless",icon:"💛",name:"Благословение",desc:"Питомец +10 настроения",price:10,currency:"angel",once:false},
+      {id:"a_tiara",icon:"👸",name:"Тиара Зари",desc:"Головной убор аватара",price:45,currency:"angel",once:true},
+      {id:"a_staff",icon:"🌟",name:"Посох Исцеления",desc:"Защитить 1 день streak",price:30,currency:"angel",once:false},
+      {id:"a_skin",icon:"☁️",name:"Светлый скин питомца",desc:"Небесный вид питомца",price:75,currency:"angel",once:true}
     ];
     const SHOP_DEVIL = [
-      {id:"d_horns",icon:"😈",name:"Рога Тени",desc:"Рога у аватара",price:50,currency:"devil",once:true},
-      {id:"d_cloak",icon:"🌑",name:"Теневой плащ",desc:"Плащ у аватара",price:120,currency:"devil",once:true},
-      {id:"d_armor",icon:"⚔️",name:"Тёмная броня",desc:"+2 к одному стату на 24ч",price:80,currency:"devil",once:false},
-      {id:"d_treat",icon:"🍖",name:"Теневое лакомство",desc:"Питомец +10 сытости",price:30,currency:"devil",once:false},
-      {id:"d_crown",icon:"👑",name:"Корона Полуночи",desc:"Головной убор аватара",price:150,currency:"devil",once:true},
-      {id:"d_blade",icon:"🗡️",name:"Клинок Дисциплины",desc:"x2 монеты за квесты на 1 день",price:100,currency:"devil",once:false},
-      {id:"d_skin",icon:"🌑",name:"Тёмный скин питомца",desc:"Теневой вид питомца",price:250,currency:"devil",once:true}
+      {id:"d_horns",icon:"😈",name:"Рога Тени",desc:"Рога у аватара",price:15,currency:"devil",once:true},
+      {id:"d_cloak",icon:"🌑",name:"Теневой плащ",desc:"Плащ у аватара",price:35,currency:"devil",once:true},
+      {id:"d_armor",icon:"⚔️",name:"Тёмная броня",desc:"+2 к одному стату на 24ч",price:25,currency:"devil",once:false},
+      {id:"d_treat",icon:"🍖",name:"Теневое лакомство",desc:"Питомец +10 сытости",price:10,currency:"devil",once:false},
+      {id:"d_crown",icon:"👑",name:"Корона Полуночи",desc:"Головной убор аватара",price:45,currency:"devil",once:true},
+      {id:"d_blade",icon:"🗡️",name:"Клинок Дисциплины",desc:"x2 монеты за квесты на 1 день",price:30,currency:"devil",once:false},
+      {id:"d_skin",icon:"🌑",name:"Тёмный скин питомца",desc:"Теневой вид питомца",price:75,currency:"devil",once:true}
     ];
 
     let P = null;
@@ -1137,25 +1137,18 @@
         $(STAT_EL[k].v).textContent=v+"/"+sm;
         $(STAT_EL[k].b).style.width=pct(v,sm)+"%";
       });
-      $("angelPts").textContent=P.angelPoints||0;
-      $("devilPts").textContent=P.devilPoints||0;
       const coins=P.coins||0;
       animateCoins(coins);
       const angel=P.angelPoints||0, devil=P.devilPoints||0;
-      const pathBar=$("pathScaleBar"), pathVal=$("pathScaleValues"), pathTitle=$("pathScaleTitle");
-      if(pathBar&&pathVal){
-        const total=angel+devil+1;
-        const ratio=angel/total;
-        const devilPct=(1-ratio)*100;
-        pathBar.style.background="linear-gradient(to right, #6c5ce7 0%, #6c5ce7 "+devilPct+"%, #e6c200 "+devilPct+"%, #e6c200 100%)";
-        pathVal.textContent="😈 "+devil+" | 😇 "+angel;
+      const pathLeft=$("pathScaleLeft"), pathTitle=$("pathScaleTitle"), pathRight=$("pathScaleRight");
+      if(pathLeft) pathLeft.textContent="😈 "+devil;
+      if(pathRight) pathRight.textContent="😇 "+angel;
+      if(pathTitle){
         const diff=angel-devil;
-        if(pathTitle){
-          if(diff>100) pathTitle.textContent="✨ Хранительница Света", pathTitle.style.display="block";
-          else if(diff<-100) pathTitle.textContent="🌑 Госпожа Теней", pathTitle.style.display="block";
-          else if(Math.abs(diff)<30) pathTitle.textContent="⚖️ Идущая по Грани", pathTitle.style.display="block";
-          else pathTitle.style.display="none";
-        }
+        if(diff>100) pathTitle.textContent="✨ Хранительница Света", pathTitle.style.display="block";
+        else if(diff<-100) pathTitle.textContent="🌑 Госпожа Теней", pathTitle.style.display="block";
+        else if(Math.abs(diff)<30) pathTitle.textContent="⚖️ Идущая по Грани", pathTitle.style.display="block";
+        else pathTitle.textContent="", pathTitle.style.display="none";
       }
       const shopTitleText=$("shopTitleText");
       if(shopTitleText){
@@ -1944,6 +1937,12 @@
 
     $("dbgCoins").addEventListener("click",function(){
       if(!P)return;P.coins=(P.coins||0)+100;save();render();popup("+100💰","good");
+    });
+    $("dbgAngel").addEventListener("click",function(){
+      if(!P)return;P.angelPoints=(P.angelPoints||0)+50;save();render();popup("+50😇","good");
+    });
+    $("dbgDevil").addEventListener("click",function(){
+      if(!P)return;P.devilPoints=(P.devilPoints||0)+50;save();render();popup("+50😈","good");
     });
 
     $("dbgReset").addEventListener("click",function(){
