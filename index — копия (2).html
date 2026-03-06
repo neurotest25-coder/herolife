@@ -255,9 +255,6 @@
       color: var(--accent);
       background: rgba(230,194,0,0.1);
     }
-    .filter-btn[data-filter="easy"] { color: #2ecc71; }
-    .filter-btn[data-filter="medium"] { color: #fdcb6e; }
-    .filter-btn[data-filter="hard"] { color: #ff4b5c; }
     .quests-list { display: grid; gap: 6px; }
     .quest-counter { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 8px; }
 
@@ -628,9 +625,8 @@
                 <button type="button" class="filter-btn" data-filter="charisma">✨</button>
                 <button type="button" class="filter-btn" data-filter="discipline">🛡️</button>
                 <button type="button" class="filter-btn" data-filter="energy">⚡</button>
-                <button type="button" class="filter-btn" data-filter="easy" title="Лёгкие">●</button>
-                <button type="button" class="filter-btn" data-filter="medium" title="Средние">●</button>
-                <button type="button" class="filter-btn" data-filter="hard" title="Сложные">●</button>
+                <button type="button" class="filter-btn" data-filter="easy">🟢easy</button>
+                <button type="button" class="filter-btn" data-filter="hard">🔴hard</button>
               </div>
               <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
               <div class="quests-list" id="goodQuestsList"></div>
@@ -1201,7 +1197,7 @@
       currentFilter = statKey;
       document.querySelectorAll(".quest-item").forEach(function(item){
         if(statKey === "all"){ item.style.display = ""; return; }
-        if(statKey === "easy" || statKey === "medium" || statKey === "hard"){
+        if(statKey === "easy" || statKey === "hard"){
           const diff = item.getAttribute("data-difficulty") || "";
           item.style.display = diff === statKey ? "" : "none";
           return;
