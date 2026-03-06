@@ -163,7 +163,7 @@
     .path-scale-right { color: var(--text-muted); }
 
     .character-divider-title { margin-top: 8px; margin-bottom: 2px; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; color: var(--text-muted); }
-    .shield-indicator + .character-divider-title { margin-top: 20px; }
+    .shield-indicator + .character-divider-title { margin-top: 12px; }
     .pet-block { margin-top: 4px; display: grid; gap: 6px; font-size: 0.86rem; }
     .pet-main { display: flex; align-items: center; gap: 8px; }
     .pet-icon { font-size: 3rem; cursor: pointer; transition: transform 0.3s; animation: petIdle 3s ease-in-out infinite; }
@@ -171,11 +171,6 @@
     @keyframes petBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     @keyframes petIdle { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
     .pet-name { font-weight: 500; }
-    .pet-name-block { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
-    .pet-stage-name { font-size: 0.78rem; color: var(--accent); }
-    .pet-stage-desc { font-size: 0.72rem; color: var(--text-muted); }
-    .pet-stage-bonus { font-size: 0.72rem; color: var(--accent); }
-    .pet-evolution-hint { font-size: 0.78rem; color: var(--accent); margin-bottom: 8px; padding: 8px; background: rgba(230,194,0,0.1); border-radius: 8px; }
     .pet-mood-text { font-size: 0.75rem; color: var(--text-muted); }
     .pet-play-btn {
       border: none; border-radius: 999px; padding: 4px 10px;
@@ -247,7 +242,6 @@
     .quests-hint { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
     .quests-hint.hidden { display: none; }
-    .mystic-advice { font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; }
     .filter-row {
       display: flex;
       gap: 6px;
@@ -335,7 +329,6 @@
     .quest-btn--done { cursor: default; }
     .quest-btn--done, .quest-btn:disabled { pointer-events: none; }
 
-    .quest-item--mystic { border-color: rgba(230,194,0,0.5); box-shadow: 0 0 12px rgba(230,194,0,0.3); }
     .quest-item--good-done {
       background: rgba(46,204,113,0.15);
       border-color: rgba(46,204,113,0.4);
@@ -489,7 +482,6 @@
       opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 40;
     }
     .overlay--visible { opacity: 1; pointer-events: auto; }
-    .overlay--evolution .overlay-inner { border-color: rgba(108,92,231,0.8); background: radial-gradient(circle at top, rgba(108,92,231,0.35), rgba(7,7,20,0.98)); }
     .overlay-inner {
       text-align: center; padding: 26px 20px; border-radius: 18px; max-width: 340px; width: 90%;
       border: 1px solid rgba(230,194,0,0.8);
@@ -542,7 +534,6 @@
 </head>
 <body>
   <div id="levelUpOverlay" class="overlay"><div class="overlay-inner"><div class="overlay-title">🎉 LEVEL UP!</div><div class="overlay-text">Уровень <strong id="levelUpLevel">1</strong></div></div></div>
-  <div id="evolutionOverlay" class="overlay overlay--evolution"><div class="overlay-inner"><div class="overlay-title">✨ ПИТОМЕЦ ЭВОЛЮЦИОНИРОВАЛ! ✨</div><div class="overlay-text" id="evolutionText"></div><button class="overlay-close-btn" id="evolutionClose">Замечательно! ✨</button></div></div>
   <div id="endDayOverlay" class="overlay"><div class="overlay-inner"><div class="overlay-title">🌙 ИТОГИ ДНЯ</div><div class="overlay-text" id="endDayText"></div><button class="overlay-close-btn" id="endDayClose">Отлично! ✨</button></div></div>
 
   <div class="page-wrap"><main class="hero-card">
@@ -623,15 +614,9 @@
 
             <div class="character-divider-title">─── Питомец ───</div>
             <div class="pet-block">
-              <div class="pet-evolution-hint" id="petEvolutionHint" style="display:none;"></div>
               <div class="pet-main">
                 <span class="pet-icon" id="petIcon">🐱</span>
-                <div class="pet-name-block">
-                  <span class="pet-name" id="petNameD">Питомец</span>
-                  <span class="pet-stage-name" id="petStageName"></span>
-                  <span class="pet-stage-desc" id="petStageDesc"></span>
-                  <span class="pet-stage-bonus" id="petStageBonus"></span>
-                </div>
+                <span class="pet-name" id="petNameD">Питомец</span>
                 <span id="petFlower"></span>
                 <button class="pet-play-btn" id="petPlayBtn" style="display:none">🎀 Поиграть</button>
               </div>
@@ -672,7 +657,6 @@
                 <button type="button" class="filter-btn" data-filter="hard" title="Сложные">●</button>
               </div>
               <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
-              <div class="mystic-advice" id="mysticAdvice" style="display:none;"></div>
               <div class="quests-list" id="goodQuestsList"></div>
               <div class="quest-counter" id="questCounter">Выполнено: 0/35</div>
 
@@ -1069,77 +1053,6 @@
     const STREAK_NAMES={[-1]:"",0:"Огонёк",1:"Пламя",2:"Костёр",3:"Корона"};
     const MILESTONE_PHRASES={3:"Начало положено! 🔥",7:"НЕДЕЛЯ! Большинство бросают на третий. А ты нет 🔥🔥",14:"Две недели. Это характер 🔥🔥🔥",30:"МЕСЯЦ. Ты невероятна 👑🔥"};
 
-    const PET_STAGES = {
-      cat: [
-        {stage:0, name:"Котёнок Искорка", icon:"🐱", desc:"Маленький пушистый котёнок с большими глазами", maxLevel:15, bonus:null},
-        {stage:1, name:"Кот-Чародей Мистик", icon:"🐈", desc:"Грациозный кот в шляпе волшебника", maxLevel:35, bonus:"Подсказывает квест для отстающего стата"},
-        {stage:2, name:"Звёздный Страж Лунарис", icon:"🦁", desc:"Величественный кот с узорами созвездий", maxLevel:999, bonus:"+1 🧠 +1 ✨ пассивно"}
-      ],
-      dog: [
-        {stage:0, name:"Щенок Дружок", icon:"🐶", desc:"Верный и энергичный щенок", maxLevel:15, bonus:null},
-        {stage:1, name:"Пёс-Рыцарь Защитник", icon:"🐕", desc:"Верный пёс в доспехах", maxLevel:35, bonus:"+10% к квестам 🛡️💪"},
-        {stage:2, name:"Золотой Паладин Аврелий", icon:"🐺", desc:"Сияющий страж с золотой гривой", maxLevel:999, bonus:"+1 💪 +1 🛡️ пассивно"}
-      ],
-      dragon: [
-        {stage:0, name:"Дракончик Уголёк", icon:"🐲", desc:"Маленький дракончик, дышит дымком", maxLevel:15, bonus:null},
-        {stage:1, name:"Дракон-Алхимик Пламя", icon:"🐉", desc:"Гордый дракон, варит зелья", maxLevel:35, bonus:"Рандомный бонус 1 раз в день"},
-        {stage:2, name:"Древний Дракон Эмберия", icon:"🔥", desc:"Легендарный дракон с хрустальными крыльями", maxLevel:999, bonus:"+1 ⚡ +1 ❤️ пассивно, +15% монет"}
-      ]
-    };
-
-    function getPetStage(profile){
-      const level = profile.level || 1;
-      const type = profile.petType || "cat";
-      const stages = PET_STAGES[type] || PET_STAGES.cat;
-      const hunger = profile.petHunger ?? 80;
-      const mood = profile.petMood ?? 3;
-      const canEvolve = hunger >= 70 && mood >= 7;
-      let targetStage = 0;
-      if(level >= 36 && canEvolve) targetStage = 2;
-      else if(level >= 16 && canEvolve) targetStage = 1;
-      return targetStage;
-    }
-
-    function checkPetEvolution(profile){
-      if(!profile)return;
-      const oldStage = profile.petStage ?? 0;
-      const newStage = getPetStage(profile);
-      if(newStage > oldStage){
-        profile.petStage = newStage;
-        save();
-        showEvolutionOverlay(profile, oldStage, newStage);
-      }
-      const hintEl = $("petEvolutionHint");
-      if(hintEl){
-        const level = profile.level || 1;
-        const hunger = profile.petHunger ?? 80;
-        const mood = profile.petMood ?? 3;
-        const needHint = (level >= 36 && getPetStage(profile) < 2) || (level >= 16 && level < 36 && getPetStage(profile) < 1);
-        if(needHint && (hunger < 70 || mood < 7)){
-          hintEl.style.display = "block";
-          hintEl.innerHTML = "✨ Почти готов к эволюции!<br>Сытость: "+hunger+"% (нужно 70%)<br>Настроение: "+mood+"/10 (нужно 7)";
-        } else hintEl.style.display = "none";
-      }
-    }
-
-    let evolutionOverlayTimeout = null;
-    function showEvolutionOverlay(profile, oldStage, newStage){
-      const type = profile.petType || "cat";
-      const stages = PET_STAGES[type] || PET_STAGES.cat;
-      const oldS = stages.find(s=>s.stage===oldStage) || stages[0];
-      const newS = stages.find(s=>s.stage===newStage) || stages[0];
-      const el = $("evolutionText");
-      if(el){
-        el.innerHTML = oldS.icon+" → "+newS.icon+"<br><br>"+oldS.name+" → "+newS.name+"<br><br>"+newS.desc+"<br><br>"+(newS.bonus?"Новая способность: "+newS.bonus:"");
-      }
-      $("evolutionOverlay").classList.add("overlay--visible");
-      if(evolutionOverlayTimeout) clearTimeout(evolutionOverlayTimeout);
-      evolutionOverlayTimeout = setTimeout(function(){
-        evolutionOverlayTimeout = null;
-        $("evolutionOverlay").classList.remove("overlay--visible");
-      }, 7000);
-    }
-
     function declDays(n){
       const abs=Math.abs(n)%100;
       const mod=abs%10;
@@ -1176,7 +1089,7 @@
         el.appendChild(main); el.appendChild(sub);
       }else{ el.textContent=txt; }
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),10000);
+      setTimeout(()=>el.remove(),subtitle?10000:10000);
     }
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
@@ -1245,16 +1158,9 @@
         else if(currentShopTab==="angel") shopTitleText.innerHTML='😇 Свет — <span class="shop-title-coins">'+a+'</span>';
         else shopTitleText.innerHTML='😈 Тень — <span class="shop-title-coins">'+d+'</span>';
       }
-      const type=P.petType||"cat";
-      const stages=PET_STAGES[type]||PET_STAGES.cat;
-      const petStage=P.petStage??getPetStage(P);
-      const stageData=stages.find(s=>s.stage===petStage)||stages[0];
-      $("petIcon").textContent=stageData.icon;
+      const pt={cat:"🐱",dog:"🐶",dragon:"🐲"};
+      $("petIcon").textContent=pt[P.petType]||"🐾";
       $("petNameD").textContent=P.petName||"Питомец";
-      const sn=$("petStageName"), sd=$("petStageDesc"), sb=$("petStageBonus");
-      if(sn) sn.textContent=stageData.name;
-      if(sd) sd.textContent=stageData.desc;
-      if(sb){ sb.textContent=stageData.bonus?"⭐ "+stageData.bonus:""; sb.style.display=stageData.bonus?"block":"none"; }
       $("petFlower").textContent=P.inventory&&P.inventory.flower?"🌺":"";
       const h=cl(P.petHunger||0,0,100);
       $("hungerText").textContent=h+"%";
@@ -1398,24 +1304,6 @@
       if(!gList)return;
       gList.innerHTML="";
       const allQ = QUESTS.concat(P.customQuests||[]);
-      let mysticQuestId = null;
-      if(P && (P.petStage||0)===1 && P.petType==="cat"){
-        const sm=sMax();
-        let minStat=null, minVal=999;
-        STAT_KEYS.forEach(k=>{ const v=P.stats[k]||0; if(v<minVal){ minVal=v; minStat=k; } });
-        if(minStat){
-          const found=allQ.find(q=>q.stats&&q.stats[minStat]&&!(P.quests&&P.quests[q.id]));
-          if(found) mysticQuestId=found.id;
-        }
-      }
-      const mysticAdvice=$("mysticAdvice");
-      if(mysticAdvice){
-        if(mysticQuestId){
-          const q=allQ.find(x=>x.id===mysticQuestId);
-          mysticAdvice.textContent=q?"🐈 Мистик советует: "+q.title:"";
-          mysticAdvice.style.display=q?"block":"none";
-        } else mysticAdvice.style.display="none";
-      }
       allQ.forEach(q=>{
         const div=document.createElement("div");
         const done=P.quests&&P.quests[q.id];
@@ -1426,7 +1314,7 @@
         const tip=q.tip||"";
         const tipHtml=tip?'<span class="quest-tip-toggle" data-tip-for="'+q.id+'" title="Подсказка">💡</span>':"";
         const tipBlock=tip?'<div class="quest-tip" id="tip-'+q.id+'">'+tip+'</div>':"";
-        const itemCls="quest-item"+(done?" quest-item--good-done":"")+(mysticQuestId===q.id?" quest-item--mystic":"");
+        const itemCls="quest-item"+(done?" quest-item--good-done":"");
         const titleCls="quest-title"+(done?" quest-title--done":"");
         div.className=itemCls;
         div.dataset.questId=q.id;
@@ -1571,7 +1459,6 @@
       P.xp=(P.xp||0)+5;
       P.angelPoints=(P.angelPoints||0)+1;
       P.petMood=cl((P.petMood||3)+1,0,10);
-      checkPetEvolution(P);
       save();
       render();
       if($("inspirationSubPane")&&$("inspirationSubPane").classList.contains("quest-sub-pane--active")){
@@ -1593,15 +1480,6 @@
 
       let questCoins=q.coins||0;
       if(P.doubleCoinsActive) questCoins*=2;
-      let dogBonus=false;
-      if((P.petStage||0)===1&&P.petType==="dog"&&q.stats&&(q.stats.discipline||q.stats.strength)){ questCoins=Math.floor(questCoins*1.1); dogBonus=true; }
-      if((P.petStage||0)===2&&P.petType==="dragon") questCoins=Math.floor(questCoins*1.15);
-      if((P.petStage||0)===1&&P.petType==="dragon"&&!P.dragonDailyBonusUsed){
-        const r=Math.random();
-        if(r<0.5){ questCoins+=5; popup("🐉 Пламя варит зелье... +5💰!","good"); }
-        else if(r<0.8){ const k=STAT_KEYS[Math.floor(Math.random()*STAT_KEYS.length)]; P.stats[k]=cl((P.stats[k]||0)+1,0,sMax()); popup("🐉 Пламя варит зелье... "+STAT_ICONS[k]+"+1!","good"); }
-        P.dragonDailyBonusUsed=true;
-      }
       P.coins=cl((P.coins||0)+questCoins,0,999999);
       Object.entries(q.stats||{}).forEach(([k,v])=>{
         let add=v;
@@ -1609,7 +1487,7 @@
         if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+add,0,sm);
       });
       const statsPart=statStr(q.stats,true);
-      const mainLine="+"+questCoins+"💰"+(statsPart?" "+statsPart:"")+(dogBonus?" 🐕+10%":"");
+      const mainLine="+"+questCoins+"💰"+(statsPart?" "+statsPart:"");
       const reaction=QUEST_REACTIONS.good[Math.floor(Math.random()*QUEST_REACTIONS.good.length)].replace(/{pet}/g,P.petName||"Питомец");
       P.xp=(P.xp||0)+10;
       if(q.alignment==="angel") P.angelPoints=(P.angelPoints||0)+1;
@@ -1619,7 +1497,7 @@
 
       let lv=P.level, xp=P.xp, need=lv*100;
       while(xp>=need){xp-=need;lv++;need=lv*100;}
-      if(lv>prevLv){$("levelUpLevel").textContent=lv;$("levelUpOverlay").classList.add("overlay--visible");setTimeout(()=>$("levelUpOverlay").classList.remove("overlay--visible"),5000);}
+      if(lv>prevLv){$("levelUpLevel").textContent=lv;$("levelUpOverlay").classList.add("overlay--visible");setTimeout(()=>$("levelUpOverlay").classList.remove("overlay--visible"),3000);}
       P.level=lv;P.xp=xp;P.xpToNext=lv*100;
       P.quests[id]=true;
 
@@ -1627,7 +1505,6 @@
       if(hint)hint.classList.add("hidden");
 
       save(); buildQuests(); render();
-      checkPetEvolution(P);
     }
 
     function renderShop(){
@@ -1687,7 +1564,6 @@
       if(id==="d_blade") P.doubleCoinsActive=true;
       if(["a_nimb","a_wings","a_armor","a_tiara","a_skin","d_horns","d_cloak","d_crown","d_skin"].indexOf(id)!==-1) P.inventory[id]=true;
 
-      if(["treat","a_bless","d_treat"].indexOf(id)!==-1) checkPetEvolution(P);
       save(); render();
     }
 
@@ -1739,7 +1615,6 @@
       P.totalCoinsEarned=(P.totalCoinsEarned||0)+earnedCoins;
 
       save(); buildQuests(); render();
-      checkPetEvolution(P);
     }
 
     function newDay(){
@@ -1756,7 +1631,6 @@
       P.streakProtection=false;
       P.darkArmorActive=false;
       P.doubleCoinsActive=false;
-      P.dragonDailyBonusUsed=false;
       P.quests={};
       P.dayCompleted=false;
       P.lastVisitDate=todayStr;
@@ -1768,13 +1642,6 @@
       P.dailyCard=null;
       P.dailyCardDate=null;
       P.dailyCardSwitched=false;
-      const sm=sMax();
-      if((P.petStage||0)===2){
-        if(P.petType==="cat"){ P.stats.intelligence=cl((P.stats.intelligence||0)+1,0,sm); P.stats.charisma=cl((P.stats.charisma||0)+1,0,sm); popup("🌟 "+(P.petName||"Питомец")+" дарит бонус: +1🧠 +1✨","good"); }
-        else if(P.petType==="dog"){ P.stats.strength=cl((P.stats.strength||0)+1,0,sm); P.stats.discipline=cl((P.stats.discipline||0)+1,0,sm); popup("🌟 "+(P.petName||"Питомец")+" дарит бонус: +1💪 +1🛡️","good"); }
-        else if(P.petType==="dragon"){ P.stats.energy=cl((P.stats.energy||0)+1,0,sm); P.stats.health=cl((P.stats.health||0)+1,0,sm); popup("🌟 "+(P.petName||"Питомец")+" дарит бонус: +1⚡ +1❤️","good"); }
-      }
-      checkPetEvolution(P);
       save();
     }
 
@@ -1782,10 +1649,10 @@
       const s={};STAT_KEYS.forEach(k=>s[k]=1);
       return {heroName:base.heroName,gender:base.gender||"unknown",petType:base.petType||"cat",petName:base.petName,
         level:1,xp:0,stats:s,angelPoints:0,devilPoints:0,coins:0,
-        petMood:3,petHunger:80,petStage:0,quests:{},inventory:{},customQuests:[],
+        petMood:3,petHunger:80,quests:{},inventory:{},customQuests:[],
         dayCompleted:false,lastVisitDate:today(),createdAt:new Date().toISOString(),
         streak:0,streakStage:0,lastActiveDate:null,missedDays:0,shownMilestones:[],
-        streakProtection:false,darkArmorStat:null,darkArmorActive:false,doubleCoinsActive:false,dragonDailyBonusUsed:false,
+        streakProtection:false,darkArmorStat:null,darkArmorActive:false,doubleCoinsActive:false,
         history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
         completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false};
     }
@@ -1847,9 +1714,6 @@
           if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
           if(!P.completedCards)P.completedCards={};if(P.dailyCardSwitched==null)P.dailyCardSwitched=false;
           if(P.streakProtection==null)P.streakProtection=false;if(P.darkArmorActive==null)P.darkArmorActive=false;if(P.doubleCoinsActive==null)P.doubleCoinsActive=false;
-          if(P.petStage==null)P.petStage=0;
-          if(P.dragonDailyBonusUsed==null)P.dragonDailyBonusUsed=false;
-          checkPetEvolution(P);
           save(); showChar(useComeback);
           return;
         }
@@ -2054,10 +1918,6 @@
 
     $("endDayBtn").addEventListener("click",endDay);
     $("endDayClose").addEventListener("click",()=>$("endDayOverlay").classList.remove("overlay--visible"));
-    $("evolutionClose").addEventListener("click",function(){
-      if(evolutionOverlayTimeout){ clearTimeout(evolutionOverlayTimeout); evolutionOverlayTimeout=null; }
-      $("evolutionOverlay").classList.remove("overlay--visible");
-    });
 
     $("petIcon").addEventListener("click",function(){this.classList.remove("bounce");void this.offsetWidth;this.classList.add("bounce");});
     $("petPlayBtn").addEventListener("click",function(){
@@ -2065,7 +1925,6 @@
       P.inventory.toyUsedToday=true;
       P.petMood=cl((P.petMood||3)+3,0,10);
       popup("🎀 "+P.petName+" доволен!","good");
-      checkPetEvolution(P);
       save(); render();
     });
 
@@ -2073,8 +1932,8 @@
       if(!P)return;P.xp=(P.xp||0)+90;
       let lv=P.level,xp=P.xp,n=lv*100,pl=lv;
       while(xp>=n){xp-=n;lv++;n=lv*100;}
-      if(lv>pl){$("levelUpLevel").textContent=lv;$("levelUpOverlay").classList.add("overlay--visible");setTimeout(()=>$("levelUpOverlay").classList.remove("overlay--visible"),5000);}
-      P.level=lv;P.xp=xp;save();render();checkPetEvolution(P);popup("+90 XP","good");
+      if(lv>pl){$("levelUpLevel").textContent=lv;$("levelUpOverlay").classList.add("overlay--visible");setTimeout(()=>$("levelUpOverlay").classList.remove("overlay--visible"),3000);}
+      P.level=lv;P.xp=xp;save();render();popup("+90 XP","good");
     });
 
     $("dbgCoins").addEventListener("click",function(){
