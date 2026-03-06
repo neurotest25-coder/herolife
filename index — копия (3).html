@@ -176,12 +176,88 @@
     }
     .pet-play-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
 
+    .quest-sub-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+    .quest-sub-tab { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 8px 12px; font-size: 0.9rem; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+    .quest-sub-tab:hover { border-color: var(--accent-soft); color: var(--text-main); }
+    .quest-sub-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(230,194,0,0.1); }
+    .quest-sub-pane { display: none; }
+    .quest-sub-pane.quest-sub-pane--active { display: block; }
+    .inspiration-section { margin-top: 8px; }
+    .inspiration-title { font-size: 1rem; font-weight: 600; text-align: center; margin-bottom: 16px; color: var(--text-main); }
+    .inspiration-daily-card {
+      position: relative; background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5));
+      border-radius: var(--border-radius-lg); padding: 24px 20px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.65); border: 1px solid rgba(230,194,0,0.35);
+      overflow: hidden; margin-bottom: 20px; text-align: center;
+    }
+    .inspiration-daily-card::before {
+      content: ""; position: absolute; inset: -40%;
+      background: radial-gradient(circle at top left, rgba(230,194,0,0.12), transparent 55%);
+      opacity: 0.75; pointer-events: none; z-index: 0;
+    }
+    .inspiration-daily-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
+    .inspiration-daily-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .inspiration-daily-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
+    .inspiration-daily-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
+    .inspiration-daily-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 10px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .inspiration-btn-done { background: linear-gradient(135deg, #2ecc71, #00c853); color: white; }
+    .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
+    .inspiration-btn-switch { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
+    .inspiration-btn-switch:disabled { opacity: 0.5; cursor: default; }
+    .inspiration-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .inspiration-cat-btn { border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; background: rgba(6,8,30,0.6); color: var(--text-main); cursor: pointer; text-align: center; transition: all 0.15s; }
+    .inspiration-cat-btn:hover { border-color: var(--accent-soft); box-shadow: 0 0 12px rgba(230,194,0,0.2); }
+    .inspiration-cat-btn .icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .inspiration-cat-btn .label { font-size: 0.85rem; }
+    .inspiration-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .inspiration-card-mini { border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; background: rgba(6,8,30,0.6); cursor: pointer; text-align: center; transition: all 0.15s; }
+    .inspiration-card-mini:hover { border-color: var(--accent-soft); }
+    .inspiration-card-mini .icon { font-size: 1.5rem; }
+    .inspiration-card-mini .title { font-size: 0.8rem; margin: 4px 0 2px; }
+    .inspiration-card-mini .coins { font-size: 0.75rem; color: var(--accent); }
+    .inspiration-back-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; padding: 4px 0; }
+    .inspiration-back-btn:hover { color: var(--accent); }
+    .inspiration-detail-content { background: rgba(6,8,30,0.6); border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.08); }
+    .inspiration-detail-emoji { font-size: 2.5rem; text-align: center; margin-bottom: 12px; }
+    .inspiration-detail-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .inspiration-detail-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
+    .inspiration-detail-tip { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px; }
+    .inspiration-detail-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
     .quests-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .quests-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .quests-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
     .quests-hint { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
     .quests-hint.hidden { display: none; }
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(230,194,0,0.1);
+    }
+    .filter-btn[data-filter="easy"] { color: #2ecc71; }
+    .filter-btn[data-filter="medium"] { color: #fdcb6e; }
+    .filter-btn[data-filter="hard"] { color: #ff4b5c; }
     .quests-list { display: grid; gap: 6px; }
     .quest-counter { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 8px; }
 
@@ -190,12 +266,23 @@
       gap: 8px; padding: 8px 10px; border-radius: 12px;
       background: rgba(6,8,30,0.9); border: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+      cursor: pointer;
     }
     .quest-main { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
     .quest-icon { font-size: 1.1rem; flex-shrink: 0; }
     .quest-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
     .quest-title { font-size: 0.85rem; font-weight: 500; }
-    .quest-desc { font-size: 0.72rem; color: var(--text-muted); }
+    .quest-desc { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+    .quest-tip { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; display: none; }
+    .quest-tip.quest-tip--visible { display: block; }
+    .quest-tip-toggle { background: none; border: none; cursor: pointer; font-size: 0.75rem; padding: 0 2px; opacity: 0.7; }
+    .quest-tip-toggle:hover { opacity: 1; }
+    .quest-difficulty-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
+    .quest-difficulty-dot--easy { background: #2ecc71; }
+    .quest-difficulty-dot--medium { background: #e6c200; }
+    .quest-difficulty-dot--hard { background: #ff4b5c; }
+    .quest-title-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+    .quest-alignment { font-size: 0.7rem; }
     .quest-stats { font-size: 0.7rem; }
     .quest-stats.good { color: #2ecc71; }
     .quest-stats.bad { color: #ff4b5c; }
@@ -256,7 +343,8 @@
     .add-custom-quest-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; }
 
     .shop-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
-    .shop-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .shop-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .shop-closed-text { text-align: center; color: #e6c200; font-size: 0.9rem; margin-bottom: 6px; }
     .shop-list { display: grid; gap: 6px; }
     .shop-item {
       display: flex; align-items: center; justify-content: space-between;
@@ -296,6 +384,16 @@
     .stats-totals { font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
 
     .shop-title-coins { color: #e6c200; font-weight: 700; }
+
+    .streak-fire {
+      display: inline-block;
+      animation: firePulse 1.5s infinite;
+      transform-origin: center;
+    }
+    @keyframes firePulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
 
     .tab-pane {
       display: none;
@@ -349,8 +447,10 @@
       color: white; box-shadow: 0 12px 28px rgba(0,0,0,0.7);
       transition: all 0.13s;
     }
-    .end-day-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; }
+    .end-day-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; outline: none; }
     .end-day-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+    .greeting-phrase { font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 10px 0; font-style: italic; }
+    .greeting-phrase.greeting-phrase--comeback { color: #fd79a8; }
 
     .debug-section { margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; gap: 6px; }
     .debug-btn { border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; font-size: 0.75rem; color: var(--text-muted); background: rgba(255,255,255,0.03); cursor: pointer; }
@@ -384,11 +484,14 @@
     .xp-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
       font-size: 1.8rem; font-weight: 700; pointer-events: none; z-index: 30;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
       animation: xpPopUp 1.2s ease-out forwards;
     }
     .xp-popup--good { color: #2ecc71; text-shadow: 0 0 20px rgba(46,204,113,0.8); }
     .xp-popup--bad { color: #ff4b5c; text-shadow: 0 0 20px rgba(255,75,92,0.8); }
     .xp-popup--info { color: #74b9ff; text-shadow: 0 0 20px rgba(116,185,255,0.8); }
+    .xp-popup-main { font-size: 1.8rem; font-weight: 700; }
+    .xp-popup-sub { font-size: 0.75rem; font-weight: 400; margin-top: 4px; opacity: 0.95; }
     @keyframes xpPopUp { 0% { opacity:1; transform:translate(-50%,-50%) scale(0.5); } 30% { opacity:1; transform:translate(-50%,-70%) scale(1.2); } 100% { opacity:0; transform:translate(-50%,-120%) scale(0.8); } }
 
     .xp-bar-hit { animation: xpFlash 1s ease-out; }
@@ -475,6 +578,7 @@
         </header>
         <div class="character-section">
           <div class="tab-pane tab-pane--active" id="tabHero">
+            <div class="greeting-phrase" id="greetingPhrase"></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">Опыт</span><span class="stat-value" id="xpText">0/100</span></div><div class="progress"><div class="progress-fill progress-fill--xp" id="xpBar"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">❤️ Здоровье</span><span class="stat-value" id="vHP">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--hp" id="bHP"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">🧠 Интеллект</span><span class="stat-value" id="vINT">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--int" id="bINT"></div></div></div>
@@ -507,15 +611,30 @@
           </div>
 
           <div class="tab-pane" id="tabQuests">
+            <div class="quest-sub-tabs">
+              <button type="button" class="quest-sub-tab active" data-subtab="quests">📜 Квесты</button>
+              <button type="button" class="quest-sub-tab" data-subtab="inspiration">✨ Вдохновение</button>
+            </div>
+            <div class="quest-sub-pane quest-sub-pane--active" id="questsSubPane">
             <section class="quests-section">
               <div class="quests-title"><span>📜</span><span>Ежедневные квесты</span></div>
               <div class="quests-date" id="questsDate"></div>
-              <div class="quests-hint" id="questsHint">👆 Отмечай дела и избегай срывов!</div>
+              <div class="quests-hint" id="questsHint">👆 Отмечай привычки!</div>
+              <div class="filter-row" id="questFilterRow">
+                <button type="button" class="filter-btn active" data-filter="all">Все</button>
+                <button type="button" class="filter-btn" data-filter="strength">💪</button>
+                <button type="button" class="filter-btn" data-filter="intelligence">🧠</button>
+                <button type="button" class="filter-btn" data-filter="health">❤️</button>
+                <button type="button" class="filter-btn" data-filter="charisma">✨</button>
+                <button type="button" class="filter-btn" data-filter="discipline">🛡️</button>
+                <button type="button" class="filter-btn" data-filter="energy">⚡</button>
+                <button type="button" class="filter-btn" data-filter="easy" title="Лёгкие">●</button>
+                <button type="button" class="filter-btn" data-filter="medium" title="Средние">●</button>
+                <button type="button" class="filter-btn" data-filter="hard" title="Сложные">●</button>
+              </div>
               <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
               <div class="quests-list" id="goodQuestsList"></div>
-              <div class="character-divider-title" style="margin-top:12px">── ❌ Были ли срывы? ──</div>
-              <div class="quests-list" id="badQuestsList"></div>
-              <div class="quest-counter" id="questCounter">Выполнено: 0/10 ✅ Срывов: 0 ❌</div>
+              <div class="quest-counter" id="questCounter">Выполнено: 0/35</div>
 
               <div class="add-custom-quest-block">
                 <button type="button" class="add-custom-quest-btn" id="addCustomQuestBtn">➕ Добавить свой квест</button>
@@ -557,17 +676,26 @@
                   </div>
 
                   <div class="field">
-                    <div class="field-label"><span>Тип квеста</span></div>
-                    <div class="choice-row">
-                      <button type="button" class="choice-card selected" data-group="questType" data-value="good">
-                        <span class="icon">✅</span>
-                        <span class="label">Хорошая</span>
-                      </button>
-                      <button type="button" class="choice-card" data-group="questType" data-value="bad">
-                        <span class="icon">❌</span>
-                        <span class="label">Плохая</span>
-                      </button>
-                    </div>
+                    <label class="field-label" for="customQuestDifficulty"><span>Сложность</span></label>
+                    <select id="customQuestDifficulty" class="text-input">
+                      <option value="easy">🟢 Лёгкая</option>
+                      <option value="medium">🟡 Средняя</option>
+                      <option value="hard">🔴 Сложная</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="customQuestAlignment"><span>Выравнивание</span></label>
+                    <select id="customQuestAlignment" class="text-input">
+                      <option value="neutral">— Нейтральное</option>
+                      <option value="angel">😇 Ангел</option>
+                      <option value="devil">😈 Чёрт</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label class="field-label" for="customQuestTip"><span>Подсказка (опционально)</span></label>
+                    <input id="customQuestTip" class="text-input" type="text" maxlength="80" placeholder="Совет или факт" />
                   </div>
 
                   <div class="field">
@@ -621,11 +749,28 @@
               <button class="end-day-btn" id="endDayBtn">🌙 Завершить день</button>
               <div class="end-day-note" id="endDayNote"></div>
             </div>
+            </div>
+            <div class="quest-sub-pane" id="inspirationSubPane">
+              <div class="inspiration-section">
+                <div class="inspiration-title">✨ Вдохновение дня</div>
+                <div class="inspiration-daily-card" id="inspirationDailyCard"></div>
+                <div class="inspiration-categories" id="inspirationCategories"></div>
+                <div class="inspiration-category-view" id="inspirationCategoryView" style="display:none;">
+                  <button type="button" class="inspiration-back-btn" id="inspirationBackBtn">← Назад</button>
+                  <div class="inspiration-cards-grid" id="inspirationCardsGrid"></div>
+                </div>
+                <div class="inspiration-card-detail" id="inspirationCardDetail" style="display:none;">
+                  <button type="button" class="inspiration-back-btn" id="inspirationDetailBackBtn">← Назад</button>
+                  <div class="inspiration-detail-content" id="inspirationDetailContent"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="tab-pane" id="tabShop">
             <section class="shop-section">
               <div class="shop-title"><span>🛒</span><span id="shopTitleText">Магазин</span></div>
+              <div class="shop-closed-text" id="shopClosedText" style="display:none;">🌙 Магазин закрыт до завтра</div>
               <div class="shop-list" id="shopList"></div>
             </section>
           </div>
@@ -687,29 +832,146 @@
     const MONTH_NAMES = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
     let statsMonthOffset = 0;
     let currentTab = "hero";
+    let currentFilter = "all";
+    const filterMap = { all: null, strength: "💪", intelligence: "🧠", health: "❤️", charisma: "✨", discipline: "🛡️", energy: "⚡" };
+
+    const GREETINGS = {
+      morning: [
+        "Новая неделя! {pet} верит в тебя 💪",
+        "Вторник. Ты уже в пути! {pet} рядом ☀️",
+        "Середина недели! {pet} гордится тобой 🌟",
+        "Четверг. Скоро выходные. Но сначала — приключения ⚔️",
+        "Пятница! Время для себя. {pet} готов 🐱",
+        "Выходной! Позаботься о себе. {pet} предлагает отдохнуть 💤",
+        "Воскресенье. Мягкий день. Что хорошего на этой неделе? 🌸"
+      ],
+      evening: [
+        "Вечер. Время подвести итоги. {pet} сворачивается клубком 🌙",
+        "День подходит к концу. Ты сделала достаточно. Правда 💜",
+        "{pet} зевает. Пора отдыхать. Завтра новые приключения ✨"
+      ],
+      day: [
+        "День в разгаре! {pet} следит за тобой 👀",
+        "Обед? Не забудь про воду! {pet} напоминает 💧",
+        "Полдень. {pet} верит что сегодня будет хороший день ☀️"
+      ],
+      night: [
+        "Поздновато... {pet} уже спит 😴 Позаботься о себе 💜",
+        "Ночь. {pet} мурлычет во сне. Может и тебе пора? 🌙",
+        "Тише... {pet} видит сны. Завтра новый день ✨"
+      ]
+    };
+
+    const QUEST_REACTIONS = {
+      good: [
+        "Отлично! {pet} мурчит от гордости 🐱",
+        "Есть! Ещё один шаг вперёд 🌟",
+        "Маленькая победа — но победа! ✨",
+        "{pet} прыгает от радости! 🎉",
+        "Чувствуешь? Ты становишься сильнее 💪",
+        "Так держать! 🔥",
+        "Будущая ты скажет спасибо 💜",
+        "Квест выполнен! Ты — героиня ⚔️",
+        "Ещё один кирпичик в новую жизнь 🏰",
+        "{pet} смотрит с восхищением 🌟"
+      ],
+      bad: [
+        "Бывает. {pet} не осуждает 💜",
+        "Честность с собой — уже сила 🛡️",
+        "Записано. Завтра будет лучше 🌅",
+        "{pet} тычется носом: всё будет хорошо 🐱",
+        "Один срыв — не конец пути ✨"
+      ]
+    };
+
+    const COMEBACK_PHRASES = [
+      "Вчера был непростой день? {pet} ждёт тебя 🐱",
+      "Пропуск — это пауза, не конец. Ты здесь — значит не сдалась 💪",
+      "{pet} загрустил вчера. Но он знает — ты вернёшься 💜",
+      "Новый день. Чистый лист. Начнём? ☀️",
+      "Знаешь что главное? Что ты открыла приложение. Это уже победа ✨"
+    ];
 
     const QUESTS = [
-      {id:"g1",type:"good",icon:"🌅",title:"Ранняя пташка",desc:"Встать до 7:00",coins:15,stats:{energy:2,discipline:1}},
-      {id:"g2",type:"good",icon:"💧",title:"Источник жизни",desc:"Выпить 2л воды",coins:10,stats:{health:3}},
-      {id:"g3",type:"good",icon:"📚",title:"Поглотитель знаний",desc:"Читать 20 мин",coins:20,stats:{intelligence:3}},
-      {id:"g4",type:"good",icon:"🏃",title:"Железный воин",desc:"Тренировка 30 мин",coins:25,stats:{strength:3,health:1}},
-      {id:"g5",type:"good",icon:"🧘",title:"Дзен мастер",desc:"Медитация 10 мин",coins:15,stats:{health:2,discipline:2}},
-      {id:"g6",type:"good",icon:"🥗",title:"Правильное топливо",desc:"Здоровая еда",coins:20,stats:{health:2,strength:1}},
-      {id:"g7",type:"good",icon:"😴",title:"Властелин сна",desc:"Лечь до 23:00",coins:15,stats:{health:3,energy:2}},
-      {id:"g8",type:"good",icon:"🤝",title:"Социальный герой",desc:"Общение с другом",coins:10,stats:{charisma:3}},
-      {id:"g9",type:"good",icon:"📝",title:"Стратег",desc:"План на день",coins:10,stats:{intelligence:1,discipline:2}},
-      {id:"g10",type:"good",icon:"🎯",title:"Фокус режим",desc:"Работа без телефона 1ч",coins:20,stats:{intelligence:2,discipline:2}},
-      {id:"b1",type:"bad",icon:"🍔",title:"Фастфуд атака",desc:"Вредная еда",coins:-15,stats:{health:-2,strength:-1}},
-      {id:"b2",type:"bad",icon:"📱",title:"Дум скроллинг",desc:"Соцсети >2ч",coins:-20,stats:{intelligence:-2,energy:-2}},
-      {id:"b3",type:"bad",icon:"🌙",title:"Ночной призрак",desc:"Лёг после 01:00",coins:-15,stats:{health:-3,energy:-3}},
-      {id:"b4",type:"bad",icon:"🛋️",title:"Режим картошки",desc:"День без движения",coins:-20,stats:{strength:-2,health:-2}},
-      {id:"b5",type:"bad",icon:"☕",title:"Кофеиновый вампир",desc:">4 чашек кофе",coins:-10,stats:{health:-1,energy:-2}},
-      {id:"b6",type:"bad",icon:"🚬",title:"Тёмная сторона",desc:"Сигарета/алкоголь",coins:-30,stats:{health:-4,discipline:-2}},
-      {id:"b7",type:"bad",icon:"😤",title:"Вспышка гнева",desc:"Сорвался на кого-то",coins:-15,stats:{charisma:-3,discipline:-2}},
-      {id:"b8",type:"bad",icon:"🗑️",title:"Прокрастинатор",desc:"Отложил важное",coins:-15,stats:{intelligence:-1,discipline:-3}},
-      {id:"b9",type:"bad",icon:"🍬",title:"Сахарный бунт",desc:"Объелся сладким",coins:-10,stats:{health:-2}},
-      {id:"b10",type:"bad",icon:"🤐",title:"Затворник",desc:"День без общения",coins:-10,stats:{charisma:-2,energy:-1}}
+      {id:"q1",type:"good",icon:"💧",title:"Стакан воды после пробуждения",desc:"Сразу после будильника",tip:"Тело теряет за ночь до 1л воды",coins:5,difficulty:"easy",alignment:"neutral",stats:{health:1,energy:1}},
+      {id:"q2",type:"good",icon:"😴",title:"Лечь спать до 23:00",desc:"Будильник-напоминание на 22:30",tip:"Каждый час сна до полуночи = два после",coins:10,difficulty:"medium",alignment:"devil",stats:{health:2,energy:1}},
+      {id:"q3",type:"good",icon:"🚶",title:"Прогулка 15-30 минут",desc:"После обеда или работы",tip:"20 мин на улице снижают кортизол на 25%",coins:10,difficulty:"medium",alignment:"angel",stats:{health:2,energy:1}},
+      {id:"q4",type:"good",icon:"🍽️",title:"Осознанный приём пищи",desc:"Не у экрана, не на бегу",tip:"Еда у экрана: ешь на 30% больше",coins:10,difficulty:"medium",alignment:"angel",stats:{health:2}},
+      {id:"q5",type:"good",icon:"🏋️",title:"Тренировка 20+ минут",desc:"Любая: зарядка, йога, бег",tip:"Лучшая тренировка — та что делаешь",coins:20,difficulty:"hard",alignment:"devil",stats:{health:2,strength:2}},
+      {id:"q6",type:"good",icon:"☀️",title:"Выйти на солнце на 10 минут",desc:"До обеда",tip:"80% россиян — дефицит витамина D",coins:5,difficulty:"easy",alignment:"neutral",stats:{health:1,energy:1}},
+      {id:"q7",type:"good",icon:"📖",title:"Прочитать 10 страниц книги",desc:"Перед сном вместо телефона",tip:"10 стр/день = 12 книг в год",coins:10,difficulty:"medium",alignment:"neutral",stats:{intelligence:2}},
+      {id:"q8",type:"good",icon:"📝",title:"Записать 3 задачи на сегодня",desc:"Утром после кофе. Ровно 3, не 10",tip:"Мозг не держит больше 3-4 приоритетов",coins:5,difficulty:"easy",alignment:"neutral",stats:{intelligence:1,discipline:1}},
+      {id:"q9",type:"good",icon:"🎧",title:"Подкаст или аудиокнига 15 мин",desc:"В дороге, на прогулке, при уборке",tip:"Обучение без отдельного времени",coins:10,difficulty:"medium",alignment:"angel",stats:{intelligence:2}},
+      {id:"q10",type:"good",icon:"📓",title:"Дневник: мысли или рефлексия",desc:"Вечером, 5-10 минут",tip:"Экспрессивное письмо снижает тревогу на 40%",coins:10,difficulty:"medium",alignment:"angel",stats:{intelligence:2,health:1}},
+      {id:"q11",type:"good",icon:"💻",title:"1 урок или видео по обучению",desc:"Выделить 30 мин заранее",tip:"Один урок — прогресс. Не весь курс за день",coins:15,difficulty:"hard",alignment:"devil",stats:{intelligence:3}},
+      {id:"q12",type:"good",icon:"🤸",title:"Утренняя разминка 5-10 минут",desc:"После стакана воды",tip:"5 минут движения = двигатель на день",coins:10,difficulty:"easy",alignment:"neutral",stats:{strength:1,energy:2}},
+      {id:"q13",type:"good",icon:"⚔️",title:"Первый шаг в отложенном деле",desc:"Только 5 минут! Первый час дня",tip:"Не закончить а НАЧАТЬ. 80% продолжат",coins:15,difficulty:"hard",alignment:"devil",stats:{strength:3,discipline:1}},
+      {id:"q14",type:"good",icon:"🛑",title:"Мягко отказать в ненужном",desc:"В момент просьбы",tip:"Каждое ненужное да = нет себе",coins:15,difficulty:"hard",alignment:"devil",stats:{strength:3,charisma:1}},
+      {id:"q15",type:"good",icon:"🧊",title:"Холодное умывание или контрастный душ",desc:"Утром при умывании",tip:"Блуждающий нерв → прилив бодрости",coins:10,difficulty:"medium",alignment:"devil",stats:{strength:2,energy:1}},
+      {id:"q16",type:"good",icon:"🧹",title:"Порядок в одной зоне 15 мин",desc:"Один ящик, одна полка",tip:"Внешний порядок = внутренний порядок",coins:10,difficulty:"easy",alignment:"neutral",stats:{strength:1,discipline:1}},
+      {id:"q17",type:"good",icon:"🦁",title:"Сделать одну вещь которая пугает",desc:"1-2 раза в неделю",tip:"Одно страшное дело в неделю — за год ты другой человек",coins:25,difficulty:"hard",alignment:"devil",stats:{strength:4,charisma:2}},
+      {id:"q18",type:"good",icon:"💖",title:"Отметить что в себе нравится",desc:"Утром или перед сном",tip:"Тренировка замечать хорошее в себе",coins:10,difficulty:"easy",alignment:"angel",stats:{charisma:2,health:1}},
+      {id:"q19",type:"good",icon:"🙏",title:"Принять комплимент словом спасибо",desc:"Когда скажут приятное",tip:"Обесценивание комплимента = обесценивание себя",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:3}},
+      {id:"q20",type:"good",icon:"📞",title:"Написать или позвонить кому-то первой",desc:"В обед или вечером",tip:"Качество отношений — предиктор счастья #1",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:2,health:1}},
+      {id:"q21",type:"good",icon:"🏆",title:"Рассказать о своём достижении",desc:"1-2 раза в неделю",tip:"Видимость заслуг — навык, не хвастовство",coins:15,difficulty:"hard",alignment:"devil",stats:{charisma:3,strength:1}},
+      {id:"q22",type:"good",icon:"🧘",title:"30 минут наедине по СВОЕМУ выбору",desc:"Вечером или в выходные",tip:"Одиночество по выбору = роскошь",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:2,energy:1}},
+      {id:"q23",type:"good",icon:"🪞",title:"Поймала сравнение — запиши достижение",desc:"В момент сравнения с другими",tip:"Перенаправить внимание на себя",coins:15,difficulty:"medium",alignment:"angel",stats:{charisma:3,intelligence:1}},
+      {id:"q24",type:"good",icon:"🛏️",title:"Заправить кровать",desc:"Сразу после подъёма",tip:"Первая завершённая задача = цепочка побед. 30 секунд",coins:5,difficulty:"easy",alignment:"neutral",stats:{discipline:1}},
+      {id:"q25",type:"good",icon:"✅",title:"Выполнить 3 из запланированных задач",desc:"Вечером подвести итог",tip:"3 из 5 = успех. Антиперфекционизм",coins:10,difficulty:"medium",alignment:"neutral",stats:{discipline:2,intelligence:1}},
+      {id:"q26",type:"good",icon:"🎯",title:"1 час фокуса без отвлечений",desc:"Своё продуктивное время",tip:"1 час фокуса = 3 часа с отвлечениями",coins:15,difficulty:"hard",alignment:"devil",stats:{discipline:3,intelligence:1}},
+      {id:"q27",type:"good",icon:"🎒",title:"Подготовить вещи на завтра",desc:"Перед сном, 10 минут",tip:"Подарок завтрашней себе",coins:10,difficulty:"easy",alignment:"neutral",stats:{discipline:2}},
+      {id:"q28",type:"good",icon:"🛡️",title:"Защитить своё дело от чужой просьбы",desc:"Когда возникнет ситуация",tip:"Твой план — обещание самой себе",coins:15,difficulty:"hard",alignment:"devil",stats:{discipline:3,strength:1}},
+      {id:"q29",type:"good",icon:"⏳",title:"Перед покупкой подождать 24 часа",desc:"В момент импульса",tip:"Через 24ч дофамин спадёт",coins:10,difficulty:"medium",alignment:"devil",stats:{discipline:2}},
+      {id:"q30",type:"good",icon:"⏰",title:"По первому будильнику без snooze",desc:"Утро",tip:"5 snooze = 5 прерванных циклов сна",coins:10,difficulty:"medium",alignment:"devil",stats:{energy:2}},
+      {id:"q31",type:"good",icon:"🤫",title:"5 минут тишины без телефона",desc:"В любое время",tip:"5 минут тишины = перезагрузка",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:2,intelligence:1}},
+      {id:"q32",type:"good",icon:"💤",title:"Дневной отдых 15-20 минут",desc:"После обеда 13-15",tip:"NASA: 20 мин = +34% продуктивности",coins:10,difficulty:"medium",alignment:"angel",stats:{energy:3}},
+      {id:"q33",type:"good",icon:"📵",title:"Вечер без экранов",desc:"Книга, рукоделие, общение. За 1ч до сна",tip:"Экраны = ложный отдых",coins:10,difficulty:"medium",alignment:"angel",stats:{energy:2,intelligence:1}},
+      {id:"q34",type:"good",icon:"💃",title:"Потанцевать 5 минут под любимое",desc:"При упадке энергии",tip:"Движение + музыка = мгновенная перезагрузка",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:2,charisma:1}},
+      {id:"q35",type:"good",icon:"🙏",title:"Записать 3 благодарности за сегодня",desc:"Вечером, последнее перед сном",tip:"Доказано: +25% счастья за 2 недели",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:1,charisma:1,health:1}}
     ];
+
+    const INSPIRATION_CARDS = {
+      creativity: [
+        {id:"c1",icon:"🎨",title:"Нарисуй своё настроение",desc:"Возьми лист или открой заметки. Нарисуй как чувствуешь себя прямо сейчас. Линии, цвета, каракули — всё считается.",tip:"Рисование снижает кортизол на 75%",time:5,coins:3,stat:"charisma"},
+        {id:"c2",icon:"📸",title:"Сфотографируй красоту в обычном",desc:"Найди что-то красивое рядом. Свет, тень, текстура. Одна фотография.",tip:"Тренировка замечать хорошее",time:5,coins:3,stat:"charisma"},
+        {id:"c3",icon:"🎵",title:"Составь плейлист настроения",desc:"Добавь 5-7 песен которые отражают как ты себя чувствуешь сейчас.",tip:"Музыка — самый быстрый способ сменить настроение",time:10,coins:3,stat:"energy"},
+        {id:"c4",icon:"✍️",title:"Напиши 6-словную историю своей жизни",desc:"Всего 6 слов. Попробуй несколько вариантов. Хемингуэй написал: Продаются детские ботинки, неношеные.",tip:"Ограничения развивают креативность",time:3,coins:3,stat:"intelligence"},
+        {id:"c5",icon:"🤲",title:"Сделай что-то руками",desc:"Слепи из пластилина, сложи оригами, вышей стежок. Что угодно руками.",tip:"Мелкая моторика успокаивает нервную систему",time:15,coins:5,stat:"discipline"},
+        {id:"c6",icon:"🌅",title:"Опиши идеальный обычный день",desc:"Не мечту, а просто хороший день. Что в нём есть? Напиши в заметках.",tip:"Помогает понять что тебе реально важно",time:10,coins:5,stat:"intelligence"},
+        {id:"c7",icon:"💌",title:"Напиши письмо себе через месяц",desc:"Что хочешь чтобы случилось? Как ты хочешь себя чувствовать? Сохрани.",tip:"Письма себе повышают осознанность целей",time:10,coins:5,stat:"discipline"},
+        {id:"c8",icon:"👩‍🍳",title:"Приготовь по новому рецепту",desc:"Найди рецепт чего-то чего никогда не готовила. Приготовь прямо сейчас или запланируй на сегодня.",tip:"Новые навыки = новые нейронные связи",time:20,coins:5,stat:"strength"}
+      ],
+      challenge: [
+        {id:"ch1",icon:"🦵",title:"20 приседаний прямо сейчас",desc:"Встань и сделай 20 приседаний. Медленно, с правильной техникой.",tip:"Дофамин от быстрого достижения",time:1,coins:3,stat:"strength"},
+        {id:"ch2",icon:"🗑️",title:"Удали 10 ненужных фото",desc:"Открой галерею. Удали 10 фото которые точно не нужны.",tip:"Цифровое захламление = ментальный шум",time:5,coins:3,stat:"discipline"},
+        {id:"ch3",icon:"⭐",title:"Напиши отзыв или рекомендацию",desc:"Мастеру, кафе, книге, приложению. Хорошему — хорошее слово.",tip:"Благодарность улучшает настроение дающего",time:5,coins:3,stat:"charisma"},
+        {id:"ch4",icon:"🔧",title:"Исправь мелочь которая раздражает",desc:"Та вещь которую откладываешь. Перегоревшая лампочка, неудобный ярлык, сломанная кнопка.",tip:"Мелкие раздражители накапливаются и тратят энергию",time:10,coins:3,stat:"discipline"},
+        {id:"ch5",icon:"🦸",title:"Постой 2 минуты в позе силы",desc:"Встань прямо, руки на бёдрах или вверх, подбородок вверх. 2 минуты.",tip:"Поза влияет на уровень кортизола и тестостерона",time:2,coins:3,stat:"strength"},
+        {id:"ch6",icon:"👋",title:"Заговори с незнакомым",desc:"Скажи что-то приятное: продавцу, соседу, человеку в очереди.",tip:"Случайные связи повышают счастье",time:1,coins:3,stat:"charisma"},
+        {id:"ch7",icon:"📨",title:"Отправь сообщение которое откладываешь",desc:"Оно уже давно ждёт. Напиши прямо сейчас. Коротко.",tip:"Незавершённые дела занимают ментальное пространство",time:3,coins:5,stat:"strength"},
+        {id:"ch8",icon:"⚖️",title:"Узнай одну вещь о своих правах",desc:"Как потребитель, работник, гражданин. Один факт.",tip:"Знание своих прав = уверенность",time:10,coins:5,stat:"intelligence"}
+      ],
+      care: [
+        {id:"ca1",icon:"☕",title:"Сделай напиток красиво",desc:"Чай, кофе, воду с лимоном. Красивая кружка, может пенка или лёд. Насладись процессом.",tip:"Маленькие ритуалы снижают стресс",time:5,coins:3,stat:"health"},
+        {id:"ca2",icon:"🤗",title:"Обними кого-то на 20 секунд",desc:"Именно 20 — меньше не работает. Питомца тоже считается.",tip:"20 секунд объятий = выброс окситоцина",time:1,coins:3,stat:"health"},
+        {id:"ca3",icon:"📱",title:"Позвони маме или папе просто так",desc:"Не по делу. Просто спросить как дела.",tip:"Связь с близкими — предиктор долголетия",time:5,coins:5,stat:"charisma"},
+        {id:"ca4",icon:"🛋️",title:"Полежи 10 минут просто так",desc:"Без телефона. Без задач. Просто лечь и побыть.",tip:"Ненаправленное мышление — важная функция мозга",time:10,coins:3,stat:"energy"},
+        {id:"ca5",icon:"🥇",title:"Вспомни 3 момента гордости",desc:"За эту неделю или за всё время. Запиши или просто вспомни.",tip:"Работает как антидепрессант без побочных эффектов",time:5,coins:5,stat:"charisma"},
+        {id:"ca6",icon:"🫀",title:"Поблагодари своё тело",desc:"Скажи спасибо: ногам за то что ходят, рукам за то что создают. Вслух или в мыслях.",tip:"Телесная осознанность снижает тревогу",time:3,coins:3,stat:"health"},
+        {id:"ca7",icon:"💬",title:"Напиши кому-то скучаю",desc:"Тому кому давно не писала. Одно сообщение.",tip:"Поддержание связей требует активных действий",time:2,coins:3,stat:"charisma"},
+        {id:"ca8",icon:"🕊️",title:"Прости себе одну вещь",desc:"Что-то за что ругаешь себя. Скажи себе: я делала лучшее что могла тогда.",tip:"Самосострадание = основа психологической устойчивости",time:3,coins:5,stat:"health"}
+      ],
+      explore: [
+        {id:"e1",icon:"🗺️",title:"Пройди другой дорогой",desc:"В магазин, на работу, на прогулку. Другой маршрут.",tip:"Новые маршруты = новые нейронные связи",time:5,coins:3,stat:"intelligence"},
+        {id:"e2",icon:"🎼",title:"10 мин музыки нового жанра",desc:"Жанр который никогда не слушала. Джаз, фолк, босанова, k-pop.",tip:"Музыкальные предпочтения расширяются через практику",time:10,coins:3,stat:"intelligence"},
+        {id:"e3",icon:"🗣️",title:"Выучи фразу на необычном языке",desc:"Финский, суахили, японский. Одну фразу. Произнеси вслух.",tip:"Изучение языков — лучшая тренировка для мозга",time:3,coins:3,stat:"intelligence"},
+        {id:"e4",icon:"🌍",title:"1 факт о незнакомой стране",desc:"Любая страна которая пришла в голову. Один интересный факт.",tip:"Любопытство — двигатель развития",time:5,coins:3,stat:"intelligence"},
+        {id:"e5",icon:"🍜",title:"Попробуй еду которую не ела",desc:"В магазине, кафе или приготовь. Что-то новое.",tip:"Открытость к новому связана с эмоциональной гибкостью",time:5,coins:3,stat:"health"},
+        {id:"e6",icon:"🎤",title:"TED Talk на случайную тему",desc:"Открой ted.com/talks и выбери рандомно. 15 минут.",tip:"Один новый взгляд меняет больше чем кажется",time:15,coins:5,stat:"intelligence"},
+        {id:"e7",icon:"👥",title:"Узнай что-то новое о человеке рядом",desc:"Спроси что-то что никогда не спрашивала: любимое детское воспоминание, мечта, страх.",tip:"Глубокие вопросы сближают быстрее small talk",time:2,coins:3,stat:"charisma"},
+        {id:"e8",icon:"📚",title:"Случайная статья Википедии",desc:"Открой wikipedia.org/wiki/Special:Random Прочитай.",tip:"Случайные знания часто самые ценные",time:10,coins:3,stat:"intelligence"}
+      ]
+    };
 
     const SHOP = [
       {id:"crown",icon:"👑",name:"Корона новичка",desc:"Добавляет 👑 к аватару",price:50,once:true},
@@ -756,7 +1018,17 @@
       requestAnimationFrame(step);
     }
     function save(){try{localStorage.setItem(SK,JSON.stringify(P));}catch(e){}}
-    function popup(txt,type){const el=document.createElement("div");el.className="xp-popup xp-popup--"+type;el.textContent=txt;document.body.appendChild(el);setTimeout(()=>el.remove(),1300);}
+    function popup(txt,type,subtitle){
+      const el=document.createElement("div");
+      el.className="xp-popup xp-popup--"+type;
+      if(subtitle){
+        const main=document.createElement("div"); main.className="xp-popup-main"; main.textContent=txt;
+        const sub=document.createElement("div"); sub.className="xp-popup-sub"; sub.textContent=subtitle;
+        el.appendChild(main); el.appendChild(sub);
+      }else{ el.textContent=txt; }
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),subtitle?4000:1300);
+    }
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
     function moodText(v){return v<=2?"Грустит...":v<=4?"Нормально":v<=7?"Доволен!":"В восторге!";}
@@ -786,7 +1058,11 @@
       $("charCrown").textContent=P.inventory&&P.inventory.crown?"👑":"";
       $("charLevel").textContent=lv;
       const streakEl=$("charStreak");
-      if(streakEl) streakEl.textContent=(P.streak&&P.streak>0)?" 🔥 "+declDays(P.streak):"";
+      if(streakEl){
+        const s=P.streak||0;
+        if(s>0) streakEl.innerHTML='<span class="streak-fire">🔥</span> '+declDays(s);
+        else streakEl.textContent="💤";
+      }
       $("charStatMax").textContent="Макс. стат: "+sm;
       $("xpText").textContent=(P.xp||0)+"/"+(lv*100);
       $("xpBar").style.width=pct(P.xp||0,lv*100)+"%";
@@ -817,6 +1093,11 @@
       $("petPlayBtn").style.display=(P.inventory&&P.inventory.toy)?"inline-block":"none";
       if(P.inventory&&P.inventory.toyUsedToday)$("petPlayBtn").disabled=true,$("petPlayBtn").textContent="Поиграли ✓";
       else $("petPlayBtn").disabled=false,$("petPlayBtn").textContent="🎀 Поиграть";
+      const endBtn=$("endDayBtn");
+      if(endBtn){
+        if(P.dayCompleted){ endBtn.disabled=true; endBtn.textContent="День завершён 🌙"; }
+        else{ endBtn.disabled=false; endBtn.textContent="🌙 Завершить день"; }
+      }
       updateCounter();
       renderShop();
       renderStats();
@@ -826,7 +1107,10 @@
       if(!P)return;
       const streakNum=P.streak||0;
       const streakBox=$("statsStreak");
-      if(streakBox) streakBox.textContent=streakNum>0?"🔥 "+declDays(streakNum)+" подряд!":"";
+      if(streakBox){
+        if(streakNum>0) streakBox.innerHTML='<span class="streak-fire">🔥</span> '+declDays(streakNum)+" подряд!";
+        else streakBox.textContent="💤 Нет серии";
+      }
 
       const cal=$("statsCalendar");
       if(cal){
@@ -913,46 +1197,184 @@
       }).join(" ");
     }
 
+    function applyFilter(statKey){
+      currentFilter = statKey;
+      document.querySelectorAll(".quest-item").forEach(function(item){
+        if(statKey === "all"){ item.style.display = ""; return; }
+        if(statKey === "easy" || statKey === "medium" || statKey === "hard"){
+          const diff = item.getAttribute("data-difficulty") || "";
+          item.style.display = diff === statKey ? "" : "none";
+          return;
+        }
+        const cats = item.getAttribute("data-categories") || "";
+        item.style.display = cats.indexOf(statKey) !== -1 ? "" : "none";
+      });
+      document.querySelectorAll(".filter-btn").forEach(function(btn){
+        btn.classList.toggle("active", btn.dataset.filter === statKey);
+      });
+    }
+
     function buildQuests(){
-      const gList=$("goodQuestsList"), bList=$("badQuestsList");
-      gList.innerHTML=""; bList.innerHTML="";
+      const gList=$("goodQuestsList");
+      if(!gList)return;
+      gList.innerHTML="";
       const allQ = QUESTS.concat(P.customQuests||[]);
       allQ.forEach(q=>{
         const div=document.createElement("div");
-        const isGood=q.type==="good";
         const done=P.quests&&P.quests[q.id];
-        const statsText=statStr(q.stats,isGood);
-        const itemCls="quest-item"+(done?(isGood?" quest-item--good-done":" quest-item--bad-done"):"");
+        const statsText=statStr(q.stats,true);
+        const diff=q.difficulty||"medium";
+        const diffCls="quest-difficulty-dot--"+(diff==="easy"?"easy":diff==="hard"?"hard":"medium");
+        const alignIcon=q.alignment==="angel"?"😇":q.alignment==="devil"?"😈":"";
+        const tip=q.tip||"";
+        const tipHtml=tip?'<span class="quest-tip-toggle" data-tip-for="'+q.id+'" title="Подсказка">💡</span>':"";
+        const tipBlock=tip?'<div class="quest-tip" id="tip-'+q.id+'">'+tip+'</div>':"";
+        const itemCls="quest-item"+(done?" quest-item--good-done":"");
         const titleCls="quest-title"+(done?" quest-title--done":"");
-        const btnCls="quest-btn "+(isGood?"quest-btn--good":"quest-btn--bad")+(done?" quest-btn--done":"");
-        const btnText=done?(isGood?"✓":"✗"):"○";
         div.className=itemCls;
         div.dataset.questId=q.id;
-        div.dataset.questType=q.type;
+        div.dataset.categories=Object.keys(q.stats||{}).join(",");
+        div.dataset.difficulty=diff;
         div.innerHTML=`
           <div class="quest-main">
             <span class="quest-icon">${q.icon}</span>
             <div class="quest-text">
-              <div class="${titleCls}">${q.title}</div>
-              <div class="quest-desc">${q.desc||""}</div>
+              <div class="quest-title-row">
+                <span class="quest-difficulty-dot ${diffCls}"></span>
+                <div class="${titleCls}">${q.title}</div>
+                ${alignIcon?'<span class="quest-alignment">'+alignIcon+'</span>':""}
+              </div>
+              <div class="quest-desc">${q.desc||""}${tipHtml}</div>
+              ${tipBlock}
               ${q.custom?'<span class="quest-delete-link" data-del="'+q.id+'">🗑️ удалить</span>':""}
-              <div class="quest-stats ${isGood?"good":"bad"}">${statsText}</div>
+              <div class="quest-stats good">${statsText}</div>
             </div>
           </div>
-          <span class="quest-coins ${isGood?"good":"bad"}">${q.coins>0?"+":""}${q.coins}💰</span>
-          <button class="${btnCls}" ${done||P.dayCompleted?"disabled":""}>${btnText}</button>
+          <span class="quest-coins good">${q.coins>0?"+":""}${q.coins}💰</span>
+          <button class="quest-btn quest-btn--good ${done?"quest-btn--done":""}" ${done||P.dayCompleted?"disabled":""}>${done?"✓":"○"}</button>
         `;
-        (isGood?gList:bList).appendChild(div);
+        gList.appendChild(div);
       });
+      document.querySelectorAll(".quest-tip-toggle").forEach(function(btn){
+        btn.addEventListener("click",function(ev){ ev.stopPropagation(); const tipEl=$("tip-"+this.dataset.tipFor); if(tipEl) tipEl.classList.toggle("quest-tip--visible"); });
+      });
+      if(typeof applyFilter==="function") applyFilter(currentFilter);
     }
 
     function updateCounter(){
       const allQ=QUESTS.concat(P.customQuests||[]);
-      const goodQ=allQ.filter(q=>q.type==="good");
-      const badQ=allQ.filter(q=>q.type==="bad");
-      const doneGood=goodQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      const doneBad=badQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      $("questCounter").textContent="Выполнено: "+doneGood+"/"+goodQ.length+" ✅  Срывов: "+doneBad+" ❌";
+      const doneGood=allQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      $("questCounter").textContent="Выполнено: "+doneGood+"/"+allQ.length;
+    }
+
+    function getAllInspirationCards(){
+      const all=[];
+      Object.keys(INSPIRATION_CARDS).forEach(k=>all.push(...INSPIRATION_CARDS[k]));
+      return all;
+    }
+    function getInspirationCardById(id){
+      const all=getAllInspirationCards();
+      return all.find(c=>c.id===id);
+    }
+    function getDailyCard(){
+      const todayStr=today();
+      if(P.dailyCardDate===todayStr&&P.dailyCard){
+        const c=getInspirationCardById(P.dailyCard);
+        if(c) return c;
+      }
+      const all=getAllInspirationCards();
+      const card=all[Math.floor(Math.random()*all.length)];
+      P.dailyCard=card.id;
+      P.dailyCardDate=todayStr;
+      save();
+      return card;
+    }
+    function setQuestSubTab(subtab){
+      document.querySelectorAll(".quest-sub-tab").forEach(t=>t.classList.toggle("active",t.dataset.subtab===subtab));
+      const qPane=$("questsSubPane"), iPane=$("inspirationSubPane");
+      if(qPane) qPane.classList.toggle("quest-sub-pane--active",subtab==="quests");
+      if(iPane){ iPane.classList.toggle("quest-sub-pane--active",subtab==="inspiration"); if(subtab==="inspiration") renderInspiration(); }
+    }
+    function renderInspiration(){
+      if(!P)return;
+      const dailyCard=getDailyCard();
+      const done=P.completedCards&&P.completedCards[dailyCard.id];
+      const canSwitch=!P.dailyCardSwitched;
+      const dailyEl=$("inspirationDailyCard");
+      if(dailyEl){
+        dailyEl.innerHTML=`
+          <div class="inspiration-daily-emoji">${dailyCard.icon}</div>
+          <div class="inspiration-daily-title">${dailyCard.title}</div>
+          <div class="inspiration-daily-desc">${dailyCard.desc}</div>
+          <div class="inspiration-daily-time">⏱ ${dailyCard.time} мин</div>
+          <div class="inspiration-daily-btns">
+            <button type="button" class="inspiration-btn-done" data-insp-id="${dailyCard.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
+            <button type="button" class="inspiration-btn-switch" data-insp-switch ${canSwitch?"":"disabled"}>🔄 Другая</button>
+          </div>
+        `;
+      }
+      const catMap={creativity:{icon:"🎨",label:"Творчество"},challenge:{icon:"💪",label:"Вызов"},care:{icon:"❤️",label:"Забота"},explore:{icon:"🔮",label:"Исследование"}};
+      const catEl=$("inspirationCategories");
+      if(catEl){
+        catEl.innerHTML=Object.keys(catMap).map(k=>`<button type="button" class="inspiration-cat-btn" data-cat="${k}"><span class="icon">${catMap[k].icon}</span><span class="label">${catMap[k].label}</span></button>`).join("");
+      }
+      $("inspirationCategoryView").style.display="none";
+      $("inspirationCardDetail").style.display="none";
+      $("inspirationCategories").style.display="grid";
+    }
+    let currentInspirationCategory=null;
+    function showInspirationCategory(catKey){
+      currentInspirationCategory=catKey;
+      const cards=INSPIRATION_CARDS[catKey]||[];
+      const grid=$("inspirationCardsGrid");
+      if(!grid)return;
+      grid.innerHTML=cards.map(c=>{
+        const done=P.completedCards&&P.completedCards[c.id];
+        return `<div class="inspiration-card-mini" data-insp-id="${c.id}"><span class="icon">${c.icon}</span><div class="title">${c.title}</div><div class="coins">+${c.coins}💰</div></div>`;
+      }).join("");
+      $("inspirationCategories").style.display="none";
+      $("inspirationCardDetail").style.display="none";
+      $("inspirationCategoryView").style.display="block";
+    }
+    function showInspirationDetail(cardId){
+      const c=getInspirationCardById(cardId);
+      if(!c)return;
+      const done=P.completedCards&&P.completedCards[c.id];
+      const content=$("inspirationDetailContent");
+      if(content){
+        content.innerHTML=`
+          <div class="inspiration-detail-emoji">${c.icon}</div>
+          <div class="inspiration-detail-title">${c.title}</div>
+          <div class="inspiration-detail-desc">${c.desc}</div>
+          ${c.tip?'<div class="inspiration-detail-tip">💡 '+c.tip+'</div>':""}
+          <div class="inspiration-detail-time">⏱ ${c.time} мин</div>
+          <button type="button" class="inspiration-btn-done" data-insp-id="${c.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
+        `;
+      }
+      $("inspirationCategories").style.display="none";
+      $("inspirationCategoryView").style.display="none";
+      $("inspirationCardDetail").style.display="block";
+    }
+    function doInspirationCard(id){
+      if(!P||P.dayCompleted)return;
+      if(!P.completedCards)P.completedCards={};
+      if(P.completedCards[id])return;
+      const c=getInspirationCardById(id);
+      if(!c)return;
+      const sm=sMax();
+      P.coins=cl((P.coins||0)+c.coins,0,999999);
+      if(c.stat&&P.stats[c.stat]!=null) P.stats[c.stat]=cl((P.stats[c.stat]||0)+1,0,sm);
+      P.completedCards[id]=true;
+      P.xp=(P.xp||0)+5;
+      P.angelPoints=(P.angelPoints||0)+1;
+      P.petMood=cl((P.petMood||3)+1,0,10);
+      save();
+      render();
+      if($("inspirationSubPane")&&$("inspirationSubPane").classList.contains("quest-sub-pane--active")){
+        if($("inspirationCardDetail").style.display!=="none") showInspirationCategory(currentInspirationCategory);
+        else renderInspiration();
+      }
+      popup("+"+c.coins+"💰 "+(STAT_ICONS[c.stat]||"")+"+1","good","Отлично! ✨");
     }
 
     function doQuest(id){
@@ -962,36 +1384,20 @@
       const allQ=QUESTS.concat(P.customQuests||[]);
       const q=allQ.find(x=>x.id===id);
       if(!q)return;
-      const isGood=q.type==="good";
       const prevLv=P.level;
       const sm=sMax();
 
-      if(!isGood && P.inventory && P.inventory.shield){
-        P.inventory.shield=false;
-        P.devilPoints=(P.devilPoints||0)+1;
-        P.quests[id]=true;
-        popup("🛡️ Щит поглотил урон!","info");
-        save(); buildQuests(); render();
-        return;
-      }
-
       P.coins=cl((P.coins||0)+q.coins,0,999999);
-      Object.entries(q.stats).forEach(([k,v])=>{
+      Object.entries(q.stats||{}).forEach(([k,v])=>{
         if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+v,0,sm);
       });
-      if(isGood){
-        P.xp=(P.xp||0)+10;
-        P.angelPoints=(P.angelPoints||0)+1;
-        P.petMood=cl((P.petMood||3)+1,0,10);
-        popup("+"+q.coins+"💰","good");
-      } else {
-        P.xp=cl((P.xp||0)-5,0,999999);
-        P.devilPoints=(P.devilPoints||0)+1;
-        P.petMood=cl((P.petMood||3)-1,0,10);
-        popup(q.coins+"💰","bad");
-        $("xpBar").classList.add("xp-bar-hit");
-        setTimeout(()=>$("xpBar").classList.remove("xp-bar-hit"),1000);
-      }
+      const statsPart=statStr(q.stats,true);
+      const mainLine="+"+q.coins+"💰"+(statsPart?" "+statsPart:"");
+      const reaction=QUEST_REACTIONS.good[Math.floor(Math.random()*QUEST_REACTIONS.good.length)].replace(/{pet}/g,P.petName||"Питомец");
+      P.xp=(P.xp||0)+10;
+      P.angelPoints=(P.angelPoints||0)+1;
+      P.petMood=cl((P.petMood||3)+1,0,10);
+      popup(mainLine,"good",reaction);
 
       let lv=P.level, xp=P.xp, need=lv*100;
       while(xp>=need){xp-=need;lv++;need=lv*100;}
@@ -1008,10 +1414,13 @@
     function renderShop(){
       const list=$("shopList");
       list.innerHTML="";
+      const closed=P && P.dayCompleted;
+      const closedText=$("shopClosedText");
+      if(closedText) closedText.style.display=closed?"block":"none";
       SHOP.forEach(s=>{
         const owned=P.inventory&&P.inventory[s.id];
         const canBuy=(P.coins||0)>=s.price;
-        const disabled=(!canBuy&&!owned)||(s.once&&owned);
+        const disabled=closed||(!canBuy&&!owned)||(s.once&&owned);
         const btnText=s.once&&owned?"Куплено ✓":"Купить";
         const div=document.createElement("div");
         div.className="shop-item";
@@ -1046,27 +1455,23 @@
     function endDay(){
       if(!P||P.dayCompleted)return;
       const allQ=QUESTS.concat(P.customQuests||[]);
-      const goodQ=allQ.filter(q=>q.type==="good");
-      const badQ=allQ.filter(q=>q.type==="bad");
-      const doneGood=goodQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      const doneBad=badQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      const earnedCoins=goodQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+q.coins,0);
-      const lostCoins=badQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+q.coins,0);
+      const doneGood=allQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      const earnedCoins=allQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+(q.coins||0),0);
       const petName=P.petName||"Питомец";
       const m=P.petMood||3;
       const mt=moodText(m);
 
       $("endDayText").innerHTML=`
-        Выполнено квестов: <strong>${doneGood}/${goodQ.length}</strong> ✅<br>
-        Срывов: <strong>${doneBad}</strong> ❌<br><br>
-        Заработано: <strong>+${earnedCoins}💰</strong><br>
-        Потеряно: <strong>${lostCoins}💰</strong><br><br>
-        😇 +${doneGood} &nbsp; 😈 +${doneBad}<br><br>
+        Выполнено: <strong>${doneGood}/${allQ.length}</strong> ✅<br><br>
+        Заработано: <strong>+${earnedCoins}💰</strong><br><br>
+        😇 +${doneGood}<br><br>
         ${moodEmoji(m)} ${petName}: ${mt}
       `;
       $("endDayOverlay").classList.add("overlay--visible");
       P.dayCompleted=true;
-      $("endDayBtn").disabled=true;
+      const endBtn=$("endDayBtn");
+      endBtn.disabled=true;
+      endBtn.textContent="День завершён 🌙";
       $("endDayNote").textContent="День завершён. Новые квесты завтра 🌅";
 
       const todayStr=today();
@@ -1077,9 +1482,9 @@
         P.lastActiveDate=todayStr;
       }
       if(!P.history)P.history={};
-      P.history[todayStr]={good:doneGood,bad:doneBad};
+      P.history[todayStr]={good:doneGood,bad:0};
       P.totalDays=(P.totalDays||0)+1;
-      P.totalQuests=(P.totalQuests||0)+doneGood+doneBad;
+      P.totalQuests=(P.totalQuests||0)+doneGood;
       P.totalCoinsEarned=(P.totalCoinsEarned||0)+earnedCoins;
 
       save(); buildQuests(); render();
@@ -1093,6 +1498,10 @@
       P.petMood=3;
       if(P.inventory&&P.inventory.flower) P.stats.health=cl((P.stats.health||0)+1,0,sMax());
       if(P.inventory) P.inventory.toyUsedToday=false;
+      P.completedCards={};
+      P.dailyCard=null;
+      P.dailyCardDate=null;
+      P.dailyCardSwitched=false;
       save();
     }
 
@@ -1102,10 +1511,34 @@
         level:1,xp:0,stats:s,angelPoints:0,devilPoints:0,coins:0,
         petMood:3,petHunger:80,quests:{},inventory:{},customQuests:[],
         dayCompleted:false,lastVisitDate:today(),createdAt:new Date().toISOString(),
-        streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0};
+        streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
+        completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false};
     }
 
-    function showChar(){
+    function showGreeting(useComeback){
+      const el=$("greetingPhrase");
+      if(!el||!P)return;
+      const pet=P.petName||"Питомец";
+      let text="";
+      if(useComeback){
+        text=COMEBACK_PHRASES[Math.floor(Math.random()*COMEBACK_PHRASES.length)].replace(/{pet}/g,pet);
+        el.className="greeting-phrase greeting-phrase--comeback";
+      }else{
+        const hour=new Date().getHours();
+        const dayOfWeek=new Date().getDay();
+        let arr,idx;
+        if(hour<12){ arr=GREETINGS.morning; idx=dayOfWeek===0?6:dayOfWeek-1; text=arr[idx]; }
+        else if(hour<17){ arr=GREETINGS.day; text=arr[Math.floor(Math.random()*arr.length)]; }
+        else if(hour<22){ arr=GREETINGS.evening; text=arr[Math.floor(Math.random()*arr.length)]; }
+        else{ arr=GREETINGS.night; text=arr[Math.floor(Math.random()*arr.length)]; }
+        text=text.replace(/{pet}/g,pet);
+        el.className="greeting-phrase";
+      }
+      el.textContent=text;
+    }
+
+    function showChar(useComeback){
+      window.scrollTo(0,0);
       $("characterScreen").classList.remove("screen-hidden-final","screen-hidden");
       $("characterScreen").classList.add("screen-active");
       $("creationScreen").classList.remove("screen-active");
@@ -1115,6 +1548,7 @@
       setTimeout(()=>$("characterCard").classList.remove("character-card-enter"),450);
       $("questsDate").textContent="📅 "+fmtDate();
       buildQuests(); render();
+      showGreeting(useComeback||false);
     }
 
     function restore(){
@@ -1124,11 +1558,17 @@
         const d=JSON.parse(raw);
         if(!d||typeof d!=="object")return;
         if(typeof d.level==="number"){
-          if(d.lastVisitDate!==today()) newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3});
+          let useComeback=false;
+          if(d.lastVisitDate!==today()){
+            const yesterdayStr=dateStrOffset(-1);
+            if(!d.history||!d.history[yesterdayStr]) useComeback=true;
+            newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3,completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false});
+          }
           if(d.inventory&&d.inventory.flower&&d.lastVisitDate===today()) {}
           P=d;if(!P.customQuests)P.customQuests=[];if(!P.inventory)P.inventory={};
           if(P.streak==null)P.streak=0;if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
-          save(); showChar();
+          if(!P.completedCards)P.completedCards={};if(P.dailyCardSwitched==null)P.dailyCardSwitched=false;
+          save(); showChar(useComeback);
           return;
         }
         if(d.heroName)$("heroName").value=d.heroName;
@@ -1158,8 +1598,39 @@
     $("petName").addEventListener("input",function(){if(this.value.trim())setErr($("field-pet-name"),false);});
 
     document.addEventListener("click",function(e){
+      const subTab=e.target.closest(".quest-sub-tab");
+      if(subTab){ setQuestSubTab(subTab.dataset.subtab); return; }
+      const inspDone=e.target.closest(".inspiration-btn-done");
+      if(inspDone&&!inspDone.disabled){ doInspirationCard(inspDone.dataset.inspId); return; }
+      const inspSwitch=e.target.closest("[data-insp-switch]");
+      if(inspSwitch&&!inspSwitch.disabled){
+        const all=getAllInspirationCards();
+        let card;
+        do{ card=all[Math.floor(Math.random()*all.length)]; }while(card&&card.id===P.dailyCard);
+        P.dailyCard=card.id;
+        P.dailyCardSwitched=true;
+        save();
+        renderInspiration();
+        return;
+      }
+      const inspCat=e.target.closest(".inspiration-cat-btn");
+      if(inspCat){ showInspirationCategory(inspCat.dataset.cat); return; }
+      const inspMini=e.target.closest(".inspiration-card-mini");
+      if(inspMini){ showInspirationDetail(inspMini.dataset.inspId); return; }
+      const inspBackCat=e.target.closest("#inspirationBackBtn");
+      if(inspBackCat){ renderInspiration(); return; }
+      const inspBackDetail=e.target.closest("#inspirationDetailBackBtn");
+      if(inspBackDetail){ if(currentInspirationCategory) showInspirationCategory(currentInspirationCategory); else renderInspiration(); return; }
+      const filterBtn = e.target.closest(".filter-btn");
+      if(filterBtn){ applyFilter(filterBtn.dataset.filter); return; }
+      if(e.target.closest(".quest-tip-toggle")||e.target.closest(".quest-tip")) return;
       const btn=e.target.closest(".quest-btn");
-      if(btn&&!btn.disabled){const item=btn.closest(".quest-item");if(item)doQuest(item.dataset.questId);}
+      if(btn&&!btn.disabled){const item=btn.closest(".quest-item");if(item)doQuest(item.dataset.questId);return;}
+      const questRow=e.target.closest(".quest-item");
+      if(questRow){
+        const id=questRow.dataset.questId;
+        if(id)doQuest(id);
+      }
       const del=e.target.closest(".quest-delete-btn")||e.target.closest(".quest-delete-link");
       if(del){const id=del.dataset.del;if(id&&confirm("Удалить квест?")){P.customQuests=(P.customQuests||[]).filter(q=>q.id!==id);save();buildQuests();render();}}
       const buy=e.target.closest(".shop-buy-btn");
@@ -1181,6 +1652,9 @@
     const bonusInput2 = $("customQuestBonus2");
     const addSubmit = $("customQuestAddBtn");
     const addCancel = $("customQuestCancelBtn");
+    const difficultySelect = $("customQuestDifficulty");
+    const alignmentSelect = $("customQuestAlignment");
+    const tipInput = $("customQuestTip");
 
     function customQuestsCount(){return P && P.customQuests ? P.customQuests.length : 0;}
     function updateCustomQuestLimit(){
@@ -1205,10 +1679,9 @@
       if(statSelect2) statSelect2.value = "";
       if(bonusInput1) bonusInput1.value = "2";
       if(bonusInput2) bonusInput2.value = "2";
-      document.querySelectorAll('[data-group="questType"]').forEach(function(card){
-        if(card.dataset.value==="good") card.classList.add("selected");
-        else card.classList.remove("selected");
-      });
+      if(difficultySelect) difficultySelect.value = "easy";
+      if(alignmentSelect) alignmentSelect.value = "neutral";
+      if(tipInput) tipInput.value = "";
     }
 
     if(addBtn){
@@ -1240,8 +1713,9 @@
 
         const desc = descInput ? (descInput.value || "").trim().slice(0,50) : "";
         const emoji = emojiSelect && emojiSelect.value ? emojiSelect.value : "⭐";
-        let type = getVal("questType") || "good";
-        const isGood = type === "good";
+        const difficulty = difficultySelect && difficultySelect.value ? difficultySelect.value : "easy";
+        const alignment = alignmentSelect && alignmentSelect.value ? alignmentSelect.value : "neutral";
+        const tip = tipInput ? (tipInput.value || "").trim().slice(0,80) : "";
 
         let coins = 15;
         if(coinsInput && coinsInput.value !== ""){
@@ -1249,25 +1723,24 @@
           if(!isNaN(v)) coins = cl(v,5,30);
         }
         if(coinsInput) coinsInput.value = String(coins);
-        if(!isGood) coins = -coins;
 
         const stats = {};
         const key1 = statSelect1 ? statSelect1.value : "health";
         let b1 = 2;
         if(bonusInput1 && bonusInput1.value !== ""){ const v=parseInt(bonusInput1.value,10); if(!isNaN(v)) b1=cl(v,1,5); }
         if(bonusInput1) bonusInput1.value = String(b1);
-        stats[key1] = isGood ? b1 : -b1;
+        stats[key1] = b1;
         const key2 = statSelect2 ? statSelect2.value : "";
         if(key2){
           let b2 = 2;
           if(bonusInput2 && bonusInput2.value !== ""){ const v=parseInt(bonusInput2.value,10); if(!isNaN(v)) b2=cl(v,1,5); }
           if(bonusInput2) bonusInput2.value = String(b2);
-          stats[key2] = isGood ? b2 : -b2;
+          stats[key2] = b2;
         }
 
         if(!P.customQuests) P.customQuests = [];
         const id = "custom_" + Date.now();
-        P.customQuests.push({id, type, icon: emoji, title, desc, coins, stats, custom:true});
+        P.customQuests.push({id, type:"good", icon: emoji, title, desc, tip, coins, difficulty, alignment, stats, custom:true});
         save();
         buildQuests();
         render();

@@ -224,6 +224,11 @@
     .inspiration-detail-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
     .inspiration-detail-tip { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px; }
     .inspiration-detail-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
+    .inspiration-detail-hint { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-bottom: 6px; }
+    .inspiration-card--done { background: rgba(46,204,113,0.15) !important; border-color: rgba(46,204,113,0.4) !important; }
+    .inspiration-card-mini--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); pointer-events: none; }
+    .inspiration-detail-content--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); }
+    .inspiration-title--done { text-decoration: line-through; }
     .quests-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .quests-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .quests-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
@@ -385,6 +390,8 @@
 
     .shop-title-coins { color: #e6c200; font-weight: 700; }
 
+    .streak-pulse { animation: streakPulse 1.5s ease-in-out infinite; }
+    @keyframes streakPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
     .streak-fire {
       display: inline-block;
       animation: firePulse 1.5s infinite;
@@ -621,13 +628,13 @@
               <div class="quests-date" id="questsDate"></div>
               <div class="quests-hint" id="questsHint">👆 Отмечай привычки!</div>
               <div class="filter-row" id="questFilterRow">
-                <button type="button" class="filter-btn active" data-filter="all">Все</button>
-                <button type="button" class="filter-btn" data-filter="strength">💪</button>
-                <button type="button" class="filter-btn" data-filter="intelligence">🧠</button>
-                <button type="button" class="filter-btn" data-filter="health">❤️</button>
-                <button type="button" class="filter-btn" data-filter="charisma">✨</button>
-                <button type="button" class="filter-btn" data-filter="discipline">🛡️</button>
-                <button type="button" class="filter-btn" data-filter="energy">⚡</button>
+                <button type="button" class="filter-btn active" data-filter="all" title="Все квесты">Все</button>
+                <button type="button" class="filter-btn" data-filter="strength" title="Сила">💪</button>
+                <button type="button" class="filter-btn" data-filter="intelligence" title="Интеллект">🧠</button>
+                <button type="button" class="filter-btn" data-filter="health" title="Здоровье">❤️</button>
+                <button type="button" class="filter-btn" data-filter="charisma" title="Харизма">✨</button>
+                <button type="button" class="filter-btn" data-filter="discipline" title="Дисциплина">🛡️</button>
+                <button type="button" class="filter-btn" data-filter="energy" title="Энергия">⚡</button>
                 <button type="button" class="filter-btn" data-filter="easy" title="Лёгкие">●</button>
                 <button type="button" class="filter-btn" data-filter="medium" title="Средние">●</button>
                 <button type="button" class="filter-btn" data-filter="hard" title="Сложные">●</button>
@@ -991,6 +998,20 @@
     function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
     function dateStrOffset(off){const d=new Date();d.setDate(d.getDate()+off);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
     function fmtDate(){const m=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];const d=new Date();return d.getDate()+" "+m[d.getMonth()]+" "+d.getFullYear();}
+    function getStreakStage(streak, missedDays){
+      let stage;
+      if(streak>=30) stage=3;
+      else if(streak>=14) stage=2;
+      else if(streak>=7) stage=1;
+      else if(streak>=1) stage=0;
+      else return -1;
+      stage=Math.max(-1, stage-missedDays);
+      return stage;
+    }
+    const STREAK_ICONS={[-1]:"💤",0:"🔥",1:"🔥🔥",2:"🔥🔥🔥",3:"👑🔥"};
+    const STREAK_NAMES={[-1]:"",0:"Огонёк",1:"Пламя",2:"Костёр",3:"Корона"};
+    const MILESTONE_PHRASES={3:"Начало положено! 🔥",7:"НЕДЕЛЯ! Большинство бросают на третий. А ты нет 🔥🔥",14:"Две недели. Это характер 🔥🔥🔥",30:"МЕСЯЦ. Ты невероятна 👑🔥"};
+
     function declDays(n){
       const abs=Math.abs(n)%100;
       const mod=abs%10;
@@ -1027,7 +1048,7 @@
         el.appendChild(main); el.appendChild(sub);
       }else{ el.textContent=txt; }
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),subtitle?4000:1300);
+      setTimeout(()=>el.remove(),subtitle?5000:1300);
     }
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
@@ -1060,8 +1081,13 @@
       const streakEl=$("charStreak");
       if(streakEl){
         const s=P.streak||0;
-        if(s>0) streakEl.innerHTML='<span class="streak-fire">🔥</span> '+declDays(s);
-        else streakEl.textContent="💤";
+        const missed=P.missedDays||0;
+        const stage=getStreakStage(s,missed);
+        const icon=STREAK_ICONS[stage]||"💤";
+        const name=STREAK_NAMES[stage]||"";
+        const pulseClass=(s>=3&&stage>=0)?" streak-pulse":"";
+        if(stage>=0) streakEl.innerHTML='<span class="streak-fire'+pulseClass+'">'+icon+'</span> '+(name?name+" | ":"")+declDays(s);
+        else streakEl.innerHTML='<span class="streak-fire">💤</span> | 0 дней';
       }
       $("charStatMax").textContent="Макс. стат: "+sm;
       $("xpText").textContent=(P.xp||0)+"/"+(lv*100);
@@ -1108,7 +1134,11 @@
       const streakNum=P.streak||0;
       const streakBox=$("statsStreak");
       if(streakBox){
-        if(streakNum>0) streakBox.innerHTML='<span class="streak-fire">🔥</span> '+declDays(streakNum)+" подряд!";
+        const missed=P.missedDays||0;
+        const stage=getStreakStage(streakNum,missed);
+        const icon=STREAK_ICONS[stage]||"💤";
+        const name=STREAK_NAMES[stage]||"";
+        if(stage>=0) streakBox.innerHTML='<span class="streak-fire">'+icon+'</span> '+(name?name+" | ":"")+declDays(streakNum)+" подряд!";
         else streakBox.textContent="💤 Нет серии";
       }
 
@@ -1302,12 +1332,14 @@
       const canSwitch=!P.dailyCardSwitched;
       const dailyEl=$("inspirationDailyCard");
       if(dailyEl){
+        dailyEl.className="inspiration-daily-card"+(done?" inspiration-card--done":"");
         dailyEl.innerHTML=`
           <div class="inspiration-daily-emoji">${dailyCard.icon}</div>
-          <div class="inspiration-daily-title">${dailyCard.title}</div>
+          <div class="inspiration-daily-title ${done?"inspiration-title--done":""}">${dailyCard.title}</div>
           <div class="inspiration-daily-desc">${dailyCard.desc}</div>
           <div class="inspiration-daily-time">⏱ ${dailyCard.time} мин</div>
           <div class="inspiration-daily-btns">
+            ${done?"":'<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>'}
             <button type="button" class="inspiration-btn-done" data-insp-id="${dailyCard.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
             <button type="button" class="inspiration-btn-switch" data-insp-switch ${canSwitch?"":"disabled"}>🔄 Другая</button>
           </div>
@@ -1330,7 +1362,7 @@
       if(!grid)return;
       grid.innerHTML=cards.map(c=>{
         const done=P.completedCards&&P.completedCards[c.id];
-        return `<div class="inspiration-card-mini" data-insp-id="${c.id}"><span class="icon">${c.icon}</span><div class="title">${c.title}</div><div class="coins">+${c.coins}💰</div></div>`;
+        return `<div class="inspiration-card-mini ${done?"inspiration-card-mini--done":""}" data-insp-id="${c.id}"><span class="icon">${c.icon}</span><div class="title ${done?"inspiration-title--done":""}">${c.title}</div><div class="coins">+${c.coins}💰</div></div>`;
       }).join("");
       $("inspirationCategories").style.display="none";
       $("inspirationCardDetail").style.display="none";
@@ -1342,12 +1374,14 @@
       const done=P.completedCards&&P.completedCards[c.id];
       const content=$("inspirationDetailContent");
       if(content){
+        content.className="inspiration-detail-content"+(done?" inspiration-detail-content--done":"");
         content.innerHTML=`
           <div class="inspiration-detail-emoji">${c.icon}</div>
-          <div class="inspiration-detail-title">${c.title}</div>
+          <div class="inspiration-detail-title ${done?"inspiration-title--done":""}">${c.title}</div>
           <div class="inspiration-detail-desc">${c.desc}</div>
           ${c.tip?'<div class="inspiration-detail-tip">💡 '+c.tip+'</div>':""}
           <div class="inspiration-detail-time">⏱ ${c.time} мин</div>
+          ${done?"":'<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>'}
           <button type="button" class="inspiration-btn-done" data-insp-id="${c.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
         `;
       }
@@ -1475,11 +1509,21 @@
       $("endDayNote").textContent="День завершён. Новые квесты завтра 🌅";
 
       const todayStr=today();
-      if(doneGood>=3){
+      if(doneGood>=1){
         const yesterdayStr=dateStrOffset(-1);
         if(P.lastActiveDate===yesterdayStr) P.streak=(P.streak||0)+1;
         else P.streak=1;
         P.lastActiveDate=todayStr;
+        P.missedDays=0;
+        const str=P.streak||0;
+        const stage=getStreakStage(str,0);
+        [3,7,14,30].forEach(function(m){
+          if(str>=m&&(!P.shownMilestones||P.shownMilestones.indexOf(m)===-1)){
+            if(!P.shownMilestones)P.shownMilestones=[];
+            P.shownMilestones.push(m);
+            if(MILESTONE_PHRASES[m]) popup(MILESTONE_PHRASES[m],"good");
+          }
+        });
       }
       if(!P.history)P.history={};
       P.history[todayStr]={good:doneGood,bad:0};
@@ -1491,9 +1535,18 @@
     }
 
     function newDay(){
+      if(!P)return;
+      const todayStr=today();
+      const yesterdayStr=dateStrOffset(-1);
+      const lastActive=P.lastActiveDate||"1970-01-01";
+      const daysSince=Math.floor((new Date(todayStr)-new Date(lastActive))/86400000);
+      let missedDays=daysSince<=1?0:daysSince-1;
+      if(missedDays>=3){ P.streak=0; P.missedDays=0; }
+      else if(missedDays>=1){ P.missedDays=missedDays; }
+      else if(lastActive===yesterdayStr){ P.streak=(P.streak||0)+1; P.missedDays=0; }
       P.quests={};
       P.dayCompleted=false;
-      P.lastVisitDate=today();
+      P.lastVisitDate=todayStr;
       P.petHunger=cl((P.petHunger||80)-20,0,100);
       P.petMood=3;
       if(P.inventory&&P.inventory.flower) P.stats.health=cl((P.stats.health||0)+1,0,sMax());
@@ -1511,7 +1564,8 @@
         level:1,xp:0,stats:s,angelPoints:0,devilPoints:0,coins:0,
         petMood:3,petHunger:80,quests:{},inventory:{},customQuests:[],
         dayCompleted:false,lastVisitDate:today(),createdAt:new Date().toISOString(),
-        streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
+        streak:0,streakStage:0,lastActiveDate:null,missedDays:0,shownMilestones:[],
+        history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
         completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false};
     }
 
@@ -1559,14 +1613,17 @@
         if(!d||typeof d!=="object")return;
         if(typeof d.level==="number"){
           let useComeback=false;
+          P=d;
           if(d.lastVisitDate!==today()){
             const yesterdayStr=dateStrOffset(-1);
             if(!d.history||!d.history[yesterdayStr]) useComeback=true;
-            newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3,completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false});
+            newDay();
+            Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3,completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false});
           }
           if(d.inventory&&d.inventory.flower&&d.lastVisitDate===today()) {}
           P=d;if(!P.customQuests)P.customQuests=[];if(!P.inventory)P.inventory={};
-          if(P.streak==null)P.streak=0;if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
+          if(P.streak==null)P.streak=0;if(P.streakStage==null)P.streakStage=0;if(P.missedDays==null)P.missedDays=0;if(!P.shownMilestones)P.shownMilestones=[];
+          if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
           if(!P.completedCards)P.completedCards={};if(P.dailyCardSwitched==null)P.dailyCardSwitched=false;
           save(); showChar(useComeback);
           return;
