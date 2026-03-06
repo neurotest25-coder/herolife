@@ -221,17 +221,7 @@
     .quest-icon { font-size: 1.1rem; flex-shrink: 0; }
     .quest-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
     .quest-title { font-size: 0.85rem; font-weight: 500; }
-    .quest-desc { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-    .quest-tip { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; display: none; }
-    .quest-tip.quest-tip--visible { display: block; }
-    .quest-tip-toggle { background: none; border: none; cursor: pointer; font-size: 0.75rem; padding: 0 2px; opacity: 0.7; }
-    .quest-tip-toggle:hover { opacity: 1; }
-    .quest-difficulty-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
-    .quest-difficulty-dot--easy { background: #2ecc71; }
-    .quest-difficulty-dot--medium { background: #e6c200; }
-    .quest-difficulty-dot--hard { background: #ff4b5c; }
-    .quest-title-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-    .quest-alignment { font-size: 0.7rem; }
+    .quest-desc { font-size: 0.72rem; color: var(--text-muted); }
     .quest-stats { font-size: 0.7rem; }
     .quest-stats.good { color: #2ecc71; }
     .quest-stats.bad { color: #ff4b5c; }
@@ -563,7 +553,7 @@
             <section class="quests-section">
               <div class="quests-title"><span>📜</span><span>Ежедневные квесты</span></div>
               <div class="quests-date" id="questsDate"></div>
-              <div class="quests-hint" id="questsHint">👆 Отмечай привычки!</div>
+              <div class="quests-hint" id="questsHint">👆 Отмечай дела и избегай срывов!</div>
               <div class="filter-row" id="questFilterRow">
                 <button type="button" class="filter-btn active" data-filter="all">Все</button>
                 <button type="button" class="filter-btn" data-filter="strength">💪</button>
@@ -572,12 +562,12 @@
                 <button type="button" class="filter-btn" data-filter="charisma">✨</button>
                 <button type="button" class="filter-btn" data-filter="discipline">🛡️</button>
                 <button type="button" class="filter-btn" data-filter="energy">⚡</button>
-                <button type="button" class="filter-btn" data-filter="easy">🟢easy</button>
-                <button type="button" class="filter-btn" data-filter="hard">🔴hard</button>
               </div>
               <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
               <div class="quests-list" id="goodQuestsList"></div>
-              <div class="quest-counter" id="questCounter">Выполнено: 0/35</div>
+              <div class="character-divider-title" style="margin-top:12px">── ❌ Были ли срывы? ──</div>
+              <div class="quests-list" id="badQuestsList"></div>
+              <div class="quest-counter" id="questCounter">Выполнено: 0/10 ✅ Срывов: 0 ❌</div>
 
               <div class="add-custom-quest-block">
                 <button type="button" class="add-custom-quest-btn" id="addCustomQuestBtn">➕ Добавить свой квест</button>
@@ -619,26 +609,17 @@
                   </div>
 
                   <div class="field">
-                    <label class="field-label" for="customQuestDifficulty"><span>Сложность</span></label>
-                    <select id="customQuestDifficulty" class="text-input">
-                      <option value="easy">🟢 Лёгкая</option>
-                      <option value="medium">🟡 Средняя</option>
-                      <option value="hard">🔴 Сложная</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label class="field-label" for="customQuestAlignment"><span>Выравнивание</span></label>
-                    <select id="customQuestAlignment" class="text-input">
-                      <option value="neutral">— Нейтральное</option>
-                      <option value="angel">😇 Ангел</option>
-                      <option value="devil">😈 Чёрт</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label class="field-label" for="customQuestTip"><span>Подсказка (опционально)</span></label>
-                    <input id="customQuestTip" class="text-input" type="text" maxlength="80" placeholder="Совет или факт" />
+                    <div class="field-label"><span>Тип квеста</span></div>
+                    <div class="choice-row">
+                      <button type="button" class="choice-card selected" data-group="questType" data-value="good">
+                        <span class="icon">✅</span>
+                        <span class="label">Хорошая</span>
+                      </button>
+                      <button type="button" class="choice-card" data-group="questType" data-value="bad">
+                        <span class="icon">❌</span>
+                        <span class="label">Плохая</span>
+                      </button>
+                    </div>
                   </div>
 
                   <div class="field">
@@ -820,41 +801,26 @@
     ];
 
     const QUESTS = [
-      {id:"q1",type:"good",icon:"💧",title:"Стакан воды после пробуждения",desc:"Сразу после будильника",tip:"Тело теряет за ночь до 1л воды",coins:5,difficulty:"easy",alignment:"neutral",stats:{health:1,energy:1}},
-      {id:"q2",type:"good",icon:"😴",title:"Лечь спать до 23:00",desc:"Будильник-напоминание на 22:30",tip:"Каждый час сна до полуночи = два после",coins:10,difficulty:"medium",alignment:"devil",stats:{health:2,energy:1}},
-      {id:"q3",type:"good",icon:"🚶",title:"Прогулка 15-30 минут",desc:"После обеда или работы",tip:"20 мин на улице снижают кортизол на 25%",coins:10,difficulty:"medium",alignment:"angel",stats:{health:2,energy:1}},
-      {id:"q4",type:"good",icon:"🍽️",title:"Осознанный приём пищи",desc:"Не у экрана, не на бегу",tip:"Еда у экрана: ешь на 30% больше",coins:10,difficulty:"medium",alignment:"angel",stats:{health:2}},
-      {id:"q5",type:"good",icon:"🏋️",title:"Тренировка 20+ минут",desc:"Любая: зарядка, йога, бег",tip:"Лучшая тренировка — та что делаешь",coins:20,difficulty:"hard",alignment:"devil",stats:{health:2,strength:2}},
-      {id:"q6",type:"good",icon:"☀️",title:"Выйти на солнце на 10 минут",desc:"До обеда",tip:"80% россиян — дефицит витамина D",coins:5,difficulty:"easy",alignment:"neutral",stats:{health:1,energy:1}},
-      {id:"q7",type:"good",icon:"📖",title:"Прочитать 10 страниц книги",desc:"Перед сном вместо телефона",tip:"10 стр/день = 12 книг в год",coins:10,difficulty:"medium",alignment:"neutral",stats:{intelligence:2}},
-      {id:"q8",type:"good",icon:"📝",title:"Записать 3 задачи на сегодня",desc:"Утром после кофе. Ровно 3, не 10",tip:"Мозг не держит больше 3-4 приоритетов",coins:5,difficulty:"easy",alignment:"neutral",stats:{intelligence:1,discipline:1}},
-      {id:"q9",type:"good",icon:"🎧",title:"Подкаст или аудиокнига 15 мин",desc:"В дороге, на прогулке, при уборке",tip:"Обучение без отдельного времени",coins:10,difficulty:"medium",alignment:"angel",stats:{intelligence:2}},
-      {id:"q10",type:"good",icon:"📓",title:"Дневник: мысли или рефлексия",desc:"Вечером, 5-10 минут",tip:"Экспрессивное письмо снижает тревогу на 40%",coins:10,difficulty:"medium",alignment:"angel",stats:{intelligence:2,health:1}},
-      {id:"q11",type:"good",icon:"💻",title:"1 урок или видео по обучению",desc:"Выделить 30 мин заранее",tip:"Один урок — прогресс. Не весь курс за день",coins:15,difficulty:"hard",alignment:"devil",stats:{intelligence:3}},
-      {id:"q12",type:"good",icon:"🤸",title:"Утренняя разминка 5-10 минут",desc:"После стакана воды",tip:"5 минут движения = двигатель на день",coins:10,difficulty:"easy",alignment:"neutral",stats:{strength:1,energy:2}},
-      {id:"q13",type:"good",icon:"⚔️",title:"Первый шаг в отложенном деле",desc:"Только 5 минут! Первый час дня",tip:"Не закончить а НАЧАТЬ. 80% продолжат",coins:15,difficulty:"hard",alignment:"devil",stats:{strength:3,discipline:1}},
-      {id:"q14",type:"good",icon:"🛑",title:"Мягко отказать в ненужном",desc:"В момент просьбы",tip:"Каждое ненужное да = нет себе",coins:15,difficulty:"hard",alignment:"devil",stats:{strength:3,charisma:1}},
-      {id:"q15",type:"good",icon:"🧊",title:"Холодное умывание или контрастный душ",desc:"Утром при умывании",tip:"Блуждающий нерв → прилив бодрости",coins:10,difficulty:"medium",alignment:"devil",stats:{strength:2,energy:1}},
-      {id:"q16",type:"good",icon:"🧹",title:"Порядок в одной зоне 15 мин",desc:"Один ящик, одна полка",tip:"Внешний порядок = внутренний порядок",coins:10,difficulty:"easy",alignment:"neutral",stats:{strength:1,discipline:1}},
-      {id:"q17",type:"good",icon:"🦁",title:"Сделать одну вещь которая пугает",desc:"1-2 раза в неделю",tip:"Одно страшное дело в неделю — за год ты другой человек",coins:25,difficulty:"hard",alignment:"devil",stats:{strength:4,charisma:2}},
-      {id:"q18",type:"good",icon:"💖",title:"Отметить что в себе нравится",desc:"Утром или перед сном",tip:"Тренировка замечать хорошее в себе",coins:10,difficulty:"easy",alignment:"angel",stats:{charisma:2,health:1}},
-      {id:"q19",type:"good",icon:"🙏",title:"Принять комплимент словом спасибо",desc:"Когда скажут приятное",tip:"Обесценивание комплимента = обесценивание себя",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:3}},
-      {id:"q20",type:"good",icon:"📞",title:"Написать или позвонить кому-то первой",desc:"В обед или вечером",tip:"Качество отношений — предиктор счастья #1",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:2,health:1}},
-      {id:"q21",type:"good",icon:"🏆",title:"Рассказать о своём достижении",desc:"1-2 раза в неделю",tip:"Видимость заслуг — навык, не хвастовство",coins:15,difficulty:"hard",alignment:"devil",stats:{charisma:3,strength:1}},
-      {id:"q22",type:"good",icon:"🧘",title:"30 минут наедине по СВОЕМУ выбору",desc:"Вечером или в выходные",tip:"Одиночество по выбору = роскошь",coins:10,difficulty:"medium",alignment:"angel",stats:{charisma:2,energy:1}},
-      {id:"q23",type:"good",icon:"🪞",title:"Поймала сравнение — запиши достижение",desc:"В момент сравнения с другими",tip:"Перенаправить внимание на себя",coins:15,difficulty:"medium",alignment:"angel",stats:{charisma:3,intelligence:1}},
-      {id:"q24",type:"good",icon:"🛏️",title:"Заправить кровать",desc:"Сразу после подъёма",tip:"Первая завершённая задача = цепочка побед. 30 секунд",coins:5,difficulty:"easy",alignment:"neutral",stats:{discipline:1}},
-      {id:"q25",type:"good",icon:"✅",title:"Выполнить 3 из запланированных задач",desc:"Вечером подвести итог",tip:"3 из 5 = успех. Антиперфекционизм",coins:10,difficulty:"medium",alignment:"neutral",stats:{discipline:2,intelligence:1}},
-      {id:"q26",type:"good",icon:"🎯",title:"1 час фокуса без отвлечений",desc:"Своё продуктивное время",tip:"1 час фокуса = 3 часа с отвлечениями",coins:15,difficulty:"hard",alignment:"devil",stats:{discipline:3,intelligence:1}},
-      {id:"q27",type:"good",icon:"🎒",title:"Подготовить вещи на завтра",desc:"Перед сном, 10 минут",tip:"Подарок завтрашней себе",coins:10,difficulty:"easy",alignment:"neutral",stats:{discipline:2}},
-      {id:"q28",type:"good",icon:"🛡️",title:"Защитить своё дело от чужой просьбы",desc:"Когда возникнет ситуация",tip:"Твой план — обещание самой себе",coins:15,difficulty:"hard",alignment:"devil",stats:{discipline:3,strength:1}},
-      {id:"q29",type:"good",icon:"⏳",title:"Перед покупкой подождать 24 часа",desc:"В момент импульса",tip:"Через 24ч дофамин спадёт",coins:10,difficulty:"medium",alignment:"devil",stats:{discipline:2}},
-      {id:"q30",type:"good",icon:"⏰",title:"По первому будильнику без snooze",desc:"Утро",tip:"5 snooze = 5 прерванных циклов сна",coins:10,difficulty:"medium",alignment:"devil",stats:{energy:2}},
-      {id:"q31",type:"good",icon:"🤫",title:"5 минут тишины без телефона",desc:"В любое время",tip:"5 минут тишины = перезагрузка",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:2,intelligence:1}},
-      {id:"q32",type:"good",icon:"💤",title:"Дневной отдых 15-20 минут",desc:"После обеда 13-15",tip:"NASA: 20 мин = +34% продуктивности",coins:10,difficulty:"medium",alignment:"angel",stats:{energy:3}},
-      {id:"q33",type:"good",icon:"📵",title:"Вечер без экранов",desc:"Книга, рукоделие, общение. За 1ч до сна",tip:"Экраны = ложный отдых",coins:10,difficulty:"medium",alignment:"angel",stats:{energy:2,intelligence:1}},
-      {id:"q34",type:"good",icon:"💃",title:"Потанцевать 5 минут под любимое",desc:"При упадке энергии",tip:"Движение + музыка = мгновенная перезагрузка",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:2,charisma:1}},
-      {id:"q35",type:"good",icon:"🙏",title:"Записать 3 благодарности за сегодня",desc:"Вечером, последнее перед сном",tip:"Доказано: +25% счастья за 2 недели",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:1,charisma:1,health:1}}
+      {id:"g1",type:"good",icon:"🌅",title:"Ранняя пташка",desc:"Встать до 7:00",coins:15,stats:{energy:2,discipline:1}},
+      {id:"g2",type:"good",icon:"💧",title:"Источник жизни",desc:"Выпить 2л воды",coins:10,stats:{health:3}},
+      {id:"g3",type:"good",icon:"📚",title:"Поглотитель знаний",desc:"Читать 20 мин",coins:20,stats:{intelligence:3}},
+      {id:"g4",type:"good",icon:"🏃",title:"Железный воин",desc:"Тренировка 30 мин",coins:25,stats:{strength:3,health:1}},
+      {id:"g5",type:"good",icon:"🧘",title:"Дзен мастер",desc:"Медитация 10 мин",coins:15,stats:{health:2,discipline:2}},
+      {id:"g6",type:"good",icon:"🥗",title:"Правильное топливо",desc:"Здоровая еда",coins:20,stats:{health:2,strength:1}},
+      {id:"g7",type:"good",icon:"😴",title:"Властелин сна",desc:"Лечь до 23:00",coins:15,stats:{health:3,energy:2}},
+      {id:"g8",type:"good",icon:"🤝",title:"Социальный герой",desc:"Общение с другом",coins:10,stats:{charisma:3}},
+      {id:"g9",type:"good",icon:"📝",title:"Стратег",desc:"План на день",coins:10,stats:{intelligence:1,discipline:2}},
+      {id:"g10",type:"good",icon:"🎯",title:"Фокус режим",desc:"Работа без телефона 1ч",coins:20,stats:{intelligence:2,discipline:2}},
+      {id:"b1",type:"bad",icon:"🍔",title:"Фастфуд атака",desc:"Вредная еда",coins:-15,stats:{health:-2,strength:-1}},
+      {id:"b2",type:"bad",icon:"📱",title:"Дум скроллинг",desc:"Соцсети >2ч",coins:-20,stats:{intelligence:-2,energy:-2}},
+      {id:"b3",type:"bad",icon:"🌙",title:"Ночной призрак",desc:"Лёг после 01:00",coins:-15,stats:{health:-3,energy:-3}},
+      {id:"b4",type:"bad",icon:"🛋️",title:"Режим картошки",desc:"День без движения",coins:-20,stats:{strength:-2,health:-2}},
+      {id:"b5",type:"bad",icon:"☕",title:"Кофеиновый вампир",desc:">4 чашек кофе",coins:-10,stats:{health:-1,energy:-2}},
+      {id:"b6",type:"bad",icon:"🚬",title:"Тёмная сторона",desc:"Сигарета/алкоголь",coins:-30,stats:{health:-4,discipline:-2}},
+      {id:"b7",type:"bad",icon:"😤",title:"Вспышка гнева",desc:"Сорвался на кого-то",coins:-15,stats:{charisma:-3,discipline:-2}},
+      {id:"b8",type:"bad",icon:"🗑️",title:"Прокрастинатор",desc:"Отложил важное",coins:-15,stats:{intelligence:-1,discipline:-3}},
+      {id:"b9",type:"bad",icon:"🍬",title:"Сахарный бунт",desc:"Объелся сладким",coins:-10,stats:{health:-2}},
+      {id:"b10",type:"bad",icon:"🤐",title:"Затворник",desc:"День без общения",coins:-10,stats:{charisma:-2,energy:-1}}
     ];
 
     const SHOP = [
@@ -911,7 +877,7 @@
         el.appendChild(main); el.appendChild(sub);
       }else{ el.textContent=txt; }
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),subtitle?4000:1300);
+      setTimeout(()=>el.remove(),subtitle?3000:1300);
     }
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
@@ -1085,11 +1051,6 @@
       currentFilter = statKey;
       document.querySelectorAll(".quest-item").forEach(function(item){
         if(statKey === "all"){ item.style.display = ""; return; }
-        if(statKey === "easy" || statKey === "hard"){
-          const diff = item.getAttribute("data-difficulty") || "";
-          item.style.display = diff === statKey ? "" : "none";
-          return;
-        }
         const cats = item.getAttribute("data-categories") || "";
         item.style.display = cats.indexOf(statKey) !== -1 ? "" : "none";
       });
@@ -1099,56 +1060,48 @@
     }
 
     function buildQuests(){
-      const gList=$("goodQuestsList");
-      if(!gList)return;
-      gList.innerHTML="";
+      const gList=$("goodQuestsList"), bList=$("badQuestsList");
+      gList.innerHTML=""; bList.innerHTML="";
       const allQ = QUESTS.concat(P.customQuests||[]);
       allQ.forEach(q=>{
         const div=document.createElement("div");
+        const isGood=q.type==="good";
         const done=P.quests&&P.quests[q.id];
-        const statsText=statStr(q.stats,true);
-        const diff=q.difficulty||"medium";
-        const diffCls="quest-difficulty-dot--"+(diff==="easy"?"easy":diff==="hard"?"hard":"medium");
-        const alignIcon=q.alignment==="angel"?"😇":q.alignment==="devil"?"😈":"";
-        const tip=q.tip||"";
-        const tipHtml=tip?'<span class="quest-tip-toggle" data-tip-for="'+q.id+'" title="Подсказка">💡</span>':"";
-        const tipBlock=tip?'<div class="quest-tip" id="tip-'+q.id+'">'+tip+'</div>':"";
-        const itemCls="quest-item"+(done?" quest-item--good-done":"");
+        const statsText=statStr(q.stats,isGood);
+        const itemCls="quest-item"+(done?(isGood?" quest-item--good-done":" quest-item--bad-done"):"");
         const titleCls="quest-title"+(done?" quest-title--done":"");
+        const btnCls="quest-btn "+(isGood?"quest-btn--good":"quest-btn--bad")+(done?" quest-btn--done":"");
+        const btnText=done?(isGood?"✓":"✗"):"○";
+        const categories=Object.keys(q.stats||{}).join(",");
         div.className=itemCls;
         div.dataset.questId=q.id;
-        div.dataset.categories=Object.keys(q.stats||{}).join(",");
-        div.dataset.difficulty=diff;
+        div.dataset.questType=q.type;
+        div.dataset.categories=categories;
         div.innerHTML=`
           <div class="quest-main">
             <span class="quest-icon">${q.icon}</span>
             <div class="quest-text">
-              <div class="quest-title-row">
-                <span class="quest-difficulty-dot ${diffCls}"></span>
-                <div class="${titleCls}">${q.title}</div>
-                ${alignIcon?'<span class="quest-alignment">'+alignIcon+'</span>':""}
-              </div>
-              <div class="quest-desc">${q.desc||""}${tipHtml}</div>
-              ${tipBlock}
+              <div class="${titleCls}">${q.title}</div>
+              <div class="quest-desc">${q.desc||""}</div>
               ${q.custom?'<span class="quest-delete-link" data-del="'+q.id+'">🗑️ удалить</span>':""}
-              <div class="quest-stats good">${statsText}</div>
+              <div class="quest-stats ${isGood?"good":"bad"}">${statsText}</div>
             </div>
           </div>
-          <span class="quest-coins good">${q.coins>0?"+":""}${q.coins}💰</span>
-          <button class="quest-btn quest-btn--good ${done?"quest-btn--done":""}" ${done||P.dayCompleted?"disabled":""}>${done?"✓":"○"}</button>
+          <span class="quest-coins ${isGood?"good":"bad"}">${q.coins>0?"+":""}${q.coins}💰</span>
+          <button class="${btnCls}" ${done||P.dayCompleted?"disabled":""}>${btnText}</button>
         `;
-        gList.appendChild(div);
-      });
-      document.querySelectorAll(".quest-tip-toggle").forEach(function(btn){
-        btn.addEventListener("click",function(ev){ ev.stopPropagation(); const tipEl=$("tip-"+this.dataset.tipFor); if(tipEl) tipEl.classList.toggle("quest-tip--visible"); });
+        (isGood?gList:bList).appendChild(div);
       });
       if(typeof applyFilter==="function") applyFilter(currentFilter);
     }
 
     function updateCounter(){
       const allQ=QUESTS.concat(P.customQuests||[]);
-      const doneGood=allQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      $("questCounter").textContent="Выполнено: "+doneGood+"/"+allQ.length;
+      const goodQ=allQ.filter(q=>q.type==="good");
+      const badQ=allQ.filter(q=>q.type==="bad");
+      const doneGood=goodQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      const doneBad=badQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      $("questCounter").textContent="Выполнено: "+doneGood+"/"+goodQ.length+" ✅  Срывов: "+doneBad+" ❌";
     }
 
     function doQuest(id){
@@ -1158,20 +1111,40 @@
       const allQ=QUESTS.concat(P.customQuests||[]);
       const q=allQ.find(x=>x.id===id);
       if(!q)return;
+      const isGood=q.type==="good";
       const prevLv=P.level;
       const sm=sMax();
 
+      if(!isGood && P.inventory && P.inventory.shield){
+        P.inventory.shield=false;
+        P.devilPoints=(P.devilPoints||0)+1;
+        P.quests[id]=true;
+        popup("🛡️ Щит поглотил урон!","info");
+        save(); buildQuests(); render();
+        return;
+      }
+
       P.coins=cl((P.coins||0)+q.coins,0,999999);
-      Object.entries(q.stats||{}).forEach(([k,v])=>{
+      Object.entries(q.stats).forEach(([k,v])=>{
         if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+v,0,sm);
       });
-      const statsPart=statStr(q.stats,true);
-      const mainLine="+"+q.coins+"💰"+(statsPart?" "+statsPart:"");
-      const reaction=QUEST_REACTIONS.good[Math.floor(Math.random()*QUEST_REACTIONS.good.length)].replace(/{pet}/g,P.petName||"Питомец");
-      P.xp=(P.xp||0)+10;
-      P.angelPoints=(P.angelPoints||0)+1;
-      P.petMood=cl((P.petMood||3)+1,0,10);
-      popup(mainLine,"good",reaction);
+      const statsPart=statStr(q.stats,isGood);
+      const mainLine=(isGood?"+":"")+q.coins+"💰"+(statsPart?" "+statsPart:"");
+      const reactions=isGood?QUEST_REACTIONS.good:QUEST_REACTIONS.bad;
+      const reaction=reactions[Math.floor(Math.random()*reactions.length)].replace(/{pet}/g,P.petName||"Питомец");
+      if(isGood){
+        P.xp=(P.xp||0)+10;
+        P.angelPoints=(P.angelPoints||0)+1;
+        P.petMood=cl((P.petMood||3)+1,0,10);
+        popup(mainLine,"good",reaction);
+      } else {
+        P.xp=cl((P.xp||0)-5,0,999999);
+        P.devilPoints=(P.devilPoints||0)+1;
+        P.petMood=cl((P.petMood||3)-1,0,10);
+        popup(mainLine,"bad",reaction);
+        $("xpBar").classList.add("xp-bar-hit");
+        setTimeout(()=>$("xpBar").classList.remove("xp-bar-hit"),1000);
+      }
 
       let lv=P.level, xp=P.xp, need=lv*100;
       while(xp>=need){xp-=need;lv++;need=lv*100;}
@@ -1229,16 +1202,22 @@
     function endDay(){
       if(!P||P.dayCompleted)return;
       const allQ=QUESTS.concat(P.customQuests||[]);
-      const doneGood=allQ.filter(q=>P.quests&&P.quests[q.id]).length;
-      const earnedCoins=allQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+(q.coins||0),0);
+      const goodQ=allQ.filter(q=>q.type==="good");
+      const badQ=allQ.filter(q=>q.type==="bad");
+      const doneGood=goodQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      const doneBad=badQ.filter(q=>P.quests&&P.quests[q.id]).length;
+      const earnedCoins=goodQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+q.coins,0);
+      const lostCoins=badQ.filter(q=>P.quests&&P.quests[q.id]).reduce((s,q)=>s+q.coins,0);
       const petName=P.petName||"Питомец";
       const m=P.petMood||3;
       const mt=moodText(m);
 
       $("endDayText").innerHTML=`
-        Выполнено: <strong>${doneGood}/${allQ.length}</strong> ✅<br><br>
-        Заработано: <strong>+${earnedCoins}💰</strong><br><br>
-        😇 +${doneGood}<br><br>
+        Выполнено квестов: <strong>${doneGood}/${goodQ.length}</strong> ✅<br>
+        Срывов: <strong>${doneBad}</strong> ❌<br><br>
+        Заработано: <strong>+${earnedCoins}💰</strong><br>
+        Потеряно: <strong>${lostCoins}💰</strong><br><br>
+        😇 +${doneGood} &nbsp; 😈 +${doneBad}<br><br>
         ${moodEmoji(m)} ${petName}: ${mt}
       `;
       $("endDayOverlay").classList.add("overlay--visible");
@@ -1256,9 +1235,9 @@
         P.lastActiveDate=todayStr;
       }
       if(!P.history)P.history={};
-      P.history[todayStr]={good:doneGood,bad:0};
+      P.history[todayStr]={good:doneGood,bad:doneBad};
       P.totalDays=(P.totalDays||0)+1;
-      P.totalQuests=(P.totalQuests||0)+doneGood;
+      P.totalQuests=(P.totalQuests||0)+doneGood+doneBad;
       P.totalCoinsEarned=(P.totalCoinsEarned||0)+earnedCoins;
 
       save(); buildQuests(); render();
@@ -1368,7 +1347,6 @@
     document.addEventListener("click",function(e){
       const filterBtn = e.target.closest(".filter-btn");
       if(filterBtn){ applyFilter(filterBtn.dataset.filter); return; }
-      if(e.target.closest(".quest-tip-toggle")||e.target.closest(".quest-tip")) return;
       const btn=e.target.closest(".quest-btn");
       if(btn&&!btn.disabled){const item=btn.closest(".quest-item");if(item)doQuest(item.dataset.questId);return;}
       const questRow=e.target.closest(".quest-item");
@@ -1397,9 +1375,6 @@
     const bonusInput2 = $("customQuestBonus2");
     const addSubmit = $("customQuestAddBtn");
     const addCancel = $("customQuestCancelBtn");
-    const difficultySelect = $("customQuestDifficulty");
-    const alignmentSelect = $("customQuestAlignment");
-    const tipInput = $("customQuestTip");
 
     function customQuestsCount(){return P && P.customQuests ? P.customQuests.length : 0;}
     function updateCustomQuestLimit(){
@@ -1424,9 +1399,10 @@
       if(statSelect2) statSelect2.value = "";
       if(bonusInput1) bonusInput1.value = "2";
       if(bonusInput2) bonusInput2.value = "2";
-      if(difficultySelect) difficultySelect.value = "easy";
-      if(alignmentSelect) alignmentSelect.value = "neutral";
-      if(tipInput) tipInput.value = "";
+      document.querySelectorAll('[data-group="questType"]').forEach(function(card){
+        if(card.dataset.value==="good") card.classList.add("selected");
+        else card.classList.remove("selected");
+      });
     }
 
     if(addBtn){
@@ -1458,9 +1434,8 @@
 
         const desc = descInput ? (descInput.value || "").trim().slice(0,50) : "";
         const emoji = emojiSelect && emojiSelect.value ? emojiSelect.value : "⭐";
-        const difficulty = difficultySelect && difficultySelect.value ? difficultySelect.value : "easy";
-        const alignment = alignmentSelect && alignmentSelect.value ? alignmentSelect.value : "neutral";
-        const tip = tipInput ? (tipInput.value || "").trim().slice(0,80) : "";
+        let type = getVal("questType") || "good";
+        const isGood = type === "good";
 
         let coins = 15;
         if(coinsInput && coinsInput.value !== ""){
@@ -1468,24 +1443,25 @@
           if(!isNaN(v)) coins = cl(v,5,30);
         }
         if(coinsInput) coinsInput.value = String(coins);
+        if(!isGood) coins = -coins;
 
         const stats = {};
         const key1 = statSelect1 ? statSelect1.value : "health";
         let b1 = 2;
         if(bonusInput1 && bonusInput1.value !== ""){ const v=parseInt(bonusInput1.value,10); if(!isNaN(v)) b1=cl(v,1,5); }
         if(bonusInput1) bonusInput1.value = String(b1);
-        stats[key1] = b1;
+        stats[key1] = isGood ? b1 : -b1;
         const key2 = statSelect2 ? statSelect2.value : "";
         if(key2){
           let b2 = 2;
           if(bonusInput2 && bonusInput2.value !== ""){ const v=parseInt(bonusInput2.value,10); if(!isNaN(v)) b2=cl(v,1,5); }
           if(bonusInput2) bonusInput2.value = String(b2);
-          stats[key2] = b2;
+          stats[key2] = isGood ? b2 : -b2;
         }
 
         if(!P.customQuests) P.customQuests = [];
         const id = "custom_" + Date.now();
-        P.customQuests.push({id, type:"good", icon: emoji, title, desc, tip, coins, difficulty, alignment, stats, custom:true});
+        P.customQuests.push({id, type, icon: emoji, title, desc, coins, stats, custom:true});
         save();
         buildQuests();
         render();
