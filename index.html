@@ -176,54 +176,6 @@
     }
     .pet-play-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
 
-    .quest-sub-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
-    .quest-sub-tab { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 8px 12px; font-size: 0.9rem; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
-    .quest-sub-tab:hover { border-color: var(--accent-soft); color: var(--text-main); }
-    .quest-sub-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(230,194,0,0.1); }
-    .quest-sub-pane { display: none; }
-    .quest-sub-pane.quest-sub-pane--active { display: block; }
-    .inspiration-section { margin-top: 8px; }
-    .inspiration-title { font-size: 1rem; font-weight: 600; text-align: center; margin-bottom: 16px; color: var(--text-main); }
-    .inspiration-daily-card {
-      position: relative; background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5));
-      border-radius: var(--border-radius-lg); padding: 24px 20px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.65); border: 1px solid rgba(230,194,0,0.35);
-      overflow: hidden; margin-bottom: 20px; text-align: center;
-    }
-    .inspiration-daily-card::before {
-      content: ""; position: absolute; inset: -40%;
-      background: radial-gradient(circle at top left, rgba(230,194,0,0.12), transparent 55%);
-      opacity: 0.75; pointer-events: none; z-index: 0;
-    }
-    .inspiration-daily-emoji { font-size: 3rem; display: block; margin-bottom: 12px; }
-    .inspiration-daily-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
-    .inspiration-daily-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
-    .inspiration-daily-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
-    .inspiration-daily-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 10px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-    .inspiration-btn-done { background: linear-gradient(135deg, #2ecc71, #00c853); color: white; }
-    .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
-    .inspiration-btn-switch { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
-    .inspiration-btn-switch:disabled { opacity: 0.5; cursor: default; }
-    .inspiration-categories { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .inspiration-cat-btn { border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; background: rgba(6,8,30,0.6); color: var(--text-main); cursor: pointer; text-align: center; transition: all 0.15s; }
-    .inspiration-cat-btn:hover { border-color: var(--accent-soft); box-shadow: 0 0 12px rgba(230,194,0,0.2); }
-    .inspiration-cat-btn .icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
-    .inspiration-cat-btn .label { font-size: 0.85rem; }
-    .inspiration-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-    .inspiration-card-mini { border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; background: rgba(6,8,30,0.6); cursor: pointer; text-align: center; transition: all 0.15s; }
-    .inspiration-card-mini:hover { border-color: var(--accent-soft); }
-    .inspiration-card-mini .icon { font-size: 1.5rem; }
-    .inspiration-card-mini .title { font-size: 0.8rem; margin: 4px 0 2px; }
-    .inspiration-card-mini .coins { font-size: 0.75rem; color: var(--accent); }
-    .inspiration-back-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; margin-bottom: 12px; padding: 4px 0; }
-    .inspiration-back-btn:hover { color: var(--accent); }
-    .inspiration-detail-content { background: rgba(6,8,30,0.6); border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.08); }
-    .inspiration-detail-emoji { font-size: 2.5rem; text-align: center; margin-bottom: 12px; }
-    .inspiration-detail-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-    .inspiration-detail-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
-    .inspiration-detail-tip { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px; }
-    .inspiration-detail-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
     .quests-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .quests-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .quests-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
@@ -274,11 +226,11 @@
     .quest-tip.quest-tip--visible { display: block; }
     .quest-tip-toggle { background: none; border: none; cursor: pointer; font-size: 0.75rem; padding: 0 2px; opacity: 0.7; }
     .quest-tip-toggle:hover { opacity: 1; }
-    .quest-difficulty-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
+    .quest-difficulty-dot { display: inline-block; width: 6px; height: 6px; min-width: 6px; min-height: 6px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
     .quest-difficulty-dot--easy { background: #2ecc71; }
     .quest-difficulty-dot--medium { background: #e6c200; }
     .quest-difficulty-dot--hard { background: #ff4b5c; }
-    .quest-title-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+    .quest-title-row { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
     .quest-alignment { font-size: 0.7rem; }
     .quest-stats { font-size: 0.7rem; }
     .quest-stats.good { color: #2ecc71; }
@@ -608,11 +560,6 @@
           </div>
 
           <div class="tab-pane" id="tabQuests">
-            <div class="quest-sub-tabs">
-              <button type="button" class="quest-sub-tab active" data-subtab="quests">📜 Квесты</button>
-              <button type="button" class="quest-sub-tab" data-subtab="inspiration">✨ Вдохновение</button>
-            </div>
-            <div class="quest-sub-pane quest-sub-pane--active" id="questsSubPane">
             <section class="quests-section">
               <div class="quests-title"><span>📜</span><span>Ежедневные квесты</span></div>
               <div class="quests-date" id="questsDate"></div>
@@ -625,8 +572,21 @@
                 <button type="button" class="filter-btn" data-filter="charisma">✨</button>
                 <button type="button" class="filter-btn" data-filter="discipline">🛡️</button>
                 <button type="button" class="filter-btn" data-filter="energy">⚡</button>
-                <button type="button" class="filter-btn" data-filter="easy">🟢easy</button>
-                <button type="button" class="filter-btn" data-filter="hard">🔴hard</button>
+                <button type="button" class="filter-btn" data-filter="easy">
+                <span style="display:inline-block;width:8px;height:8px;
+                border-radius:50%;background:#2ecc71;
+                vertical-align:middle;margin-right:3px"></span>easy
+              </button>
+              <button type="button" class="filter-btn" data-filter="medium">
+                <span style="display:inline-block;width:8px;height:8px;
+                border-radius:50%;background:#fdcb6e;
+                vertical-align:middle;margin-right:3px"></span>medium
+              </button>
+              <button type="button" class="filter-btn" data-filter="hard">
+                <span style="display:inline-block;width:8px;height:8px;
+                border-radius:50%;background:#ff4b5c;
+                vertical-align:middle;margin-right:3px"></span>hard
+              </button>
               </div>
               <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
               <div class="quests-list" id="goodQuestsList"></div>
@@ -744,22 +704,6 @@
             <div class="end-day-wrap">
               <button class="end-day-btn" id="endDayBtn">🌙 Завершить день</button>
               <div class="end-day-note" id="endDayNote"></div>
-            </div>
-            </div>
-            <div class="quest-sub-pane" id="inspirationSubPane">
-              <div class="inspiration-section">
-                <div class="inspiration-title">✨ Вдохновение дня</div>
-                <div class="inspiration-daily-card" id="inspirationDailyCard"></div>
-                <div class="inspiration-categories" id="inspirationCategories"></div>
-                <div class="inspiration-category-view" id="inspirationCategoryView" style="display:none;">
-                  <button type="button" class="inspiration-back-btn" id="inspirationBackBtn">← Назад</button>
-                  <div class="inspiration-cards-grid" id="inspirationCardsGrid"></div>
-                </div>
-                <div class="inspiration-card-detail" id="inspirationCardDetail" style="display:none;">
-                  <button type="button" class="inspiration-back-btn" id="inspirationDetailBackBtn">← Назад</button>
-                  <div class="inspiration-detail-content" id="inspirationDetailContent"></div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -925,49 +869,6 @@
       {id:"q34",type:"good",icon:"💃",title:"Потанцевать 5 минут под любимое",desc:"При упадке энергии",tip:"Движение + музыка = мгновенная перезагрузка",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:2,charisma:1}},
       {id:"q35",type:"good",icon:"🙏",title:"Записать 3 благодарности за сегодня",desc:"Вечером, последнее перед сном",tip:"Доказано: +25% счастья за 2 недели",coins:10,difficulty:"easy",alignment:"angel",stats:{energy:1,charisma:1,health:1}}
     ];
-
-    const INSPIRATION_CARDS = {
-      creativity: [
-        {id:"c1",icon:"🎨",title:"Нарисуй своё настроение",desc:"Возьми лист или открой заметки. Нарисуй как чувствуешь себя прямо сейчас. Линии, цвета, каракули — всё считается.",tip:"Рисование снижает кортизол на 75%",time:5,coins:3,stat:"charisma"},
-        {id:"c2",icon:"📸",title:"Сфотографируй красоту в обычном",desc:"Найди что-то красивое рядом. Свет, тень, текстура. Одна фотография.",tip:"Тренировка замечать хорошее",time:5,coins:3,stat:"charisma"},
-        {id:"c3",icon:"🎵",title:"Составь плейлист настроения",desc:"Добавь 5-7 песен которые отражают как ты себя чувствуешь сейчас.",tip:"Музыка — самый быстрый способ сменить настроение",time:10,coins:3,stat:"energy"},
-        {id:"c4",icon:"✍️",title:"Напиши 6-словную историю своей жизни",desc:"Всего 6 слов. Попробуй несколько вариантов. Хемингуэй написал: Продаются детские ботинки, неношеные.",tip:"Ограничения развивают креативность",time:3,coins:3,stat:"intelligence"},
-        {id:"c5",icon:"🤲",title:"Сделай что-то руками",desc:"Слепи из пластилина, сложи оригами, вышей стежок. Что угодно руками.",tip:"Мелкая моторика успокаивает нервную систему",time:15,coins:5,stat:"discipline"},
-        {id:"c6",icon:"🌅",title:"Опиши идеальный обычный день",desc:"Не мечту, а просто хороший день. Что в нём есть? Напиши в заметках.",tip:"Помогает понять что тебе реально важно",time:10,coins:5,stat:"intelligence"},
-        {id:"c7",icon:"💌",title:"Напиши письмо себе через месяц",desc:"Что хочешь чтобы случилось? Как ты хочешь себя чувствовать? Сохрани.",tip:"Письма себе повышают осознанность целей",time:10,coins:5,stat:"discipline"},
-        {id:"c8",icon:"👩‍🍳",title:"Приготовь по новому рецепту",desc:"Найди рецепт чего-то чего никогда не готовила. Приготовь прямо сейчас или запланируй на сегодня.",tip:"Новые навыки = новые нейронные связи",time:20,coins:5,stat:"strength"}
-      ],
-      challenge: [
-        {id:"ch1",icon:"🦵",title:"20 приседаний прямо сейчас",desc:"Встань и сделай 20 приседаний. Медленно, с правильной техникой.",tip:"Дофамин от быстрого достижения",time:1,coins:3,stat:"strength"},
-        {id:"ch2",icon:"🗑️",title:"Удали 10 ненужных фото",desc:"Открой галерею. Удали 10 фото которые точно не нужны.",tip:"Цифровое захламление = ментальный шум",time:5,coins:3,stat:"discipline"},
-        {id:"ch3",icon:"⭐",title:"Напиши отзыв или рекомендацию",desc:"Мастеру, кафе, книге, приложению. Хорошему — хорошее слово.",tip:"Благодарность улучшает настроение дающего",time:5,coins:3,stat:"charisma"},
-        {id:"ch4",icon:"🔧",title:"Исправь мелочь которая раздражает",desc:"Та вещь которую откладываешь. Перегоревшая лампочка, неудобный ярлык, сломанная кнопка.",tip:"Мелкие раздражители накапливаются и тратят энергию",time:10,coins:3,stat:"discipline"},
-        {id:"ch5",icon:"🦸",title:"Постой 2 минуты в позе силы",desc:"Встань прямо, руки на бёдрах или вверх, подбородок вверх. 2 минуты.",tip:"Поза влияет на уровень кортизола и тестостерона",time:2,coins:3,stat:"strength"},
-        {id:"ch6",icon:"👋",title:"Заговори с незнакомым",desc:"Скажи что-то приятное: продавцу, соседу, человеку в очереди.",tip:"Случайные связи повышают счастье",time:1,coins:3,stat:"charisma"},
-        {id:"ch7",icon:"📨",title:"Отправь сообщение которое откладываешь",desc:"Оно уже давно ждёт. Напиши прямо сейчас. Коротко.",tip:"Незавершённые дела занимают ментальное пространство",time:3,coins:5,stat:"strength"},
-        {id:"ch8",icon:"⚖️",title:"Узнай одну вещь о своих правах",desc:"Как потребитель, работник, гражданин. Один факт.",tip:"Знание своих прав = уверенность",time:10,coins:5,stat:"intelligence"}
-      ],
-      care: [
-        {id:"ca1",icon:"☕",title:"Сделай напиток красиво",desc:"Чай, кофе, воду с лимоном. Красивая кружка, может пенка или лёд. Насладись процессом.",tip:"Маленькие ритуалы снижают стресс",time:5,coins:3,stat:"health"},
-        {id:"ca2",icon:"🤗",title:"Обними кого-то на 20 секунд",desc:"Именно 20 — меньше не работает. Питомца тоже считается.",tip:"20 секунд объятий = выброс окситоцина",time:1,coins:3,stat:"health"},
-        {id:"ca3",icon:"📱",title:"Позвони маме или папе просто так",desc:"Не по делу. Просто спросить как дела.",tip:"Связь с близкими — предиктор долголетия",time:5,coins:5,stat:"charisma"},
-        {id:"ca4",icon:"🛋️",title:"Полежи 10 минут просто так",desc:"Без телефона. Без задач. Просто лечь и побыть.",tip:"Ненаправленное мышление — важная функция мозга",time:10,coins:3,stat:"energy"},
-        {id:"ca5",icon:"🥇",title:"Вспомни 3 момента гордости",desc:"За эту неделю или за всё время. Запиши или просто вспомни.",tip:"Работает как антидепрессант без побочных эффектов",time:5,coins:5,stat:"charisma"},
-        {id:"ca6",icon:"🫀",title:"Поблагодари своё тело",desc:"Скажи спасибо: ногам за то что ходят, рукам за то что создают. Вслух или в мыслях.",tip:"Телесная осознанность снижает тревогу",time:3,coins:3,stat:"health"},
-        {id:"ca7",icon:"💬",title:"Напиши кому-то скучаю",desc:"Тому кому давно не писала. Одно сообщение.",tip:"Поддержание связей требует активных действий",time:2,coins:3,stat:"charisma"},
-        {id:"ca8",icon:"🕊️",title:"Прости себе одну вещь",desc:"Что-то за что ругаешь себя. Скажи себе: я делала лучшее что могла тогда.",tip:"Самосострадание = основа психологической устойчивости",time:3,coins:5,stat:"health"}
-      ],
-      explore: [
-        {id:"e1",icon:"🗺️",title:"Пройди другой дорогой",desc:"В магазин, на работу, на прогулку. Другой маршрут.",tip:"Новые маршруты = новые нейронные связи",time:5,coins:3,stat:"intelligence"},
-        {id:"e2",icon:"🎼",title:"10 мин музыки нового жанра",desc:"Жанр который никогда не слушала. Джаз, фолк, босанова, k-pop.",tip:"Музыкальные предпочтения расширяются через практику",time:10,coins:3,stat:"intelligence"},
-        {id:"e3",icon:"🗣️",title:"Выучи фразу на необычном языке",desc:"Финский, суахили, японский. Одну фразу. Произнеси вслух.",tip:"Изучение языков — лучшая тренировка для мозга",time:3,coins:3,stat:"intelligence"},
-        {id:"e4",icon:"🌍",title:"1 факт о незнакомой стране",desc:"Любая страна которая пришла в голову. Один интересный факт.",tip:"Любопытство — двигатель развития",time:5,coins:3,stat:"intelligence"},
-        {id:"e5",icon:"🍜",title:"Попробуй еду которую не ела",desc:"В магазине, кафе или приготовь. Что-то новое.",tip:"Открытость к новому связана с эмоциональной гибкостью",time:5,coins:3,stat:"health"},
-        {id:"e6",icon:"🎤",title:"TED Talk на случайную тему",desc:"Открой ted.com/talks и выбери рандомно. 15 минут.",tip:"Один новый взгляд меняет больше чем кажется",time:15,coins:5,stat:"intelligence"},
-        {id:"e7",icon:"👥",title:"Узнай что-то новое о человеке рядом",desc:"Спроси что-то что никогда не спрашивала: любимое детское воспоминание, мечта, страх.",tip:"Глубокие вопросы сближают быстрее small talk",time:2,coins:3,stat:"charisma"},
-        {id:"e8",icon:"📚",title:"Случайная статья Википедии",desc:"Открой wikipedia.org/wiki/Special:Random Прочитай.",tip:"Случайные знания часто самые ценные",time:10,coins:3,stat:"intelligence"}
-      ]
-    };
 
     const SHOP = [
       {id:"crown",icon:"👑",name:"Корона новичка",desc:"Добавляет 👑 к аватару",price:50,once:true},
@@ -1263,116 +1164,6 @@
       $("questCounter").textContent="Выполнено: "+doneGood+"/"+allQ.length;
     }
 
-    function getAllInspirationCards(){
-      const all=[];
-      Object.keys(INSPIRATION_CARDS).forEach(k=>all.push(...INSPIRATION_CARDS[k]));
-      return all;
-    }
-    function getInspirationCardById(id){
-      const all=getAllInspirationCards();
-      return all.find(c=>c.id===id);
-    }
-    function getDailyCard(){
-      const todayStr=today();
-      if(P.dailyCardDate===todayStr&&P.dailyCard){
-        const c=getInspirationCardById(P.dailyCard);
-        if(c) return c;
-      }
-      const all=getAllInspirationCards();
-      const card=all[Math.floor(Math.random()*all.length)];
-      P.dailyCard=card.id;
-      P.dailyCardDate=todayStr;
-      save();
-      return card;
-    }
-    function setQuestSubTab(subtab){
-      document.querySelectorAll(".quest-sub-tab").forEach(t=>t.classList.toggle("active",t.dataset.subtab===subtab));
-      const qPane=$("questsSubPane"), iPane=$("inspirationSubPane");
-      if(qPane) qPane.classList.toggle("quest-sub-pane--active",subtab==="quests");
-      if(iPane){ iPane.classList.toggle("quest-sub-pane--active",subtab==="inspiration"); if(subtab==="inspiration") renderInspiration(); }
-    }
-    function renderInspiration(){
-      if(!P)return;
-      const dailyCard=getDailyCard();
-      const done=P.completedCards&&P.completedCards[dailyCard.id];
-      const canSwitch=!P.dailyCardSwitched;
-      const dailyEl=$("inspirationDailyCard");
-      if(dailyEl){
-        dailyEl.innerHTML=`
-          <div class="inspiration-daily-emoji">${dailyCard.icon}</div>
-          <div class="inspiration-daily-title">${dailyCard.title}</div>
-          <div class="inspiration-daily-desc">${dailyCard.desc}</div>
-          <div class="inspiration-daily-time">⏱ ${dailyCard.time} мин</div>
-          <div class="inspiration-daily-btns">
-            <button type="button" class="inspiration-btn-done" data-insp-id="${dailyCard.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
-            <button type="button" class="inspiration-btn-switch" data-insp-switch ${canSwitch?"":"disabled"}>🔄 Другая</button>
-          </div>
-        `;
-      }
-      const catMap={creativity:{icon:"🎨",label:"Творчество"},challenge:{icon:"💪",label:"Вызов"},care:{icon:"❤️",label:"Забота"},explore:{icon:"🔮",label:"Исследование"}};
-      const catEl=$("inspirationCategories");
-      if(catEl){
-        catEl.innerHTML=Object.keys(catMap).map(k=>`<button type="button" class="inspiration-cat-btn" data-cat="${k}"><span class="icon">${catMap[k].icon}</span><span class="label">${catMap[k].label}</span></button>`).join("");
-      }
-      $("inspirationCategoryView").style.display="none";
-      $("inspirationCardDetail").style.display="none";
-      $("inspirationCategories").style.display="grid";
-    }
-    let currentInspirationCategory=null;
-    function showInspirationCategory(catKey){
-      currentInspirationCategory=catKey;
-      const cards=INSPIRATION_CARDS[catKey]||[];
-      const grid=$("inspirationCardsGrid");
-      if(!grid)return;
-      grid.innerHTML=cards.map(c=>{
-        const done=P.completedCards&&P.completedCards[c.id];
-        return `<div class="inspiration-card-mini" data-insp-id="${c.id}"><span class="icon">${c.icon}</span><div class="title">${c.title}</div><div class="coins">+${c.coins}💰</div></div>`;
-      }).join("");
-      $("inspirationCategories").style.display="none";
-      $("inspirationCardDetail").style.display="none";
-      $("inspirationCategoryView").style.display="block";
-    }
-    function showInspirationDetail(cardId){
-      const c=getInspirationCardById(cardId);
-      if(!c)return;
-      const done=P.completedCards&&P.completedCards[c.id];
-      const content=$("inspirationDetailContent");
-      if(content){
-        content.innerHTML=`
-          <div class="inspiration-detail-emoji">${c.icon}</div>
-          <div class="inspiration-detail-title">${c.title}</div>
-          <div class="inspiration-detail-desc">${c.desc}</div>
-          ${c.tip?'<div class="inspiration-detail-tip">💡 '+c.tip+'</div>':""}
-          <div class="inspiration-detail-time">⏱ ${c.time} мин</div>
-          <button type="button" class="inspiration-btn-done" data-insp-id="${c.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
-        `;
-      }
-      $("inspirationCategories").style.display="none";
-      $("inspirationCategoryView").style.display="none";
-      $("inspirationCardDetail").style.display="block";
-    }
-    function doInspirationCard(id){
-      if(!P||P.dayCompleted)return;
-      if(!P.completedCards)P.completedCards={};
-      if(P.completedCards[id])return;
-      const c=getInspirationCardById(id);
-      if(!c)return;
-      const sm=sMax();
-      P.coins=cl((P.coins||0)+c.coins,0,999999);
-      if(c.stat&&P.stats[c.stat]!=null) P.stats[c.stat]=cl((P.stats[c.stat]||0)+1,0,sm);
-      P.completedCards[id]=true;
-      P.xp=(P.xp||0)+5;
-      P.angelPoints=(P.angelPoints||0)+1;
-      P.petMood=cl((P.petMood||3)+1,0,10);
-      save();
-      render();
-      if($("inspirationSubPane")&&$("inspirationSubPane").classList.contains("quest-sub-pane--active")){
-        if($("inspirationCardDetail").style.display!=="none") showInspirationCategory(currentInspirationCategory);
-        else renderInspiration();
-      }
-      popup("+"+c.coins+"💰 "+(STAT_ICONS[c.stat]||"")+"+1","good","Отлично! ✨");
-    }
-
     function doQuest(id){
       if(!P||P.dayCompleted)return;
       if(!P.quests)P.quests={};
@@ -1494,10 +1285,6 @@
       P.petMood=3;
       if(P.inventory&&P.inventory.flower) P.stats.health=cl((P.stats.health||0)+1,0,sMax());
       if(P.inventory) P.inventory.toyUsedToday=false;
-      P.completedCards={};
-      P.dailyCard=null;
-      P.dailyCardDate=null;
-      P.dailyCardSwitched=false;
       save();
     }
 
@@ -1507,8 +1294,7 @@
         level:1,xp:0,stats:s,angelPoints:0,devilPoints:0,coins:0,
         petMood:3,petHunger:80,quests:{},inventory:{},customQuests:[],
         dayCompleted:false,lastVisitDate:today(),createdAt:new Date().toISOString(),
-        streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
-        completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false};
+        streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0};
     }
 
     function showGreeting(useComeback){
@@ -1558,12 +1344,11 @@
           if(d.lastVisitDate!==today()){
             const yesterdayStr=dateStrOffset(-1);
             if(!d.history||!d.history[yesterdayStr]) useComeback=true;
-            newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3,completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false});
+            newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3});
           }
           if(d.inventory&&d.inventory.flower&&d.lastVisitDate===today()) {}
           P=d;if(!P.customQuests)P.customQuests=[];if(!P.inventory)P.inventory={};
           if(P.streak==null)P.streak=0;if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
-          if(!P.completedCards)P.completedCards={};if(P.dailyCardSwitched==null)P.dailyCardSwitched=false;
           save(); showChar(useComeback);
           return;
         }
@@ -1594,29 +1379,6 @@
     $("petName").addEventListener("input",function(){if(this.value.trim())setErr($("field-pet-name"),false);});
 
     document.addEventListener("click",function(e){
-      const subTab=e.target.closest(".quest-sub-tab");
-      if(subTab){ setQuestSubTab(subTab.dataset.subtab); return; }
-      const inspDone=e.target.closest(".inspiration-btn-done");
-      if(inspDone&&!inspDone.disabled){ doInspirationCard(inspDone.dataset.inspId); return; }
-      const inspSwitch=e.target.closest("[data-insp-switch]");
-      if(inspSwitch&&!inspSwitch.disabled){
-        const all=getAllInspirationCards();
-        let card;
-        do{ card=all[Math.floor(Math.random()*all.length)]; }while(card&&card.id===P.dailyCard);
-        P.dailyCard=card.id;
-        P.dailyCardSwitched=true;
-        save();
-        renderInspiration();
-        return;
-      }
-      const inspCat=e.target.closest(".inspiration-cat-btn");
-      if(inspCat){ showInspirationCategory(inspCat.dataset.cat); return; }
-      const inspMini=e.target.closest(".inspiration-card-mini");
-      if(inspMini){ showInspirationDetail(inspMini.dataset.inspId); return; }
-      const inspBackCat=e.target.closest("#inspirationBackBtn");
-      if(inspBackCat){ renderInspiration(); return; }
-      const inspBackDetail=e.target.closest("#inspirationDetailBackBtn");
-      if(inspBackDetail){ if(currentInspirationCategory) showInspirationCategory(currentInspirationCategory); else renderInspiration(); return; }
       const filterBtn = e.target.closest(".filter-btn");
       if(filterBtn){ applyFilter(filterBtn.dataset.filter); return; }
       if(e.target.closest(".quest-tip-toggle")||e.target.closest(".quest-tip")) return;
