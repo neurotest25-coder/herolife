@@ -388,8 +388,6 @@
     }
     .end-day-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; outline: none; }
     .end-day-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
-    .greeting-phrase { font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 10px 0; font-style: italic; }
-    .greeting-phrase.greeting-phrase--comeback { color: #fd79a8; }
 
     .debug-section { margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; gap: 6px; }
     .debug-btn { border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; font-size: 0.75rem; color: var(--text-muted); background: rgba(255,255,255,0.03); cursor: pointer; }
@@ -423,14 +421,11 @@
     .xp-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
       font-size: 1.8rem; font-weight: 700; pointer-events: none; z-index: 30;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
       animation: xpPopUp 1.2s ease-out forwards;
     }
     .xp-popup--good { color: #2ecc71; text-shadow: 0 0 20px rgba(46,204,113,0.8); }
     .xp-popup--bad { color: #ff4b5c; text-shadow: 0 0 20px rgba(255,75,92,0.8); }
     .xp-popup--info { color: #74b9ff; text-shadow: 0 0 20px rgba(116,185,255,0.8); }
-    .xp-popup-main { font-size: 1.8rem; font-weight: 700; }
-    .xp-popup-sub { font-size: 0.75rem; font-weight: 400; margin-top: 4px; opacity: 0.95; }
     @keyframes xpPopUp { 0% { opacity:1; transform:translate(-50%,-50%) scale(0.5); } 30% { opacity:1; transform:translate(-50%,-70%) scale(1.2); } 100% { opacity:0; transform:translate(-50%,-120%) scale(0.8); } }
 
     .xp-bar-hit { animation: xpFlash 1s ease-out; }
@@ -517,7 +512,6 @@
         </header>
         <div class="character-section">
           <div class="tab-pane tab-pane--active" id="tabHero">
-            <div class="greeting-phrase" id="greetingPhrase"></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">Опыт</span><span class="stat-value" id="xpText">0/100</span></div><div class="progress"><div class="progress-fill progress-fill--xp" id="xpBar"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">❤️ Здоровье</span><span class="stat-value" id="vHP">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--hp" id="bHP"></div></div></div>
             <div class="stat-row"><div class="stat-main"><span class="stat-label">🧠 Интеллект</span><span class="stat-value" id="vINT">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--int" id="bINT"></div></div></div>
@@ -743,63 +737,6 @@
     let currentFilter = "all";
     const filterMap = { all: null, strength: "💪", intelligence: "🧠", health: "❤️", charisma: "✨", discipline: "🛡️", energy: "⚡" };
 
-    const GREETINGS = {
-      morning: [
-        "Новая неделя! {pet} верит в тебя 💪",
-        "Вторник. Ты уже в пути! {pet} рядом ☀️",
-        "Середина недели! {pet} гордится тобой 🌟",
-        "Четверг. Скоро выходные. Но сначала — приключения ⚔️",
-        "Пятница! Время для себя. {pet} готов 🐱",
-        "Выходной! Позаботься о себе. {pet} предлагает отдохнуть 💤",
-        "Воскресенье. Мягкий день. Что хорошего на этой неделе? 🌸"
-      ],
-      evening: [
-        "Вечер. Время подвести итоги. {pet} сворачивается клубком 🌙",
-        "День подходит к концу. Ты сделала достаточно. Правда 💜",
-        "{pet} зевает. Пора отдыхать. Завтра новые приключения ✨"
-      ],
-      day: [
-        "День в разгаре! {pet} следит за тобой 👀",
-        "Обед? Не забудь про воду! {pet} напоминает 💧",
-        "Полдень. {pet} верит что сегодня будет хороший день ☀️"
-      ],
-      night: [
-        "Поздновато... {pet} уже спит 😴 Позаботься о себе 💜",
-        "Ночь. {pet} мурлычет во сне. Может и тебе пора? 🌙",
-        "Тише... {pet} видит сны. Завтра новый день ✨"
-      ]
-    };
-
-    const QUEST_REACTIONS = {
-      good: [
-        "Отлично! {pet} мурчит от гордости 🐱",
-        "Есть! Ещё один шаг вперёд 🌟",
-        "Маленькая победа — но победа! ✨",
-        "{pet} прыгает от радости! 🎉",
-        "Чувствуешь? Ты становишься сильнее 💪",
-        "Так держать! 🔥",
-        "Будущая ты скажет спасибо 💜",
-        "Квест выполнен! Ты — героиня ⚔️",
-        "Ещё один кирпичик в новую жизнь 🏰",
-        "{pet} смотрит с восхищением 🌟"
-      ],
-      bad: [
-        "Бывает. {pet} не осуждает 💜",
-        "Честность с собой — уже сила 🛡️",
-        "Записано. Завтра будет лучше 🌅",
-        "{pet} тычется носом: всё будет хорошо 🐱",
-        "Один срыв — не конец пути ✨"
-      ]
-    };
-
-    const COMEBACK_PHRASES = [
-      "Вчера был непростой день? {pet} ждёт тебя 🐱",
-      "Пропуск — это пауза, не конец. Ты здесь — значит не сдалась 💪",
-      "{pet} загрустил вчера. Но он знает — ты вернёшься 💜",
-      "Новый день. Чистый лист. Начнём? ☀️",
-      "Знаешь что главное? Что ты открыла приложение. Это уже победа ✨"
-    ];
-
     const QUESTS = [
       {id:"g1",type:"good",icon:"🌅",title:"Ранняя пташка",desc:"Встать до 7:00",coins:15,stats:{energy:2,discipline:1}},
       {id:"g2",type:"good",icon:"💧",title:"Источник жизни",desc:"Выпить 2л воды",coins:10,stats:{health:3}},
@@ -868,17 +805,7 @@
       requestAnimationFrame(step);
     }
     function save(){try{localStorage.setItem(SK,JSON.stringify(P));}catch(e){}}
-    function popup(txt,type,subtitle){
-      const el=document.createElement("div");
-      el.className="xp-popup xp-popup--"+type;
-      if(subtitle){
-        const main=document.createElement("div"); main.className="xp-popup-main"; main.textContent=txt;
-        const sub=document.createElement("div"); sub.className="xp-popup-sub"; sub.textContent=subtitle;
-        el.appendChild(main); el.appendChild(sub);
-      }else{ el.textContent=txt; }
-      document.body.appendChild(el);
-      setTimeout(()=>el.remove(),subtitle?3000:1300);
-    }
+    function popup(txt,type){const el=document.createElement("div");el.className="xp-popup xp-popup--"+type;el.textContent=txt;document.body.appendChild(el);setTimeout(()=>el.remove(),1300);}
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
     function moodText(v){return v<=2?"Грустит...":v<=4?"Нормально":v<=7?"Доволен!":"В восторге!";}
@@ -1128,20 +1055,16 @@
       Object.entries(q.stats).forEach(([k,v])=>{
         if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+v,0,sm);
       });
-      const statsPart=statStr(q.stats,isGood);
-      const mainLine=(isGood?"+":"")+q.coins+"💰"+(statsPart?" "+statsPart:"");
-      const reactions=isGood?QUEST_REACTIONS.good:QUEST_REACTIONS.bad;
-      const reaction=reactions[Math.floor(Math.random()*reactions.length)].replace(/{pet}/g,P.petName||"Питомец");
       if(isGood){
         P.xp=(P.xp||0)+10;
         P.angelPoints=(P.angelPoints||0)+1;
         P.petMood=cl((P.petMood||3)+1,0,10);
-        popup(mainLine,"good",reaction);
+        popup("+"+q.coins+"💰","good");
       } else {
         P.xp=cl((P.xp||0)-5,0,999999);
         P.devilPoints=(P.devilPoints||0)+1;
         P.petMood=cl((P.petMood||3)-1,0,10);
-        popup(mainLine,"bad",reaction);
+        popup(q.coins+"💰","bad");
         $("xpBar").classList.add("xp-bar-hit");
         setTimeout(()=>$("xpBar").classList.remove("xp-bar-hit"),1000);
       }
@@ -1263,29 +1186,7 @@
         streak:0,lastActiveDate:null,history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0};
     }
 
-    function showGreeting(useComeback){
-      const el=$("greetingPhrase");
-      if(!el||!P)return;
-      const pet=P.petName||"Питомец";
-      let text="";
-      if(useComeback){
-        text=COMEBACK_PHRASES[Math.floor(Math.random()*COMEBACK_PHRASES.length)].replace(/{pet}/g,pet);
-        el.className="greeting-phrase greeting-phrase--comeback";
-      }else{
-        const hour=new Date().getHours();
-        const dayOfWeek=new Date().getDay();
-        let arr,idx;
-        if(hour<12){ arr=GREETINGS.morning; idx=dayOfWeek===0?6:dayOfWeek-1; text=arr[idx]; }
-        else if(hour<17){ arr=GREETINGS.day; text=arr[Math.floor(Math.random()*arr.length)]; }
-        else if(hour<22){ arr=GREETINGS.evening; text=arr[Math.floor(Math.random()*arr.length)]; }
-        else{ arr=GREETINGS.night; text=arr[Math.floor(Math.random()*arr.length)]; }
-        text=text.replace(/{pet}/g,pet);
-        el.className="greeting-phrase";
-      }
-      el.textContent=text;
-    }
-
-    function showChar(useComeback){
+    function showChar(){
       window.scrollTo(0,0);
       $("characterScreen").classList.remove("screen-hidden-final","screen-hidden");
       $("characterScreen").classList.add("screen-active");
@@ -1296,7 +1197,6 @@
       setTimeout(()=>$("characterCard").classList.remove("character-card-enter"),450);
       $("questsDate").textContent="📅 "+fmtDate();
       buildQuests(); render();
-      showGreeting(useComeback||false);
     }
 
     function restore(){
@@ -1306,16 +1206,11 @@
         const d=JSON.parse(raw);
         if(!d||typeof d!=="object")return;
         if(typeof d.level==="number"){
-          let useComeback=false;
-          if(d.lastVisitDate!==today()){
-            const yesterdayStr=dateStrOffset(-1);
-            if(!d.history||!d.history[yesterdayStr]) useComeback=true;
-            newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3});
-          }
+          if(d.lastVisitDate!==today()) newDay.call(null), Object.assign(d,{quests:{},dayCompleted:false,lastVisitDate:today(),petHunger:cl((d.petHunger||80)-20,0,100),petMood:3});
           if(d.inventory&&d.inventory.flower&&d.lastVisitDate===today()) {}
           P=d;if(!P.customQuests)P.customQuests=[];if(!P.inventory)P.inventory={};
           if(P.streak==null)P.streak=0;if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
-          save(); showChar(useComeback);
+          save(); showChar();
           return;
         }
         if(d.heroName)$("heroName").value=d.heroName;
