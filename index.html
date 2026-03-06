@@ -157,6 +157,11 @@
     .coins-row { margin-top: 4px; font-size: 0.9rem; text-align: center; }
     .coins-row strong { color: var(--accent); font-weight: 600; font-size: 1rem; }
     .shield-indicator { font-size: 0.8rem; text-align: center; color: #55efc4; margin-top: 4px; }
+    .path-scale-wrap { margin-top: 10px; width: 100%; }
+    .path-scale-caption { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 4px; }
+    .path-scale-bar { width: 100%; height: 12px; border-radius: 999px; overflow: hidden; background: #2d2d44; }
+    .path-scale-values { font-size: 0.8rem; text-align: center; margin-top: 4px; color: var(--text-muted); }
+    .path-scale-title { font-size: 0.85rem; font-weight: 600; text-align: center; margin-top: 4px; color: var(--accent); }
 
     .character-divider-title { margin-top: 8px; margin-bottom: 2px; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; color: var(--text-muted); }
     .pet-block { margin-top: 4px; display: grid; gap: 6px; font-size: 0.86rem; }
@@ -199,7 +204,7 @@
     .inspiration-daily-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
     .inspiration-daily-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
     .inspiration-daily-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
-    .inspiration-daily-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .inspiration-daily-btns { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 10px; text-align: center; }
     .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 10px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
     .inspiration-btn-done { background: linear-gradient(135deg, #2ecc71, #00c853); color: white; }
     .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
@@ -225,6 +230,7 @@
     .inspiration-detail-tip { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px; }
     .inspiration-detail-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
     .inspiration-detail-hint { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-bottom: 6px; }
+    .inspiration-detail-actions { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 8px; }
     .inspiration-card--done { background: rgba(46,204,113,0.15) !important; border-color: rgba(46,204,113,0.4) !important; }
     .inspiration-card-mini--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); pointer-events: none; }
     .inspiration-detail-content--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); }
@@ -349,6 +355,10 @@
 
     .shop-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
     .shop-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .shop-sub-tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+    .shop-sub-tab { border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 14px; background: rgba(6,8,30,0.6); color: var(--text-main); cursor: pointer; font-size: 0.85rem; transition: all 0.15s; }
+    .shop-sub-tab:hover { border-color: var(--accent-soft); }
+    .shop-sub-tab.shop-sub-tab--active { border-color: var(--accent); background: rgba(230,194,0,0.15); color: var(--accent); }
     .shop-closed-text { text-align: center; color: #e6c200; font-size: 0.9rem; margin-bottom: 6px; }
     .shop-list { display: grid; gap: 6px; }
     .shop-item {
@@ -595,6 +605,12 @@
             <div class="stat-row"><div class="stat-main"><span class="stat-label">⚡ Энергия</span><span class="stat-value" id="vEN">1/10</span></div><div class="progress"><div class="progress-fill progress-fill--energy" id="bEN"></div></div></div>
             <div class="alignment-row"><span>😇 Ангел: <strong id="angelPts">0</strong></span><span>😈 Чёрт: <strong id="devilPts">0</strong></span></div>
             <div class="coins-row">💰 Монеты: <strong id="coinsDisplay">0</strong></div>
+            <div class="path-scale-wrap">
+              <div class="path-scale-caption">◄ 😈 ░░░░░░░░░░░░░░░░ 😇 ►</div>
+              <div class="path-scale-bar" id="pathScaleBar"></div>
+              <div class="path-scale-values" id="pathScaleValues">😈 0 | 😇 0</div>
+              <div class="path-scale-title" id="pathScaleTitle"></div>
+            </div>
             <div class="shield-indicator" id="shieldIndicator" style="display:none">🛡️ Щит активен</div>
 
             <div class="character-divider-title">─── Питомец ───</div>
@@ -777,6 +793,11 @@
           <div class="tab-pane" id="tabShop">
             <section class="shop-section">
               <div class="shop-title"><span>🛒</span><span id="shopTitleText">Магазин</span></div>
+              <div class="shop-sub-tabs">
+                <button type="button" class="shop-sub-tab shop-sub-tab--active" data-shop-tab="coins">💰 Монеты</button>
+                <button type="button" class="shop-sub-tab" data-shop-tab="angel">😇 Свет</button>
+                <button type="button" class="shop-sub-tab" data-shop-tab="devil">😈 Тень</button>
+              </div>
               <div class="shop-closed-text" id="shopClosedText" style="display:none;">🌙 Магазин закрыт до завтра</div>
               <div class="shop-list" id="shopList"></div>
             </section>
@@ -811,19 +832,19 @@
 
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
-      <button type="button" class="bottom-nav-item bottom-nav-item--active" data-tab="hero">
+      <button type="button" class="bottom-nav-item bottom-nav-item--active" data-tab="hero" title="Персонаж">
         <div class="bottom-nav-icon">🏠</div>
         <div class="bottom-nav-label">Герой</div>
       </button>
-      <button type="button" class="bottom-nav-item" data-tab="quests">
+      <button type="button" class="bottom-nav-item" data-tab="quests" title="Квесты">
         <div class="bottom-nav-icon">⚔️</div>
         <div class="bottom-nav-label">Квесты</div>
       </button>
-      <button type="button" class="bottom-nav-item" data-tab="shop">
+      <button type="button" class="bottom-nav-item" data-tab="shop" title="Магазин">
         <div class="bottom-nav-icon">🛒</div>
         <div class="bottom-nav-label">Магазин</div>
       </button>
-      <button type="button" class="bottom-nav-item" data-tab="stats">
+      <button type="button" class="bottom-nav-item" data-tab="stats" title="Статистика">
         <div class="bottom-nav-icon">📊</div>
         <div class="bottom-nav-label">Стата</div>
       </button>
@@ -988,8 +1009,27 @@
       {id:"dice",icon:"🎲",name:"Кубик удачи",desc:"Случайный стат +5",price:30,once:false},
       {id:"shield",icon:"🛡️",name:"Щит от штрафа",desc:"Защита от 1 штрафа",price:50,once:false}
     ];
+    const SHOP_ANGEL = [
+      {id:"a_nimb",icon:"😇",name:"Нимб Милосердия",desc:"Золотое свечение аватара",price:50,currency:"angel",once:true},
+      {id:"a_wings",icon:"🕊️",name:"Крылья Рассвета",desc:"Крылышки у аватара",price:120,currency:"angel",once:true},
+      {id:"a_armor",icon:"🛡️",name:"Светлая броня",desc:"-1 к требованию босса",price:80,currency:"angel",once:true},
+      {id:"a_bless",icon:"💛",name:"Благословение",desc:"Питомец +10 настроения",price:30,currency:"angel",once:false},
+      {id:"a_tiara",icon:"👸",name:"Тиара Зари",desc:"Головной убор аватара",price:150,currency:"angel",once:true},
+      {id:"a_staff",icon:"🌟",name:"Посох Исцеления",desc:"Защитить 1 день streak",price:100,currency:"angel",once:false},
+      {id:"a_skin",icon:"☁️",name:"Светлый скин питомца",desc:"Небесный вид питомца",price:250,currency:"angel",once:true}
+    ];
+    const SHOP_DEVIL = [
+      {id:"d_horns",icon:"😈",name:"Рога Тени",desc:"Рога у аватара",price:50,currency:"devil",once:true},
+      {id:"d_cloak",icon:"🌑",name:"Теневой плащ",desc:"Плащ у аватара",price:120,currency:"devil",once:true},
+      {id:"d_armor",icon:"⚔️",name:"Тёмная броня",desc:"+2 к одному стату на 24ч",price:80,currency:"devil",once:false},
+      {id:"d_treat",icon:"🍖",name:"Теневое лакомство",desc:"Питомец +10 сытости",price:30,currency:"devil",once:false},
+      {id:"d_crown",icon:"👑",name:"Корона Полуночи",desc:"Головной убор аватара",price:150,currency:"devil",once:true},
+      {id:"d_blade",icon:"🗡️",name:"Клинок Дисциплины",desc:"x2 монеты за квесты на 1 день",price:100,currency:"devil",once:false},
+      {id:"d_skin",icon:"🌑",name:"Тёмный скин питомца",desc:"Теневой вид питомца",price:250,currency:"devil",once:true}
+    ];
 
     let P = null;
+    let currentShopTab = "coins";
 
     function $(id){return document.getElementById(id);}
     function cl(v,mn,mx){return Math.min(mx,Math.max(mn,v));}
@@ -1048,7 +1088,7 @@
         el.appendChild(main); el.appendChild(sub);
       }else{ el.textContent=txt; }
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),subtitle?5000:1300);
+      setTimeout(()=>el.remove(),subtitle?10000:10000);
     }
 
     function moodEmoji(v){return v<=2?"😢":v<=4?"😐":v<=7?"😊":"😍";}
@@ -1101,8 +1141,29 @@
       $("devilPts").textContent=P.devilPoints||0;
       const coins=P.coins||0;
       animateCoins(coins);
+      const angel=P.angelPoints||0, devil=P.devilPoints||0;
+      const pathBar=$("pathScaleBar"), pathVal=$("pathScaleValues"), pathTitle=$("pathScaleTitle");
+      if(pathBar&&pathVal){
+        const total=angel+devil+1;
+        const ratio=angel/total;
+        const devilPct=(1-ratio)*100;
+        pathBar.style.background="linear-gradient(to right, #6c5ce7 0%, #6c5ce7 "+devilPct+"%, #e6c200 "+devilPct+"%, #e6c200 100%)";
+        pathVal.textContent="😈 "+devil+" | 😇 "+angel;
+        const diff=angel-devil;
+        if(pathTitle){
+          if(diff>100) pathTitle.textContent="✨ Хранительница Света", pathTitle.style.display="block";
+          else if(diff<-100) pathTitle.textContent="🌑 Госпожа Теней", pathTitle.style.display="block";
+          else if(Math.abs(diff)<30) pathTitle.textContent="⚖️ Идущая по Грани", pathTitle.style.display="block";
+          else pathTitle.style.display="none";
+        }
+      }
       const shopTitleText=$("shopTitleText");
-      if(shopTitleText) shopTitleText.innerHTML='Магазин — 💰 <span class="shop-title-coins">'+coins+'</span>';
+      if(shopTitleText){
+        const a=P.angelPoints||0, d=P.devilPoints||0;
+        if(currentShopTab==="coins") shopTitleText.innerHTML='💰 Монеты — <span class="shop-title-coins">'+coins+'</span>';
+        else if(currentShopTab==="angel") shopTitleText.innerHTML='😇 Свет — <span class="shop-title-coins">'+a+'</span>';
+        else shopTitleText.innerHTML='😈 Тень — <span class="shop-title-coins">'+d+'</span>';
+      }
       const pt={cat:"🐱",dog:"🐶",dragon:"🐲"};
       $("petIcon").textContent=pt[P.petType]||"🐾";
       $("petNameD").textContent=P.petName||"Питомец";
@@ -1381,8 +1442,10 @@
           <div class="inspiration-detail-desc">${c.desc}</div>
           ${c.tip?'<div class="inspiration-detail-tip">💡 '+c.tip+'</div>':""}
           <div class="inspiration-detail-time">⏱ ${c.time} мин</div>
-          ${done?"":'<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>'}
-          <button type="button" class="inspiration-btn-done" data-insp-id="${c.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
+          <div class="inspiration-detail-actions">
+            ${done?"":'<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>'}
+            <button type="button" class="inspiration-btn-done" data-insp-id="${c.id}" ${done?"disabled":""}>${done?"Выполнено ✓":"✅ Сделала!"}</button>
+          </div>
         `;
       }
       $("inspirationCategories").style.display="none";
@@ -1421,15 +1484,20 @@
       const prevLv=P.level;
       const sm=sMax();
 
-      P.coins=cl((P.coins||0)+q.coins,0,999999);
+      let questCoins=q.coins||0;
+      if(P.doubleCoinsActive) questCoins*=2;
+      P.coins=cl((P.coins||0)+questCoins,0,999999);
       Object.entries(q.stats||{}).forEach(([k,v])=>{
-        if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+v,0,sm);
+        let add=v;
+        if(P.darkArmorActive&&P.darkArmorStat===k) add+=2;
+        if(P.stats[k]!=null) P.stats[k]=cl((P.stats[k]||0)+add,0,sm);
       });
       const statsPart=statStr(q.stats,true);
-      const mainLine="+"+q.coins+"💰"+(statsPart?" "+statsPart:"");
+      const mainLine="+"+questCoins+"💰"+(statsPart?" "+statsPart:"");
       const reaction=QUEST_REACTIONS.good[Math.floor(Math.random()*QUEST_REACTIONS.good.length)].replace(/{pet}/g,P.petName||"Питомец");
       P.xp=(P.xp||0)+10;
-      P.angelPoints=(P.angelPoints||0)+1;
+      if(q.alignment==="angel") P.angelPoints=(P.angelPoints||0)+1;
+      else if(q.alignment==="devil") P.devilPoints=(P.devilPoints||0)+1;
       P.petMood=cl((P.petMood||3)+1,0,10);
       popup(mainLine,"good",reaction);
 
@@ -1451,37 +1519,56 @@
       const closed=P && P.dayCompleted;
       const closedText=$("shopClosedText");
       if(closedText) closedText.style.display=closed?"block":"none";
-      SHOP.forEach(s=>{
+      const arr=currentShopTab==="angel"?SHOP_ANGEL:currentShopTab==="devil"?SHOP_DEVIL:SHOP;
+      const currencyIcon=currentShopTab==="angel"?"😇":currentShopTab==="devil"?"😈":"💰";
+      const balance=currentShopTab==="angel"?(P.angelPoints||0):currentShopTab==="devil"?(P.devilPoints||0):(P.coins||0);
+      arr.forEach(s=>{
         const owned=P.inventory&&P.inventory[s.id];
-        const canBuy=(P.coins||0)>=s.price;
+        const canBuy=balance>=s.price;
         const disabled=closed||(!canBuy&&!owned)||(s.once&&owned);
         const btnText=s.once&&owned?"Куплено ✓":"Купить";
         const div=document.createElement("div");
         div.className="shop-item";
         div.innerHTML=`
           <div class="shop-main"><span class="shop-icon">${s.icon}</span><div class="shop-text"><div class="shop-name">${s.name}</div><div class="shop-desc">${s.desc}</div></div></div>
-          <span class="shop-price">${s.price}💰</span>
+          <span class="shop-price">${s.price}${currencyIcon}</span>
           <button class="shop-buy-btn" data-shop="${s.id}" ${disabled?"disabled":""}>${btnText}</button>
         `;
         list.appendChild(div);
       });
+      document.querySelectorAll(".shop-sub-tab").forEach(btn=>{
+        btn.classList.toggle("shop-sub-tab--active",btn.getAttribute("data-shop-tab")===currentShopTab);
+      });
     }
 
+    function getShopItem(id){
+      return SHOP.find(s=>s.id===id)||SHOP_ANGEL.find(s=>s.id===id)||SHOP_DEVIL.find(s=>s.id===id);
+    }
     function buyItem(id){
       if(!P)return;
       if(!P.inventory)P.inventory={};
-      const item=SHOP.find(s=>s.id===id);
+      const item=getShopItem(id);
       if(!item)return;
       if(item.once&&P.inventory[id])return;
-      if((P.coins||0)<item.price)return;
-      P.coins-=item.price;
+      const currency=item.currency||"coins";
+      const balance=currency==="angel"?(P.angelPoints||0):currency==="devil"?(P.devilPoints||0):(P.coins||0);
+      if(balance<item.price)return;
+      if(currency==="angel") P.angelPoints=(P.angelPoints||0)-item.price;
+      else if(currency==="devil") P.devilPoints=(P.devilPoints||0)-item.price;
+      else P.coins-=item.price;
 
       if(id==="crown") P.inventory.crown=true;
       if(id==="flower") P.inventory.flower=true;
       if(id==="toy") P.inventory.toy=true;
-      if(id==="treat"){P.petHunger=cl((P.petHunger||0)+30,0,100);P.petMood=cl((P.petMood||3)+2,0,10);}
+      if(id==="treat"){P.petHunger=cl((P.petHunger||0)+30,0,100);P.petMood=cl((P.petMood||3)+2,0,10);P.angelPoints=(P.angelPoints||0)+1;}
       if(id==="dice"){const k=STAT_KEYS[Math.floor(Math.random()*STAT_KEYS.length)];P.stats[k]=cl((P.stats[k]||0)+5,0,sMax());popup("🎲 "+STAT_ICONS[k]+"+5","info");}
       if(id==="shield") P.inventory.shield=true;
+      if(id==="a_bless"){P.petMood=cl((P.petMood||3)+10,0,10);popup("💛 +10 настроения питомцу","good");}
+      if(id==="d_treat"){P.petHunger=cl((P.petHunger||0)+10,0,100);popup("🍖 +10 сытости питомцу","good");}
+      if(id==="a_staff") P.streakProtection=true;
+      if(id==="d_armor"){P.darkArmorStat=STAT_KEYS[Math.floor(Math.random()*STAT_KEYS.length)];P.darkArmorActive=true;}
+      if(id==="d_blade") P.doubleCoinsActive=true;
+      if(["a_nimb","a_wings","a_armor","a_tiara","a_skin","d_horns","d_cloak","d_crown","d_skin"].indexOf(id)!==-1) P.inventory[id]=true;
 
       save(); render();
     }
@@ -1521,6 +1608,8 @@
           if(str>=m&&(!P.shownMilestones||P.shownMilestones.indexOf(m)===-1)){
             if(!P.shownMilestones)P.shownMilestones=[];
             P.shownMilestones.push(m);
+            if(m===7){ P.angelPoints=(P.angelPoints||0)+5; }
+            if(m===14){ P.devilPoints=(P.devilPoints||0)+5; }
             if(MILESTONE_PHRASES[m]) popup(MILESTONE_PHRASES[m],"good");
           }
         });
@@ -1541,9 +1630,13 @@
       const lastActive=P.lastActiveDate||"1970-01-01";
       const daysSince=Math.floor((new Date(todayStr)-new Date(lastActive))/86400000);
       let missedDays=daysSince<=1?0:daysSince-1;
+      if(P.streakProtection&&missedDays===1){ missedDays=0; P.streakProtection=false; }
       if(missedDays>=3){ P.streak=0; P.missedDays=0; }
       else if(missedDays>=1){ P.missedDays=missedDays; }
       else if(lastActive===yesterdayStr){ P.streak=(P.streak||0)+1; P.missedDays=0; }
+      P.streakProtection=false;
+      P.darkArmorActive=false;
+      P.doubleCoinsActive=false;
       P.quests={};
       P.dayCompleted=false;
       P.lastVisitDate=todayStr;
@@ -1565,6 +1658,7 @@
         petMood:3,petHunger:80,quests:{},inventory:{},customQuests:[],
         dayCompleted:false,lastVisitDate:today(),createdAt:new Date().toISOString(),
         streak:0,streakStage:0,lastActiveDate:null,missedDays:0,shownMilestones:[],
+        streakProtection:false,darkArmorStat:null,darkArmorActive:false,doubleCoinsActive:false,
         history:{},totalDays:0,totalQuests:0,totalCoinsEarned:0,
         completedCards:{},dailyCard:null,dailyCardDate:null,dailyCardSwitched:false};
     }
@@ -1625,6 +1719,7 @@
           if(P.streak==null)P.streak=0;if(P.streakStage==null)P.streakStage=0;if(P.missedDays==null)P.missedDays=0;if(!P.shownMilestones)P.shownMilestones=[];
           if(!P.history)P.history={};if(P.totalDays==null)P.totalDays=0;if(P.totalQuests==null)P.totalQuests=0;if(P.totalCoinsEarned==null)P.totalCoinsEarned=0;
           if(!P.completedCards)P.completedCards={};if(P.dailyCardSwitched==null)P.dailyCardSwitched=false;
+          if(P.streakProtection==null)P.streakProtection=false;if(P.darkArmorActive==null)P.darkArmorActive=false;if(P.doubleCoinsActive==null)P.doubleCoinsActive=false;
           save(); showChar(useComeback);
           return;
         }
@@ -1692,6 +1787,8 @@
       if(del){const id=del.dataset.del;if(id&&confirm("Удалить квест?")){P.customQuests=(P.customQuests||[]).filter(q=>q.id!==id);save();buildQuests();render();}}
       const buy=e.target.closest(".shop-buy-btn");
       if(buy&&!buy.disabled)buyItem(buy.dataset.shop);
+      const shopTab=e.target.closest(".shop-sub-tab");
+      if(shopTab){currentShopTab=shopTab.getAttribute("data-shop-tab")||"coins";render();}
     });
 
     const addBtn = $("addCustomQuestBtn");
