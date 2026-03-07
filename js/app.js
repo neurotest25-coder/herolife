@@ -868,7 +868,7 @@
   function setTab(tab) {
     currentTab = tab;
     if (P) updateCounter();
-    const map  = {hero:"tabHero", quests:"tabQuests", shop:"tabShop", stats:"tabStats"};
+    const map  = {hero:"tabHero", quests:"tabQuests", shop:"tabShop", stats:"tabStats", map:"tabMap"};
     Object.keys(map).forEach(function(key) {
       const pane = $(map[key]);
       if (!pane) return;
@@ -877,6 +877,15 @@
     document.querySelectorAll(".bottom-nav-item").forEach(function(btn) {
       btn.classList.toggle("bottom-nav-item--active", btn.getAttribute("data-tab") === tab);
     });
+    if (tab === "map") renderMap();
+  }
+
+  function renderMap() {
+    var el = document.getElementById("bossList");
+    if (!el) return;
+    if (!el.children.length || el.innerHTML.trim() === "") {
+      if (typeof buildBossList === "function") buildBossList();
+    }
   }
 
   function setQuestSubTab(subtab) {

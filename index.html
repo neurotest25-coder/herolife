@@ -351,6 +351,14 @@
               </section>
             </div>
 
+            <!-- ═══ ВКЛАДКА: КАРТА КОРОЛЕВСТВА ═══ -->
+            <div class="tab-pane" id="tabMap">
+              <h2>⚔️ Карта королевства</h2>
+              <div id="bossDisclaimer">Боссы — метафоры обычных трудностей. Если проблема серьёзна — поговори со специалистом. Это не слабость, а мудрость 💜</div>
+              <div id="bossList"></div>
+              <div id="bossDetail" style="display:none;"></div>
+            </div>
+
           </div>
         </article>
       </section>
@@ -377,6 +385,10 @@
         <div class="bottom-nav-icon">📊</div>
         <div class="bottom-nav-label">Стата</div>
       </button>
+      <button type="button" class="bottom-nav-item" data-tab="map" title="Карта">
+        <div class="bottom-nav-icon">🗺️</div>
+        <div class="bottom-nav-label">Карта</div>
+      </button>
     </div>
   </nav>
 
@@ -393,6 +405,7 @@
   <script src="js/inspiration.js"></script>
   <script src="js/shop.js"></script>
   <script src="js/stats.js"></script>
+  <script src="js/bosses.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

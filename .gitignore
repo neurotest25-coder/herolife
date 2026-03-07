@@ -1,1 +1,18 @@
- 
+# Старые версии и копии
+старыеверсии/
+index — копия*
+
+# Системные файлы Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Системные файлы Mac
+.DS_Store
+
+# Временные файлы
+*.tmp
+*.log
+
+# Node.js на будущее
+node_modules/ 

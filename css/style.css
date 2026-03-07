@@ -428,7 +428,7 @@ body {
   position: fixed; bottom: 0; left: 0; right: 0; height: 56px;
   background: rgba(4,6,22,0.95); border-top: 1px solid rgba(230,194,0,0.2); z-index: 50;
 }
-.bottom-nav-inner { max-width: 520px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); height: 100%; }
+.bottom-nav-inner { max-width: 520px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); height: 100%; }
 .bottom-nav-item {
   border: none; background: transparent; color: var(--text-muted);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -682,4 +682,83 @@ body {
 .shuffle-smart-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Карточки боссов на карте королевства ── */
+.boss-card {
+  cursor: pointer;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: rgba(6, 8, 30, 0.95);
+  border: 1px solid #e6c200;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.boss-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(230, 194, 0, 0.35);
+}
+.boss-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.boss-card-region {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.boss-card-status {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+.boss-card-reqs {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.boss-card--locked {
+  cursor: default;
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(6, 8, 30, 0.5);
+  opacity: 0.75;
+}
+.boss-card--locked:hover {
+  transform: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+.boss-card--locked .boss-card-status { color: rgba(255, 255, 255, 0.5); }
+
+.boss-card--defeated {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.12);
+}
+.boss-card--defeated .boss-card-status { color: #2ecc71; }
+
+.boss-card--available {
+  animation: boss-card-pulse 2s ease-in-out infinite;
+}
+.boss-card--available:hover {
+  box-shadow: 0 6px 24px rgba(230, 194, 0, 0.5);
+}
+.boss-card--available .boss-card-status { color: #e6c200; }
+.boss-card--available::after {
+  content: "👆 Нажми чтобы начать";
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(230, 194, 0, 0.9);
+  margin-top: 6px;
+}
+@keyframes boss-card-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(230, 194, 0, 0.25); }
+  50% { box-shadow: 0 4px 20px rgba(230, 194, 0, 0.45); }
+}
+#bossDisclaimer {
+  margin-bottom: 20px;
+}
+
+.boss-card {
+  margin-top: 10px;
 }
