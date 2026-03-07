@@ -612,3 +612,5 @@ body {
   color: var(--accent);
   background: rgba(230, 194, 0, 0.1);
 }
+.end-day-wrap { display: none; }
+.quest-counter { display: none; }
