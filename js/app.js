@@ -878,6 +878,7 @@
       btn.classList.toggle("bottom-nav-item--active", btn.getAttribute("data-tab") === tab);
     });
     if (tab === "map") renderMap();
+    if (tab === "map" && typeof buildBossList !== "undefined") buildBossList();
   }
 
   function renderMap() {

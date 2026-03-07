@@ -762,3 +762,14 @@ body {
 .boss-card {
   margin-top: 10px;
 }
+@media (max-width: 480px) {
+  .bottom-nav-inner {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .bottom-nav-label {
+    font-size: 0.55rem;
+  }
+  .bottom-nav-icon {
+    font-size: 1rem;
+  }
+}
