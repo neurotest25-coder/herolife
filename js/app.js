@@ -854,6 +854,30 @@
     });
   }
 
+  function setQuestSubTab(subtab) {
+    if (!subtab) return;
+    document.querySelectorAll(".quest-sub-tab").forEach(function(btn) {
+      btn.classList.toggle("active", btn.dataset.subtab === subtab);
+    });
+    var questsPane = $("questsSubPane");
+    var inspirationPane = $("inspirationSubPane");
+    if (subtab === "smart") {
+      currentQuestView = "smart";
+      if (questsPane) questsPane.classList.add("quest-sub-pane--active");
+      if (inspirationPane) inspirationPane.classList.remove("quest-sub-pane--active");
+      buildQuests();
+    } else if (subtab === "quests") {
+      currentQuestView = "all";
+      if (questsPane) questsPane.classList.add("quest-sub-pane--active");
+      if (inspirationPane) inspirationPane.classList.remove("quest-sub-pane--active");
+      buildQuests();
+    } else if (subtab === "inspiration") {
+      if (questsPane) questsPane.classList.remove("quest-sub-pane--active");
+      if (inspirationPane) inspirationPane.classList.add("quest-sub-pane--active");
+      if (typeof renderInspiration === "function") renderInspiration();
+    }
+  }
+
   // ── ВОССТАНОВИТЬ ПРОФИЛЬ ──────────────────
   function restore() {
     try {
