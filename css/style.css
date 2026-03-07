@@ -307,6 +307,7 @@ body {
 .quest-difficulty-dot--hard { background: #ff4b5c; }
 .quest-title-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 .quest-alignment { font-size: 0.7rem; }
+.quest-daily-challenge-inline { font-size: 0.7rem; color: #e6c200; margin-left: 4px; white-space: nowrap; }
 .quest-stats { font-size: 0.7rem; }
 .quest-stats.good { color: #2ecc71; }
 .quest-stats.bad { color: #ff4b5c; }
