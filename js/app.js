@@ -125,6 +125,8 @@
       text = COMEBACK_PHRASES[
         Math.floor(Math.random() * COMEBACK_PHRASES.length)
       ].replace(/{pet}/g, pet);
+      text = text.replace("не сдалась", genderText("не сдалась", "не сдался"));
+      text = text.replace("открыла", genderText("открыла", "открыл"));
       el.className = "greeting-phrase greeting-phrase--comeback";
     } else {
       const hour      = new Date().getHours();
@@ -146,7 +148,11 @@
         text = arr[Math.floor(Math.random() * arr.length)];
       }
       text = text.replace(/{pet}/g, pet);
+      text = text.replace("готов 🐱", genderText("готова 🐱", "готов 🐱"));
       el.className = "greeting-phrase";
+    }
+    if (P.heroName) {
+      text = genderText("Рада видеть тебя, ", "Рад видеть тебя, ") + P.heroName + "! " + text;
     }
     el.textContent = text;
   }
@@ -211,9 +217,9 @@
     if (pathRight) pathRight.textContent = "😇 " + angel;
     if (pathTitle) {
       const diff = angel - devil;
-      if      (diff >  100) { pathTitle.textContent = "✨ Хранительница Света"; pathTitle.style.display = "block"; }
-      else if (diff < -100) { pathTitle.textContent = "🌑 Госпожа Теней";       pathTitle.style.display = "block"; }
-      else if (Math.abs(diff) < 30) { pathTitle.textContent = "⚖️ Идущая по Грани"; pathTitle.style.display = "block"; }
+      if      (diff >  100) { pathTitle.textContent = "✨ Хранитель(-ница) Света"; pathTitle.style.display = "block"; }
+      else if (diff < -100) { pathTitle.textContent = "🌑 Властитель(-ница) Теней";       pathTitle.style.display = "block"; }
+      else if (Math.abs(diff) < 30) { pathTitle.textContent = "⚖️ Идущий(-ая) по Грани"; pathTitle.style.display = "block"; }
       else { pathTitle.textContent = ""; pathTitle.style.display = "none"; }
     }
 
@@ -648,9 +654,10 @@
       "+" + questCoins + "💰" +
       (statsPart ? " " + statsPart : "") +
       (dogBonus ? " 🐕+10%" : "");
-    const reaction  = QUEST_REACTIONS.good[
+    var reaction  = QUEST_REACTIONS.good[
       Math.floor(Math.random() * QUEST_REACTIONS.good.length)
     ].replace(/{pet}/g, P.petName || "Питомец");
+    reaction = reaction.replace("Ты — героиня ⚔️", genderText("Ты — героиня ⚔️", "Ты — герой ⚔️"));
 
     showQuestToast(mainLine, reaction, "good");
 
@@ -692,7 +699,9 @@
     const petName = P.petName || "Питомец";
     const m       = P.petMood || 3;
 
+    var endAddress = "Ты справился(-ась)! ";
     $("endDayText").innerHTML =
+      endAddress + '<br><br>' +
       'Выполнено: <strong>' + doneGood + '/' + allQ.length + '</strong> ✅<br><br>' +
       'Заработано: <strong>+' + earnedCoins + '💰</strong><br><br>' +
       '😇 +' + doneGood + '<br><br>' +
@@ -996,6 +1005,11 @@
   function getVal(g) {
     const s = document.querySelector('[data-group="' + g + '"].selected');
     return s ? s.dataset.value : null;
+  }
+  function genderText(femaleWord, maleWord) {
+    var g = P && P.gender;
+    if (g === "male") return maleWord;
+    return femaleWord;
   }
 
   // ── КАСТОМНЫЕ КВЕСТЫ ──────────────────────
@@ -1405,5 +1419,15 @@
   // ── СТАРТ ─────────────────────────────────
   setTab("hero");
   restore();
+
+  // Автовыбор по умолчанию на экране создания (если ничего не выбрано)
+  if (!document.querySelector('[data-group="gender"].selected')) {
+    var femaleCard = document.querySelector('[data-group="gender"][data-value="female"]');
+    if (femaleCard) selCard(femaleCard);
+  }
+  if (!document.querySelector('[data-group="pet"].selected')) {
+    var catCard = document.querySelector('[data-group="pet"][data-value="cat"]');
+    if (catCard) selCard(catCard);
+  }
 
 })();
