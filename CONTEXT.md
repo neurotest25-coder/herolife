@@ -104,3 +104,17 @@ herolife/
 git add .
 git commit -m "описание что сделала"
 git push
+
+
+## Известные проблемы (исправить)
+- В app.js функции popup, save, sMax, cl, today 
+  должны быть доступны глобально для других файлов.
+  Решение: window.popup = popup и т.д. — УЖЕ СДЕЛАНО в app.js
+
+## Порядок подключения JS (критично!):
+1. data.js    ← константы и данные
+2. pet.js     ← использует: save, cl, sMax, today
+3. inspiration.js ← использует: P, save, sMax, cl, today, popup
+4. shop.js    ← использует: P, save, cl, sMax, STAT_KEYS
+5. stats.js   ← использует: P, STREAK_ICONS, STREAK_NAMES
+6. app.js     ← всё собирает вместе, объявляет глобальные функции
