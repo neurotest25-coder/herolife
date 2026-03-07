@@ -152,10 +152,6 @@
 
             <!-- ═══ ВКЛАДКА: КВЕСТЫ ═══ -->
             <div class="tab-pane" id="tabQuests">
-              <div class="quest-view-tabs">
-                <button type="button" id="btnSmartQuests" class="quest-view-tab active">⭐ На сегодня</button>
-                <button type="button" id="btnAllQuests" class="quest-view-tab">📜 Все квесты</button>
-              </div>
               <div class="quest-sub-tabs">
                 <button type="button" class="quest-sub-tab active" data-subtab="quests">📜 Квесты</button>
                 <button type="button" class="quest-sub-tab" data-subtab="inspiration">✨ Вдохновение</button>
@@ -163,10 +159,6 @@
 
               <!-- Подвкладка: Квесты -->
               <div class="quest-sub-pane quest-sub-pane--active" id="questsSubPane">
-                <div id="questsProgressBar" class="quests-progress-bar">
-                  <span id="questsProgressText">✅ 0/35 выполнено</span>
-                  <button type="button" id="quickEndDayBtn" class="quick-end-day-btn">🌙 Завершить</button>
-                </div>
                 <section class="quests-section">
                   <div class="quests-title"><span>📜</span><span>Ежедневные квесты</span></div>
                   <div class="quests-date" id="questsDate"></div>
@@ -285,7 +277,7 @@
                   </div>
                 </section>
 
-                <div class="end-day-wrap">
+                <div class="end-day-wrap" style="display:none">
                   <button class="end-day-btn" id="endDayBtn">🌙 Завершить день</button>
                   <div class="end-day-note" id="endDayNote"></div>
                 </div>

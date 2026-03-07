@@ -204,7 +204,12 @@ body {
 .inspiration-daily-time { font-size: 0.8rem; color: var(--accent); margin-bottom: 16px; }
 .inspiration-daily-btns { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 10px; text-align: center; }
 .inspiration-daily-btns button { border: none; border-radius: 999px; padding: 10px 20px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.15s; width: auto; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; }
-.inspiration-btn-done { background: linear-gradient(135deg, #f4d03f, #e6b800, #f39c12); color: #1a1300; box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 16px rgba(230,194,0,0.5); }
+.inspiration-btn-done {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
 .inspiration-btn-done:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; box-shadow: none; }
 .inspiration-btn-switch { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
 .inspiration-btn-switch:disabled { opacity: 0.5; cursor: default; }
@@ -234,6 +239,31 @@ body {
 .inspiration-card-mini--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); pointer-events: none; }
 .inspiration-detail-content--done { background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.4); }
 .inspiration-title--done { text-decoration: line-through; }
+.quests-progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  margin-bottom: 8px;
+  background: var(--bg-main, #1a1a2e);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.quests-progress-bar #questsProgressText { font-size: 0.9rem; color: var(--text-main); }
+.quick-end-day-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  flex-shrink: 0;
+}
 .quests-section { margin-top: 16px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
 .quests-title { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .quests-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
@@ -480,4 +510,104 @@ body {
   .quest-btn { padding: 5px 8px; font-size: 0.7rem; }
   .alignment-row { font-size: 0.8rem; }
   .stat-row { grid-template-columns: minmax(0, 120px) auto; }
+}
+
+/* Плавающая кнопка "Завершить день" над нижней навигацией */
+.floating-end-day {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 520px;
+  padding: 0 20px;
+  z-index: 35;
+  display: none;
+  pointer-events: none;
+}
+.floating-end-day--visible {
+  display: block;
+  pointer-events: auto;
+}
+.floating-end-day button,
+.floating-end-day .floating-end-day-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.floating-end-day .floating-end-day-text { text-align: left; }
+.floating-end-day .floating-end-day-count { font-weight: 700; opacity: 0.95; }
+
+/* Sticky-панель прогресса квестов */
+.quests-progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin: 0 -12px 10px -12px;
+  background: rgba(4, 6, 22, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.quests-progress-bar #questsProgressText {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+.quick-end-day-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  flex-shrink: 0;
+}
+.quick-end-day-btn:disabled {
+  background: rgba(40, 43, 72, 0.95);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* Переключатель вида квестов (На сегодня / Все квесты) */
+.quest-view-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.quest-view-tab {
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.quest-view-tab:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-main);
+}
+.quest-view-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(230, 194, 0, 0.1);
 }

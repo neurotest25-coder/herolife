@@ -8,6 +8,7 @@
   let P           = null;
   let currentTab  = "hero";
   let currentFilter = "all";
+  let currentQuestView = "smart";
 
   // ── УТИЛИТЫ ───────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -303,8 +304,142 @@
     });
   }
 
+  // ── УМНЫЙ ПОДБОР КВЕСТОВ НА ДЕНЬ ─────────
+  function getSmartQuests() {
+    const allQ = QUESTS.concat(P.customQuests || []);
+    const uncompleted = allQ.filter(function(q) {
+      return !(P.quests && P.quests[q.id]);
+    });
+    const ids = {};
+
+    function addUnique(q) {
+      if (!ids[q.id]) { ids[q.id] = q; }
+    }
+    function pickRandom(arr, n) {
+      const shuffled = arr.slice().sort(function() { return Math.random() - 0.5; });
+      return shuffled.slice(0, n);
+    }
+
+    // 1. Два случайных лёгких невыполненных
+    const easy = uncompleted.filter(function(q) {
+      return (q.difficulty || "medium") === "easy";
+    });
+    pickRandom(easy, 2).forEach(addUnique);
+
+    // 2. Стат с минимальным значением — два квеста качающих его
+    let minStat = null, minVal = 999;
+    STAT_KEYS.forEach(function(k) {
+      const v = P.stats[k] || 0;
+      if (v < minVal) { minVal = v; minStat = k; }
+    });
+    if (minStat) {
+      const forStat = uncompleted.filter(function(q) {
+        return q.stats && q.stats[minStat];
+      });
+      pickRandom(forStat, 2).forEach(addUnique);
+    }
+
+    // 3. Один случайный невыполненный (никогда не выполнял — из оставшихся)
+    const rest3 = uncompleted.filter(function(q) { return !ids[q.id]; });
+    const one = pickRandom(rest3, 1)[0];
+    if (one) addUnique(one);
+
+    // 4. Один случайный невыполненный любой сложности
+    const rest4 = uncompleted.filter(function(q) { return !ids[q.id]; });
+    const oneAny = pickRandom(rest4, 1)[0];
+    if (oneAny) addUnique(oneAny);
+
+    // 5. Вызов дня — один hard, награда x2
+    const hard = uncompleted.filter(function(q) {
+      return (q.difficulty || "medium") === "hard";
+    });
+    const challenge = pickRandom(hard, 1)[0];
+    if (challenge) {
+      const copy = Object.assign({}, challenge, {
+        coins: (challenge.coins || 0) * 2,
+        isDailyChallenge: true
+      });
+      addUnique(copy);
+      P.dailyChallengeId = challenge.id;
+    }
+
+    return Object.keys(ids).map(function(id) { return ids[id]; });
+  }
+
+  function buildSmartQuests() {
+    const gList = $("goodQuestsList");
+    if (!gList) return;
+    gList.innerHTML = "";
+
+    const smartList = getSmartQuests();
+
+    smartList.forEach(function(q) {
+      const done      = P.quests && P.quests[q.id];
+      const statsText = statStr(q.stats || {});
+      const diff      = q.difficulty || "medium";
+      const diffCls   = "quest-difficulty-dot--" + diff;
+      const alignIcon = q.alignment === "angel" ? "😇"
+                      : q.alignment === "devil"  ? "😈" : "";
+      const tip       = q.tip || "";
+      const tipHtml   = tip
+        ? '<span class="quest-tip-toggle" data-tip-for="' + q.id + '" title="Подсказка">💡</span>'
+        : "";
+      const tipBlock  = tip
+        ? '<div class="quest-tip" id="tip-' + q.id + '">' + tip + '</div>'
+        : "";
+      const challengeLabel = q.isDailyChallenge
+        ? ' <span class="quest-daily-challenge">⚡ Вызов дня x2</span>'
+        : "";
+
+      const div = document.createElement("div");
+      div.className =
+        "quest-item" +
+        (done ? " quest-item--good-done" : "");
+      div.dataset.questId    = q.id;
+      div.dataset.categories = Object.keys(q.stats || {}).join(",");
+      div.dataset.difficulty = diff;
+
+      div.innerHTML =
+        '<div class="quest-main">' +
+          '<span class="quest-icon">' + q.icon + '</span>' +
+          '<div class="quest-text">' +
+            '<div class="quest-title-row">' +
+              '<span class="quest-difficulty-dot ' + diffCls + '"></span>' +
+              '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' + q.title + challengeLabel + '</div>' +
+              (alignIcon ? '<span class="quest-alignment">' + alignIcon + '</span>' : "") +
+            '</div>' +
+            '<div class="quest-desc">' + (q.desc || "") + tipHtml + '</div>' +
+            tipBlock +
+            (q.custom ? '<span class="quest-delete-link" data-del="' + q.id + '">🗑️ удалить</span>' : "") +
+            '<div class="quest-stats good">' + statsText + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<span class="quest-coins good">' + (q.coins > 0 ? "+" : "") + q.coins + '💰</span>' +
+        '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" ' +
+          (done || P.dayCompleted ? "disabled" : "") + '>' +
+          (done ? "✓" : "○") +
+        '</button>';
+
+      gList.appendChild(div);
+    });
+
+    document.querySelectorAll(".quest-tip-toggle").forEach(function(btn) {
+      btn.addEventListener("click", function(ev) {
+        ev.stopPropagation();
+        const tipEl = $("tip-" + this.dataset.tipFor);
+        if (tipEl) tipEl.classList.toggle("quest-tip--visible");
+      });
+    });
+
+    applyFilter(currentFilter);
+  }
+
   // ── ПОСТРОИТЬ СПИСОК КВЕСТОВ ──────────────
   function buildQuests() {
+    if (currentQuestView === "smart") {
+      buildSmartQuests();
+      return;
+    }
     const gList = $("goodQuestsList");
     if (!gList) return;
     gList.innerHTML = "";
@@ -408,6 +543,19 @@
     }).length;
     const el = $("questCounter");
     if (el) el.textContent = "Выполнено: " + doneGood + "/" + allQ.length;
+
+    const progressText = $("questsProgressText");
+    if (progressText) progressText.textContent = "✅ " + doneGood + "/" + allQ.length + " выполнено";
+    const quickBtn = $("quickEndDayBtn");
+    if (quickBtn) {
+      if (P.dayCompleted) {
+        quickBtn.disabled = true;
+        quickBtn.textContent = "День завершён ✓";
+      } else {
+        quickBtn.disabled = false;
+        quickBtn.textContent = "🌙 Завершить";
+      }
+    }
   }
 
   // ── ВЫПОЛНИТЬ КВЕСТ ───────────────────────
@@ -425,6 +573,7 @@
 
     // Считаем монеты с бонусами
     let questCoins = q.coins || 0;
+    if (q.isDailyChallenge || (P.dailyChallengeId && P.dailyChallengeId === q.id)) questCoins *= 2;
     if (P.doubleCoinsActive) questCoins *= 2;
 
     let dogBonus = false;
@@ -693,6 +842,7 @@
   // ── ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ──────────────────
   function setTab(tab) {
     currentTab = tab;
+    if (P) updateCounter();
     const map  = {hero:"tabHero", quests:"tabQuests", shop:"tabShop", stats:"tabStats"};
     Object.keys(map).forEach(function(key) {
       const pane = $(map[key]);
@@ -1050,6 +1200,23 @@
 
   // Завершить день
   $("endDayBtn").addEventListener("click", endDay);
+  $("quickEndDayBtn").addEventListener("click", endDay);
+
+  $("btnSmartQuests").addEventListener("click", function() {
+    currentQuestView = "smart";
+    this.classList.add("active");
+    var allBtn = $("btnAllQuests");
+    if (allBtn) allBtn.classList.remove("active");
+    buildQuests();
+  });
+  $("btnAllQuests").addEventListener("click", function() {
+    currentQuestView = "all";
+    this.classList.add("active");
+    var smartBtn = $("btnSmartQuests");
+    if (smartBtn) smartBtn.classList.remove("active");
+    buildQuests();
+  });
+
   $("endDayClose").addEventListener("click", function() {
     $("endDayOverlay").classList.remove("overlay--visible");
   });
@@ -1129,6 +1296,29 @@
       if (tab) setTab(tab);
     });
   });
+
+
+  // ── ГЛОБАЛЬНЫЙ ЭКСПОРТ ────────────────────
+  // Делаем функции доступными для других файлов
+  window.save         = save;
+  window.render       = render;
+  window.buildQuests  = buildQuests;
+  window.popup        = popup;
+  window.cl           = cl;
+  window.sMax         = sMax;
+  window.today        = today;
+  window.dateStrOffset = dateStrOffset;
+  window.declDays     = declDays;
+  window.getStreakStage = getStreakStage;
+  window.showQuestToast = showQuestToast;
+  window.applyFilter  = applyFilter;
+  window.updateCounter = updateCounter;
+  window.buildSmartQuests = buildSmartQuests;
+  window.getSmartQuests  = getSmartQuests;
+
+  // Геттер и сеттер для P
+  window.getP = function() { return P; };
+  window.setP = function(newP) { P = newP; window.P = newP; };
 
   // ── СТАРТ ─────────────────────────────────
   setTab("hero");
