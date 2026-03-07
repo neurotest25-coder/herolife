@@ -287,11 +287,28 @@ body {
 .quest-counter { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 8px; }
 
 .quest-item {
+  position: relative;
   display: flex; align-items: center; justify-content: space-between;
   gap: 8px; padding: 8px 10px; border-radius: 12px;
   background: rgba(6,8,30,0.9); border: 1px solid rgba(255,255,255,0.06);
   box-shadow: 0 8px 18px rgba(0,0,0,0.7); cursor: pointer;
 }
+.quest-favorite-btn {
+  position: absolute; top: 6px; left: 6px;
+  width: 26px; height: 26px; padding: 0; border: none; border-radius: 6px;
+  background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5);
+  font-size: 0.9rem; cursor: pointer; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.quest-favorite-btn:hover { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+.quest-item .quest-favorite-btn[title*="Убрать"] { color: #e6c200; }
+.shuffle-smart-wrap { margin-bottom: 10px; }
+.shuffle-smart-btn {
+  width: 100%; padding: 8px 12px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06);
+  color: var(--text-muted); font-size: 0.88rem; cursor: pointer;
+}
+.shuffle-smart-btn:hover { border-color: var(--accent-soft); color: var(--text-main); }
 .quest-main { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
 .quest-icon { font-size: 1.1rem; flex-shrink: 0; }
 .quest-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
@@ -615,3 +632,54 @@ body {
 .end-day-wrap { display: none; }
 .quest-counter { display: none; }
 .quest-view-tabs { display: none; }
+
+/* ── Избранные квесты ───────────────────── */
+.quest-favorite-btn {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 2rem;
+  height: 2rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quest-favorite-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+.quest-item .quest-favorite-btn[title*="Убрать"] {
+  color: #e6c200;
+}
+.quest-item .quest-favorite-btn[title*="Убрать"]:hover {
+  color: #f0d020;
+}
+
+.shuffle-smart-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.shuffle-smart-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.shuffle-smart-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+}

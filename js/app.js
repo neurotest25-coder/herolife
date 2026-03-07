@@ -304,13 +304,25 @@
     });
   }
 
-  // ── УМНЫЙ ПОДБОР КВЕСТОВ НА ДЕНЬ ─────────
+  // ── ИЗБРАННОЕ И УМНЫЙ ПОДБОР ─────────────
+  function toggleFavorite(questId) {
+    if (!P) return;
+    var fav = P.favoriteQuests;
+    if (!fav) P.favoriteQuests = fav = [];
+    var i = fav.indexOf(questId);
+    if (i !== -1) fav.splice(i, 1);
+    else fav.push(questId);
+    if (window.save) window.save();
+    buildQuests();
+  }
+
   function getSmartQuests() {
     const allQ = QUESTS.concat(P.customQuests || []);
     const uncompleted = allQ.filter(function(q) {
       return !(P.quests && P.quests[q.id]);
     });
     const ids = {};
+    const favIds = P.favoriteQuests || [];
 
     function addUnique(q) {
       if (!ids[q.id]) { ids[q.id] = q; }
@@ -318,6 +330,13 @@
     function pickRandom(arr, n) {
       const shuffled = arr.slice().sort(function() { return Math.random() - 0.5; });
       return shuffled.slice(0, n);
+    }
+
+    // 0. До 3 избранных первыми
+    var addedFav = 0;
+    for (var f = 0; f < favIds.length && addedFav < 3; f++) {
+      var q = allQ.find(function(x) { return x.id === favIds[f]; });
+      if (q && !ids[q.id]) { addUnique(q); addedFav++; }
     }
 
     // 1. Два случайных лёгких невыполненных
@@ -390,6 +409,8 @@
       const challengeLabel = q.isDailyChallenge
         ? ' <span class="quest-daily-challenge">⚡ Вызов дня x2</span>'
         : "";
+      const isFav = (P.favoriteQuests || []).indexOf(q.id) !== -1;
+      const starBtn = '<button type="button" class="quest-favorite-btn" data-quest-id="' + q.id + '" title="' + (isFav ? "Убрать из избранного" : "В избранное") + '">' + (isFav ? "⭐" : "☆") + '</button>';
 
       const div = document.createElement("div");
       div.className =
@@ -400,6 +421,7 @@
       div.dataset.difficulty = diff;
 
       div.innerHTML =
+        starBtn +
         '<div class="quest-main">' +
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
@@ -489,6 +511,8 @@
         ? '<div class="quest-tip" id="tip-' + q.id + '">' + tip + '</div>'
         : "";
       const isMystic  = mysticQuestId === q.id;
+      const isFav = (P.favoriteQuests || []).indexOf(q.id) !== -1;
+      const starBtn = '<button type="button" class="quest-favorite-btn" data-quest-id="' + q.id + '" title="' + (isFav ? "Убрать из избранного" : "В избранное") + '">' + (isFav ? "⭐" : "☆") + '</button>';
 
       const div = document.createElement("div");
       div.className =
@@ -500,6 +524,7 @@
       div.dataset.difficulty = diff;
 
       div.innerHTML =
+        starBtn +
         '<div class="quest-main">' +
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
@@ -795,7 +820,7 @@
       level: 1, xp: 0, stats: s,
       angelPoints: 0, devilPoints: 0, coins: 0,
       petMood: 3, petHunger: 80, petStage: 0,
-      quests: {}, inventory: {}, customQuests: [],
+      quests: {}, inventory: {}, customQuests: [], favoriteQuests: [],
       dayCompleted: false,
       lastVisitDate:  today(),
       createdAt:      new Date().toISOString(),
@@ -865,13 +890,19 @@
       currentQuestView = "smart";
       if (questsPane) questsPane.classList.add("quest-sub-pane--active");
       if (inspirationPane) inspirationPane.classList.remove("quest-sub-pane--active");
+      var shuffleWrap = $("shuffleSmartWrap");
+      if (shuffleWrap) shuffleWrap.style.display = "";
       buildQuests();
     } else if (subtab === "quests") {
       currentQuestView = "all";
       if (questsPane) questsPane.classList.add("quest-sub-pane--active");
       if (inspirationPane) inspirationPane.classList.remove("quest-sub-pane--active");
+      var shuffleWrap = $("shuffleSmartWrap");
+      if (shuffleWrap) shuffleWrap.style.display = "none";
       buildQuests();
     } else if (subtab === "inspiration") {
+      var shuffleWrap = $("shuffleSmartWrap");
+      if (shuffleWrap) shuffleWrap.style.display = "none";
       if (questsPane) questsPane.classList.remove("quest-sub-pane--active");
       if (inspirationPane) inspirationPane.classList.add("quest-sub-pane--active");
       if (typeof renderInspiration === "function") renderInspiration();
@@ -901,6 +932,7 @@
 
         // Защита от undefined полей
         if (!P.customQuests)    P.customQuests    = [];
+        if (!P.favoriteQuests)  P.favoriteQuests  = [];
         if (!P.inventory)       P.inventory       = {};
         if (P.streak     == null) P.streak        = 0;
         if (P.missedDays == null) P.missedDays    = 0;
@@ -1089,6 +1121,14 @@
     // Тогл подсказки (не пропускать дальше)
     if (e.target.closest(".quest-tip-toggle") || e.target.closest(".quest-tip")) return;
 
+    // Избранное — звёздочка (не выполнять квест)
+    const favBtn = e.target.closest(".quest-favorite-btn");
+    if (favBtn) {
+      var qid = favBtn.dataset.questId;
+      if (qid) toggleFavorite(qid);
+      return;
+    }
+
     // Кнопка квеста
     const btn = e.target.closest(".quest-btn");
     if (btn && !btn.disabled) {
@@ -1225,6 +1265,14 @@
   // Завершить день
   $("endDayBtn").addEventListener("click", endDay);
   $("quickEndDayBtn").addEventListener("click", endDay);
+
+  var shuffleSmartBtn = $("shuffleSmartBtn");
+  if (shuffleSmartBtn) {
+    shuffleSmartBtn.addEventListener("click", function() {
+      if (currentQuestView !== "smart") return;
+      buildQuests();
+    });
+  }
 
   $("btnSmartQuests").addEventListener("click", function() {
     currentQuestView = "smart";
