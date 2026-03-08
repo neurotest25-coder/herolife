@@ -457,19 +457,9 @@
       const done      = P.quests && P.quests[q.id];
       const statsText = statStr(q.stats || {});
       const diff      = q.difficulty || "medium";
-      const diffCls   = "quest-difficulty-dot--" + diff;
       const alignIcon = q.alignment === "angel" ? "😇"
                       : q.alignment === "devil"  ? "😈" : "";
       const tip       = q.tip || "";
-      const tipHtml   = tip
-        ? '<span class="quest-tip-toggle" data-tip-for="' + q.id + '" title="Подсказка">💡</span>'
-        : "";
-      const tipBlock  = tip
-        ? '<div class="quest-tip" id="tip-' + q.id + '">' + tip + '</div>'
-        : "";
-      const challengeLabel = q.isDailyChallenge
-        ? ' <span class="quest-daily-challenge">⚡ Вызов дня x2</span>'
-        : "";
       const isFav = (P.favoriteQuests || []).indexOf(q.id) !== -1;
       const starBtn = '<button type="button" class="quest-favorite-btn" data-quest-id="' + q.id + '" title="' + (isFav ? "Убрать из избранного" : "В избранное") + '">' + (isFav ? "⭐" : "☆") + '</button>';
 
@@ -483,28 +473,39 @@
 
       div.innerHTML =
         starBtn +
-        '<div class="quest-main">' +
+        '<div class="quest-main" data-expand-id="' + q.id + '">' +
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
-            '<div class="quest-title-row">' +
-              '<span class="quest-difficulty-dot ' + diffCls + '"></span>' +
-              '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' + q.title + challengeLabel + '</div>' +
-              (alignIcon ? '<span class="quest-alignment">' + alignIcon + '</span>' : "") +
+            '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' +
+              q.title +
+              (q.isDailyChallenge ? ' <span class="quest-daily-challenge">⚡ x2</span>' : "") +
             '</div>' +
-            '<div class="quest-desc">' + (q.desc || "") + tipHtml + '</div>' +
-            tipBlock +
-            (q.custom ? '<span class="quest-delete-link" data-del="' + q.id + '">🗑️ удалить</span>' : "") +
-            '<div class="quest-stats good">' + statsText + '</div>' +
+            '<div class="quest-details" id="details-' + q.id + '" style="display:none;">' +
+              '<div class="quest-desc">' + (q.desc || "") + '</div>' +
+              (tip ? '<div class="quest-tip-text">💡 ' + tip + '</div>' : "") +
+              '<div class="quest-stats good">' + statsText + '</div>' +
+              '<div class="quest-meta">' +
+                (q.coins > 0 ? '<span class="quest-coins good">+' + q.coins + '💰</span>' : "") +
+                (alignIcon ? '<span class="quest-alignment">' + alignIcon + '</span>' : "") +
+              '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
-        '<span class="quest-coins good">' + (q.coins > 0 ? "+" : "") + q.coins + '💰</span>' +
-        '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" ' +
+        '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" style="border-radius:20px" ' +
           (done || P.dayCompleted ? "disabled" : "") + '>' +
-          (done ? "✓" : "○") +
+          (done ? "✓ Готово" : "Готово") +
         '</button>';
 
       gList.appendChild(div);
     });
+
+    var items = Array.from(gList.querySelectorAll(".quest-item"));
+    items.sort(function(a, b) {
+      var aDone = a.classList.contains("quest-item--good-done") ? 1 : 0;
+      var bDone = b.classList.contains("quest-item--good-done") ? 1 : 0;
+      return aDone - bDone;
+    });
+    items.forEach(function(item) { gList.appendChild(item); });
 
     document.querySelectorAll(".quest-tip-toggle").forEach(function(btn) {
       btn.addEventListener("click", function(ev) {
@@ -561,16 +562,9 @@
       const done      = P.quests && P.quests[q.id];
       const statsText = statStr(q.stats || {});
       const diff      = q.difficulty || "medium";
-      const diffCls   = "quest-difficulty-dot--" + diff;
       const alignIcon = q.alignment === "angel" ? "😇"
                       : q.alignment === "devil"  ? "😈" : "";
       const tip       = q.tip || "";
-      const tipHtml   = tip
-        ? '<span class="quest-tip-toggle" data-tip-for="' + q.id + '" title="Подсказка">💡</span>'
-        : "";
-      const tipBlock  = tip
-        ? '<div class="quest-tip" id="tip-' + q.id + '">' + tip + '</div>'
-        : "";
       const isMystic  = mysticQuestId === q.id;
       const isFav = (P.favoriteQuests || []).indexOf(q.id) !== -1;
       const starBtn = '<button type="button" class="quest-favorite-btn" data-quest-id="' + q.id + '" title="' + (isFav ? "Убрать из избранного" : "В избранное") + '">' + (isFav ? "⭐" : "☆") + '</button>';
@@ -586,24 +580,27 @@
 
       div.innerHTML =
         starBtn +
-        '<div class="quest-main">' +
+        '<div class="quest-main" data-expand-id="' + q.id + '">' +
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
-            '<div class="quest-title-row">' +
-              '<span class="quest-difficulty-dot ' + diffCls + '"></span>' +
-              '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' + q.title + '</div>' +
-              (alignIcon ? '<span class="quest-alignment">' + alignIcon + '</span>' : "") +
+            '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' +
+              q.title +
+              (q.isDailyChallenge ? ' <span class="quest-daily-challenge">⚡ x2</span>' : "") +
             '</div>' +
-            '<div class="quest-desc">' + (q.desc || "") + tipHtml + '</div>' +
-            tipBlock +
-            (q.custom ? '<span class="quest-delete-link" data-del="' + q.id + '">🗑️ удалить</span>' : "") +
-            '<div class="quest-stats good">' + statsText + '</div>' +
+            '<div class="quest-details" id="details-' + q.id + '" style="display:none;">' +
+              '<div class="quest-desc">' + (q.desc || "") + '</div>' +
+              (tip ? '<div class="quest-tip-text">💡 ' + tip + '</div>' : "") +
+              '<div class="quest-stats good">' + statsText + '</div>' +
+              '<div class="quest-meta">' +
+                (q.coins > 0 ? '<span class="quest-coins good">+' + q.coins + '💰</span>' : "") +
+                (alignIcon ? '<span class="quest-alignment">' + alignIcon + '</span>' : "") +
+              '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
-        '<span class="quest-coins good">' + (q.coins > 0 ? "+" : "") + q.coins + '💰</span>' +
-        '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" ' +
+        '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" style="border-radius:20px" ' +
           (done || P.dayCompleted ? "disabled" : "") + '>' +
-          (done ? "✓" : "○") +
+          (done ? "✓ Готово" : "Готово") +
         '</button>';
 
       gList.appendChild(div);
@@ -1212,6 +1209,17 @@
     if (favBtn) {
       var qid = favBtn.dataset.questId;
       if (qid) toggleFavorite(qid);
+      return;
+    }
+
+    const expandBtn = e.target.closest("[data-expand-id]");
+    if (expandBtn) {
+      var qid = expandBtn.dataset.expandId;
+      var details = document.getElementById("details-" + qid);
+      if (details) {
+        details.style.display =
+          details.style.display === "none" ? "block" : "none";
+      }
       return;
     }
 
