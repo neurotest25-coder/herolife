@@ -94,7 +94,7 @@
     });
 
     document.body.appendChild(el);
-    t = setTimeout(dismiss, 5000);
+    t = setTimeout(dismiss, 3000);
   }
 
   // ── АНИМАЦИЯ МОНЕТ ────────────────────────
@@ -191,7 +191,7 @@
       }
     }
 
-    $("charStatMax").textContent = "Макс. стат: " + sm;
+    
 
     // XP
     $("xpText").textContent    = (P.xp || 0) + "/" + (lv * 100);
@@ -669,7 +669,7 @@
       $("levelUpOverlay").classList.add("overlay--visible");
       setTimeout(function() {
         $("levelUpOverlay").classList.remove("overlay--visible");
-      }, 5000);
+      }, 3000);
     }
     P.level = lv; P.xp = xp; P.xpToNext = lv * 100;
 
@@ -1357,7 +1357,7 @@
     if (lv > pl) {
       $("levelUpLevel").textContent = lv;
       $("levelUpOverlay").classList.add("overlay--visible");
-      setTimeout(function() { $("levelUpOverlay").classList.remove("overlay--visible"); }, 5000);
+      setTimeout(function() { $("levelUpOverlay").classList.remove("overlay--visible"); }, 3000);
     }
     P.level = lv; P.xp = xp;
     save(); render(); checkPetEvolution(P);

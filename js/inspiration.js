@@ -66,7 +66,7 @@ function renderInspiration() {
         '<button type="button" class="inspiration-btn-done" data-insp-id="' + dailyCard.id + '" ' +
           (done ? "disabled" : "") + '>' + (done ? "Выполнено ✓" : "✅ Готово!") + '</button>' +
         '<button type="button" class="inspiration-btn-switch" data-insp-switch ' +
-          (canSwitch ? "" : "disabled") + '>🔄 Другая</button>' +
+          (canSwitch ? "" : "disabled") + '>🔄 Заменить карту</button>' +
       '</div>';
   }
 
