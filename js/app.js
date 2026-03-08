@@ -152,9 +152,9 @@
       el.className = "greeting-phrase";
     }
     if (P.heroName) {
-      text = genderText("Рада видеть тебя, ", "Рад видеть тебя, ") + P.heroName + "! " + text;
+      text = applyGender("{Рада|Рад} видеть тебя, ") + P.heroName + "! " + text;
     }
-    el.textContent = text;
+    el.textContent = applyGender(text);
   }
 
   // ── ГЛАВНЫЙ РЕНДЕР ────────────────────────
@@ -217,9 +217,9 @@
     if (pathRight) pathRight.textContent = "😇 " + angel;
     if (pathTitle) {
       const diff = angel - devil;
-      if      (diff >  100) { pathTitle.textContent = "✨ Хранитель(-ница) Света"; pathTitle.style.display = "block"; }
-      else if (diff < -100) { pathTitle.textContent = "🌑 Властитель(-ница) Теней";       pathTitle.style.display = "block"; }
-      else if (Math.abs(diff) < 30) { pathTitle.textContent = "⚖️ Идущий(-ая) по Грани"; pathTitle.style.display = "block"; }
+      if      (diff >  100) { pathTitle.textContent = applyGender("✨ {Хранительница|Хранитель} Света"); pathTitle.style.display = "block"; }
+      else if (diff < -100) { pathTitle.textContent = applyGender("🌑 {Властительница|Властитель} Теней");       pathTitle.style.display = "block"; }
+      else if (Math.abs(diff) < 30) { pathTitle.textContent = applyGender("⚖️ {Идущая|Идущий} по Грани"); pathTitle.style.display = "block"; }
       else { pathTitle.textContent = ""; pathTitle.style.display = "none"; }
     }
 
@@ -657,7 +657,7 @@
     var reaction  = QUEST_REACTIONS.good[
       Math.floor(Math.random() * QUEST_REACTIONS.good.length)
     ].replace(/{pet}/g, P.petName || "Питомец");
-    reaction = reaction.replace("Ты — героиня ⚔️", genderText("Ты — героиня ⚔️", "Ты — герой ⚔️"));
+    reaction = applyGender(reaction);
 
     showQuestToast(mainLine, reaction, "good");
 
@@ -699,7 +699,7 @@
     const petName = P.petName || "Питомец";
     const m       = P.petMood || 3;
 
-    var endAddress = "Ты справился(-ась)! ";
+    var endAddress = applyGender("{Ты справилась!|Ты справился!} ");
     $("endDayText").innerHTML =
       endAddress + '<br><br>' +
       'Выполнено: <strong>' + doneGood + '/' + allQ.length + '</strong> ✅<br><br>' +
@@ -1010,6 +1010,13 @@
     var g = P && P.gender;
     if (g === "male") return maleWord;
     return femaleWord;
+  }
+  function applyGender(text) {
+    if (!text || typeof text !== "string") return text || "";
+    var gender = P && P.gender;
+    return text.replace(/\{([^|}]+)\|([^}]+)\}/g, function(match, female, male) {
+      return gender === "male" ? male : female;
+    });
   }
 
   // ── КАСТОМНЫЕ КВЕСТЫ ──────────────────────
@@ -1422,6 +1429,7 @@
   window.getStreakStage = getStreakStage;
   window.showQuestToast = showQuestToast;
   window.applyFilter  = applyFilter;
+  window.applyGender  = applyGender;
   window.updateCounter = updateCounter;
   window.buildSmartQuests = buildSmartQuests;
   window.getSmartQuests  = getSmartQuests;

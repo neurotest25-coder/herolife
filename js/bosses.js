@@ -11,9 +11,9 @@ var BOSSES = [
     levelRequired: 5,
     requirements: { energy: 12, discipline: 8 },
     story: "Существо из тумана. Люди в его власти ходят с открытыми глазами, но спят. Делают одно и то же каждый день, не замечая жизни вокруг.",
-    victoryText: "Туман рассеивается. Мир яркий, живой. Впервые ты чувствуешь, что по-настоящему проснулся(-ась).",
+    victoryText: "Туман рассеивается. Мир яркий, живой. Впервые ты чувствуешь, что по-настоящему {проснулась|проснулся}.",
     defeatText: "Туман густеет. Нужно больше энергии и дисциплины, чтобы пробиться сквозь него.",
-    reward: { title: "Пробудившийся(-аяся)", coins: 50, special: null },
+    reward: { title: "{Пробудившаяся|Пробудившийся}", coins: 50, special: null },
     defeated: false
   },
   {
@@ -26,7 +26,7 @@ var BOSSES = [
     story: "Ледяная фигура, которая замораживает дела, планы и мечты. Шепчет: не сейчас, подожди ещё немного.",
     victoryText: "Лёд трескается. Под ним зелёная трава. Начать было совсем не так страшно, как казалось.",
     defeatText: "Лёд держит крепко. Прокачай дисциплину, интеллект и силу, чтобы растопить его.",
-    reward: { title: "Сокрушитель(-ница) Льда", coins: 75, special: null },
+    reward: { title: "{Сокрушительница|Сокрушитель} Льда", coins: 75, special: null },
     defeated: false
   },
   {
@@ -39,7 +39,7 @@ var BOSSES = [
     story: "Фигура без лица, которая не атакует, а забирает. Цвета тускнеют, еда теряет вкус, музыка замолкает. Это не лень — это истощение.",
     victoryText: "Мир обретает цвет. Пение птиц. Запах кофе. Мелочи, из которых состоит настоящая жизнь.",
     defeatText: "Тень накрывает. Позаботься о здоровье и энергии — ты заслуживаешь отдыха.",
-    reward: { title: "Познавший(-ая) Тишину", coins: 100, special: "День отдыха — раз в неделю пропуск без потери streak" },
+    reward: { title: "{Познавшая|Познавший} Тишину", coins: 100, special: "День отдыха — раз в неделю пропуск без потери streak" },
     defeated: false
   },
   {
@@ -52,7 +52,7 @@ var BOSSES = [
     story: "Паучиха плетёт паутину из мыслей «а что если». Чем больше думаешь, тем гуще сеть. Анализ превращается в паралич.",
     victoryText: "Нити тоньше, чем казалось. Оказывается, нужно было просто сделать первый шаг.",
     defeatText: "Паутина держит. Развивай силу, дисциплину и интеллект, чтобы разорвать сомнения.",
-    reward: { title: "Разрубивший(-ая) Узел", coins: 100, special: null },
+    reward: { title: "{Разрубившая|Разрубивший} Узел", coins: 100, special: null },
     defeated: false
   },
   {
@@ -62,10 +62,10 @@ var BOSSES = [
     region: "Зеркальный лабиринт",
     levelRequired: 35,
     requirements: { charisma: 22, health: 18, intelligence: 18 },
-    story: "Твоя копия говорит твоим голосом. Тебе просто повезло — скоро все поймут, что ты самозванка(-ец). Ты слышал(-а) этот голос раньше?",
-    victoryText: "Зеркала трескаются. Самозванка улыбается — наконец ты поверил(-а) в себя. Она была только отражением страха.",
+    story: "Твоя копия говорит твоим голосом. Тебе просто повезло — скоро все поймут, что ты {самозванка|самозванец}. Ты {слышала|слышал} этот голос раньше?",
+    victoryText: "Зеркала трескаются. Самозванка улыбается — наконец ты {поверила|поверил} в себя. Она была только отражением страха.",
     defeatText: "Отражения множатся. Прокачай харизму, здоровье и интеллект — поверь в себя.",
-    reward: { title: "Подлинный(-ая)", coins: 125, special: "уникальная рамка аватара" },
+    reward: { title: "{Подлинная|Подлинный}", coins: 125, special: "уникальная рамка аватара" },
     defeated: false
   },
   {
@@ -88,7 +88,7 @@ var BOSSES = [
     region: "Серый замок",
     levelRequired: 50,
     requirements: { health: 30, intelligence: 30, strength: 30, charisma: 30, discipline: 30, energy: 30 },
-    story: "Она была такой же, как ты. Хотел(-а) меняться и менял(-а). Потом устал(-а) и решил(-а), что ничего не имеет смысла. Серая Королева — это ты через 10 лет, если сдашься.",
+    story: "Она была такой же, как ты. {Хотела|Хотел} меняться и {меняла|менял}. Потом {устала|устал} и {решила|решил}, что ничего не имеет смысла. Серая Королева — это ты через 10 лет, если сдашься.",
     victoryText: {
       angel: "Ты садишься рядом с ней. Показываешь свой путь. Она плачет и берёт твою руку. Королевство спасено светом.",
       devil: "Ты смотришь ей в глаза. Этот трон — мой. Она отступает. Королевство под твоей властью.",
@@ -97,9 +97,9 @@ var BOSSES = [
     defeatText: "Она смотрит устало. Ещё не время. Прокачай все статы до 30 и вернись.",
     reward: {
       titleByAlignment: true,
-      titleAngel: "Светлый(-ая) Правитель",
-      titleDevil: "Тёмный(-ая) Властитель",
-      titleBalance: "Хранитель(-ница) Баланса",
+      titleAngel: "{Светлая Правительница|Светлый Правитель}",
+      titleDevil: "{Тёмная Властительница|Тёмный Властитель}",
+      titleBalance: "{Хранительница|Хранитель} Баланса",
       coins: 500,
       special: "финальный экран"
     },
@@ -179,14 +179,19 @@ function getBossReward(boss, profile) {
       title = r.titleBalance;
       victoryText = boss.victoryText.balance;
     }
+    title = typeof window.applyGender === "function" ? window.applyGender(title) : title;
+    victoryText = typeof window.applyGender === "function" ? window.applyGender(victoryText) : victoryText;
     return { title: title, coins: r.coins, special: r.special, victoryText: victoryText };
   }
-  return {
-    title: r.title,
+  var result = {
+    title: typeof window.applyGender === "function" ? window.applyGender(r.title || "") : (r.title || ""),
     coins: r.coins,
     special: r.special,
-    victoryText: typeof boss.victoryText === "string" ? boss.victoryText : boss.victoryText.balance
+    victoryText: typeof boss.victoryText === "string"
+      ? (typeof window.applyGender === "function" ? window.applyGender(boss.victoryText) : boss.victoryText)
+      : (typeof window.applyGender === "function" ? window.applyGender(boss.victoryText.balance) : boss.victoryText.balance)
   };
+  return result;
 }
 
 /**
@@ -206,7 +211,7 @@ function defeatBoss(bossId, profile) {
   }
 
   profile.coins = (profile.coins || 0) + reward.coins;
-  profile.title = reward.title;
+  profile.title = typeof window.applyGender === "function" ? window.applyGender(reward.title || "") : (reward.title || "");
 
   if (reward.special) {
     if (bossId === 3) {
@@ -369,12 +374,14 @@ function bossFightResult(bossId, isVictory) {
     defeatBoss(bossId, profile);
     var reward = getBossReward(boss, profile);
     victoryText = reward.victoryText || (typeof boss.victoryText === "string" ? boss.victoryText : boss.victoryText.balance);
+    victoryText = typeof window.applyGender === "function" ? window.applyGender(victoryText) : victoryText;
+    var rewardTitle = typeof window.applyGender === "function" ? window.applyGender(reward.title || "") : (reward.title || "");
     detailEl.innerHTML =
       "<button type=\"button\" class=\"boss-detail-back\" id=\"bossDetailBackBtn\">← Назад</button>" +
       "<div class=\"boss-detail-emoji\">" + boss.emoji + "</div>" +
       "<div class=\"boss-result-title\">Победа!</div>" +
       "<div class=\"boss-detail-story boss-result-text\">" + victoryText + "</div>" +
-      "<div class=\"boss-detail-reward\">Титул: " + (reward.title || "") + ", +" + (reward.coins || 0) + " 💰</div>" +
+      "<div class=\"boss-detail-reward\">Титул: " + rewardTitle + ", +" + (reward.coins || 0) + " 💰</div>" +
       "<button type=\"button\" class=\"boss-detail-btn\" id=\"bossResultBackBtn\">← Вернуться к карте</button>";
   } else {
     detailEl.innerHTML =
