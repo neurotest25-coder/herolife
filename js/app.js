@@ -1385,6 +1385,20 @@
     }
   });
 
+  var dbgDevMode = $("dbgDevMode");
+  if (dbgDevMode) {
+    dbgDevMode.addEventListener("click", function() {
+      if (!P) return;
+      if (!P.stats) P.stats = {};
+      STAT_KEYS.forEach(function(k) { P.stats[k] = 50; });
+      P.level = 55;
+      P.coins = 9999;
+      if (typeof window.save === "function") window.save();
+      if (typeof window.render === "function") window.render();
+      alert("⚔️ Режим разраба! Уровень 55, все статы 50");
+    });
+  }
+
   // Навигация
   document.querySelectorAll(".bottom-nav-item").forEach(function(btn) {
     btn.addEventListener("click", function() {
