@@ -268,13 +268,13 @@
     const pathLeft  = $("pathScaleLeft");
     const pathTitle = $("pathScaleTitle");
     const pathRight = $("pathScaleRight");
-    if (pathLeft)  pathLeft.textContent  = "😈 " + devil;
-    if (pathRight) pathRight.textContent = "😇 " + angel;
+    if (pathLeft)  pathLeft.textContent  = "🔥 Путь Воли: " + devil;
+    if (pathRight) pathRight.textContent = "✨ Путь Созидания: " + angel;
     if (pathTitle) {
       const diff = angel - devil;
-      if      (diff >  100) { pathTitle.textContent = applyGender("✨ {Хранительница|Хранитель} Света"); pathTitle.style.display = "block"; }
-      else if (diff < -100) { pathTitle.textContent = applyGender("🌑 {Властительница|Властитель} Теней");       pathTitle.style.display = "block"; }
-      else if (Math.abs(diff) < 30) { pathTitle.textContent = applyGender("⚖️ {Идущая|Идущий} по Грани"); pathTitle.style.display = "block"; }
+      if      (diff >  100) { pathTitle.textContent = applyGender("✨ {Хранительница|Хранитель} Созидания"); pathTitle.style.display = "block"; }
+      else if (diff < -100) { pathTitle.textContent = applyGender("🔥 {Воительница|Воитель} Воли");       pathTitle.style.display = "block"; }
+      else if (Math.abs(diff) < 30) { pathTitle.textContent = applyGender("⚖️ {Идущая|Идущий} своим путём"); pathTitle.style.display = "block"; }
       else { pathTitle.textContent = ""; pathTitle.style.display = "none"; }
     }
 
@@ -1359,21 +1359,6 @@
       buildQuests();
     });
   }
-
-  $("btnSmartQuests").addEventListener("click", function() {
-    currentQuestView = "smart";
-    this.classList.add("active");
-    var allBtn = $("btnAllQuests");
-    if (allBtn) allBtn.classList.remove("active");
-    buildQuests();
-  });
-  $("btnAllQuests").addEventListener("click", function() {
-    currentQuestView = "all";
-    this.classList.add("active");
-    var smartBtn = $("btnSmartQuests");
-    if (smartBtn) smartBtn.classList.remove("active");
-    buildQuests();
-  });
 
   $("endDayClose").addEventListener("click", function() {
     $("endDayOverlay").classList.remove("overlay--visible");

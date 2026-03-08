@@ -18,7 +18,7 @@
       Ты когда-нибудь бросала трекер привычек на третий день?<br><br>
       Мы тоже. Поэтому сделали игру 🎮<br><br>
       Здесь мытьё посуды даёт +1💪<br>
-      а сон до 23:00 побеждает тёмные силы
+      а сон до 23:00 побеждает Серую Королеву
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot onboarding-dot--active"></span>
@@ -36,11 +36,15 @@
     <h2 class="onboarding-title">Выполняй квесты — прокачивай себя</h2>
     <p class="onboarding-text">
       Обычные дела дают реальный результат:<br><br>
-      💧 Стакан воды = +1❤️<br>
-      🚶 Прогулка = +2❤️ +1⚡<br>
-      📖 10 страниц книги = +2🧠<br><br>
+      💧 Стакан воды = +1❤️ здоровья <br>
+      🚶 Прогулка = +2❤️ +1⚡ энергии<br>
+      📖 10 страниц книги = +2🧠 интеллекта<br><br>
       Даже один квест в день —<br>
       это уже победа 💜
+	  <br><br>
+	  ✨ Созидание 😇 — забота, рост, гармония<br>
+	  🔥 Воля 😈  — дисциплина, сила, порядок<br>
+	  Оба пути ведут к победе!
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot"></span>
@@ -241,14 +245,12 @@
 
             <!-- ═══ ВКЛАДКА: КВЕСТЫ ═══ -->
             <div class="tab-pane" id="tabQuests">
-              <div class="quest-view-tabs">
-                <button type="button" id="btnSmartQuests" class="quest-view-tab active">⭐ На сегодня</button>
-                <button type="button" id="btnAllQuests" class="quest-view-tab">📜 Все квесты</button>
-              </div>
+            
               <div class="quest-sub-tabs">
-                <button type="button" class="quest-sub-tab active" data-subtab="smart">⭐ На сегодня</button>
-				<button type="button" class="quest-sub-tab" data-subtab="quests">📜 Все квесты</button>
-                <button type="button" class="quest-sub-tab" data-subtab="inspiration">✨ Вдохновение</button>
+                <button type="button" class="quest-sub-tab active" data-subtab="smart">⭐ Сегодня</button>
+				<button type="button" class="quest-sub-tab" data-subtab="quests">📜 Все
+				</button>
+                <button type="button" class="quest-sub-tab" data-subtab="inspiration">✨ Идеи</button>
               </div>
 
               <!-- Подвкладка: Квесты -->
@@ -273,9 +275,7 @@
                     <button type="button" class="filter-btn" data-filter="charisma" title="Харизма">✨</button>
                     <button type="button" class="filter-btn" data-filter="discipline" title="Дисциплина">🛡️</button>
                     <button type="button" class="filter-btn" data-filter="energy" title="Энергия">⚡</button>
-                    <button type="button" class="filter-btn" data-filter="easy" title="Лёгкие">●</button>
-                    <button type="button" class="filter-btn" data-filter="medium" title="Средние">●</button>
-                    <button type="button" class="filter-btn" data-filter="hard" title="Сложные">●</button>
+                    
                   </div>
 
                   <div class="character-divider-title">── ✅ Выполни сегодня ──</div>
@@ -325,8 +325,8 @@
                         <label class="field-label" for="customQuestAlignment"><span>Выравнивание</span></label>
                         <select id="customQuestAlignment" class="text-input">
                           <option value="neutral">— Нейтральное</option>
-                          <option value="angel">😇 Ангел</option>
-                          <option value="devil">😈 Чёрт</option>
+                          <option value="angel">😇 Созидание</option>
+                          <option value="devil">😈 Воля</option>
                         </select>
                       </div>
 
@@ -408,8 +408,8 @@
                 <div class="shop-title"><span>🛒</span><span id="shopTitleText">Магазин</span></div>
                 <div class="shop-sub-tabs">
                   <button type="button" class="shop-sub-tab shop-sub-tab--active" data-shop-tab="coins">💰 Монеты</button>
-                  <button type="button" class="shop-sub-tab" data-shop-tab="angel">😇 Свет</button>
-                  <button type="button" class="shop-sub-tab" data-shop-tab="devil">😈 Тень</button>
+                  <button type="button" class="shop-sub-tab" data-shop-tab="angel">😇 Созидание</button>
+                  <button type="button" class="shop-sub-tab" data-shop-tab="devil">😈 Воля</button>
                 </div>
                 <div class="shop-closed-text" id="shopClosedText" style="display:none;">🌙 Магазин закрыт до завтра</div>
                 <div class="shop-list" id="shopList"></div>
