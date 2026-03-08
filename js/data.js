@@ -336,30 +336,58 @@ const INSPIRATION_CARDS = {
 
 // ── МАГАЗИНЫ ───────────────────────────────
 const SHOP = [
-  {id:"crown",  icon:"👑", name:"Корона новичка",    desc:"Добавляет 👑 к аватару",              price:50,  once:true},
-  {id:"flower", icon:"🌺", name:"Цветок в комнату",  desc:"+1 здоровье каждый день",             price:80,  once:true},
-  {id:"treat",  icon:"🍖", name:"Угощение для пета", desc:"+30% сытости, +2 настроение",          price:20,  once:false},
-  {id:"toy",    icon:"🎀", name:"Игрушка для пета",  desc:"Играть 1 раз в день, +3 настроение",  price:80,  once:true},
-  {id:"dice",   icon:"🎲", name:"Кубик удачи",       desc:"Случайный стат +5",                   price:30,  once:false},
-  {id:"shield", icon:"🛡️", name:"Щит от штрафа",    desc:"Защита от 1 штрафа",                  price:50,  once:false}
+  {id:"crown",  icon:"👑", name:"Корона новичка",
+   desc:"Добавляет 👑 к аватару",
+   price:120, once:true},
+  {id:"flower", icon:"🌺", name:"Цветок в комнату",
+   desc:"+1 здоровье каждый день",
+   price:100, once:true},
+  {id:"treat",  icon:"🍖", name:"Угощение для питомца",
+   desc:"+30% сытости, +2 настроение",
+   price:15, once:false},
+  {id:"toy",    icon:"🎀", name:"Игрушка для питомца",
+   desc:"Играть 1 раз в день, +3 настроение",
+   price:60, once:true},
+  {id:"dice",   icon:"🎲", name:"Кубик удачи",
+   desc:"Случайный стат +5",
+   price:25, once:false},
+  {id:"potion", icon:"🍵", name:"Зелье энергии",
+   desc:"+5⚡ прямо сейчас",
+   price:20, once:false}
 ];
 
 const SHOP_ANGEL = [
-  {id:"a_nimb",   icon:"😇", name:"Нимб Милосердия",    desc:"Золотое свечение аватара",      price:15, currency:"angel", once:true},
-  {id:"a_wings",  icon:"🕊️", name:"Крылья Рассвета",   desc:"Крылышки у аватара",            price:35, currency:"angel", once:true},
-  {id:"a_armor",  icon:"🛡️", name:"Светлая броня",      desc:"-1 к требованию босса",         price:25, currency:"angel", once:true},
-  {id:"a_bless",  icon:"💛", name:"Благословение",      desc:"Питомец +10 настроения",        price:10, currency:"angel", once:false},
-  {id:"a_tiara",  icon:"👸", name:"Тиара Зари",         desc:"Головной убор аватара",         price:45, currency:"angel", once:true},
-  {id:"a_staff",  icon:"🌟", name:"Посох Исцеления",    desc:"Защитить 1 день streak",        price:30, currency:"angel", once:false},
-  {id:"a_skin",   icon:"☁️", name:"Светлый скин питомца", desc:"Небесный вид питомца",       price:75, currency:"angel", once:true}
+  {id:"a_bless",  icon:"💛", name:"Благословение",
+   desc:"Питомец +10 настроения",
+   price:8, currency:"angel", once:false},
+  {id:"a_armor",  icon:"🛡️", name:"Светлая броня",
+   desc:"-1 к требованию босса",
+   price:20, currency:"angel", once:true},
+  {id:"a_staff",  icon:"🌟", name:"Защита серии",
+   desc:"Защищает твою серию на 1 день",
+   price:25, currency:"angel", once:false},
+  {id:"a_amulet", icon:"🌙", name:"Амулет роста",
+   desc:"x2 очки Созидания на сегодня",
+   price:30, currency:"angel", once:false},
+  {id:"a_skin",   icon:"☁️", name:"Светлый скин питомца",
+   desc:"Небесный вид питомца",
+   price:60, currency:"angel", once:true}
 ];
 
 const SHOP_DEVIL = [
-  {id:"d_horns",  icon:"😈", name:"Рога Тени",          desc:"Рога у аватара",                price:15, currency:"devil", once:true},
-  {id:"d_cloak",  icon:"🌑", name:"Теневой плащ",       desc:"Плащ у аватара",                price:35, currency:"devil", once:true},
-  {id:"d_armor",  icon:"⚔️", name:"Тёмная броня",       desc:"+2 к одному стату на 24ч",      price:25, currency:"devil", once:false},
-  {id:"d_treat",  icon:"🍖", name:"Теневое лакомство",  desc:"Питомец +10 сытости",           price:10, currency:"devil", once:false},
-  {id:"d_crown",  icon:"👑", name:"Корона Полуночи",    desc:"Головной убор аватара",         price:45, currency:"devil", once:true},
-  {id:"d_blade",  icon:"🗡️", name:"Клинок Дисциплины", desc:"x2 монеты за квесты на 1 день", price:30, currency:"devil", once:false},
-  {id:"d_skin",   icon:"🌑", name:"Тёмный скин питомца", desc:"Теневой вид питомца",         price:75, currency:"devil", once:true}
+  {id:"d_treat",  icon:"🍖", name:"Теневое лакомство",
+   desc:"Питомец +10 сытости",
+   price:8, currency:"devil", once:false},
+  {id:"d_armor",  icon:"⚔️", name:"Тёмная броня",
+   desc:"+2 к одному стату на 24ч",
+   price:20, currency:"devil", once:false},
+  {id:"d_blade",  icon:"🗡️", name:"Клинок Дисциплины",
+   desc:"x2 монеты за квесты на сегодня",
+   price:25, currency:"devil", once:false},
+  {id:"d_seal",   icon:"🎯", name:"Печать цели",
+   desc:"Следующий квест даёт x3 монеты",
+   price:30, currency:"devil", once:false},
+  {id:"d_skin",   icon:"🌑", name:"Тёмный скин питомца",
+   desc:"Теневой вид питомца",
+   price:60, currency:"devil", once:true}
 ];

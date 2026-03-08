@@ -88,12 +88,13 @@ function buyItem(id) {
                : currency === "devil"  ? (P.devilPoints || 0)
                : (P.coins || 0);
 
-  if (balance < item.price) return;
+  var price = Number(item.price);
+  if (balance < price) return;
 
   // Списать валюту
-  if (currency === "angel")      P.angelPoints = (P.angelPoints || 0) - item.price;
-  else if (currency === "devil") P.devilPoints = (P.devilPoints || 0) - item.price;
-  else                           P.coins = (P.coins || 0) - item.price;
+  if (currency === "angel")      P.angelPoints = (P.angelPoints || 0) - price;
+  else if (currency === "devil") P.devilPoints = (P.devilPoints || 0) - price;
+  else                           P.coins = (P.coins || 0) - price;
 
   // Эффекты предметов
   if (id === "crown")  P.inventory.crown  = true;
@@ -106,7 +107,7 @@ function buyItem(id) {
 
     if (hunger > 85) {
       if (!confirm(petName + " сыт (" + hunger + "%). Всё равно покормить?")) {
-        P.coins = (P.coins || 0) + item.price;
+        P.coins = (P.coins || 0) + price;
         if (window.setP) window.setP(P);
         if (window.save) window.save();
         if (window.render) window.render();
@@ -143,14 +144,60 @@ function buyItem(id) {
     window.popup("🍖 +10 сытости питомцу", "good");
   }
 
-  if (id === "a_staff")  P.streakProtection = true;
+  if (id === "a_staff") {
+    P.streakProtection = true;
+    if (window.showQuestToast) window.showQuestToast(
+      "🌟 Серия защищена!",
+      "Огонёк 🔥 не погаснет сегодня даже без квестов",
+      "good"
+    );
+  }
 
   if (id === "d_armor") {
     P.darkArmorStat   = STAT_KEYS[Math.floor(Math.random() * STAT_KEYS.length)];
     P.darkArmorActive = true;
+    if (window.showQuestToast) window.showQuestToast(
+      "⚔️ Тёмная броня надета!",
+      "+" + 2 + " к " + STAT_ICONS[P.darkArmorStat] + " за каждый квест сегодня",
+      "good"
+    );
   }
 
-  if (id === "d_blade") P.doubleCoinsActive = true;
+  if (id === "d_blade") {
+    P.doubleCoinsActive = true;
+    if (window.showQuestToast) window.showQuestToast(
+      "🗡️ Клинок Дисциплины активирован!",
+      "x2 монеты за все квесты сегодня 💰",
+      "good"
+    );
+  }
+
+  if (id === "potion") {
+    P.stats.energy = window.cl((P.stats.energy || 0) + 5, 0, window.sMax());
+    if (window.showQuestToast) window.showQuestToast(
+      "🍵 +5⚡ Энергия",
+      "Зелье подействовало! Чувствуешь прилив сил?",
+      "good"
+    );
+  }
+
+  if (id === "a_amulet") {
+    P.amuletActive = true;
+    if (window.showQuestToast) window.showQuestToast(
+      "🌙 Амулет роста активирован!",
+      "Сегодня очки Созидания x2 ✨",
+      "good"
+    );
+  }
+
+  if (id === "d_seal") {
+    P.sealActive = true;
+    if (window.showQuestToast) window.showQuestToast(
+      "🎯 Печать цели активирована!",
+      "Следующий квест даст x3 монеты 🔥",
+      "good"
+    );
+  }
 
   var visualItems = ["a_nimb","a_wings","a_armor","a_tiara","a_skin",
                      "d_horns","d_cloak","d_crown","d_skin"];
