@@ -4,6 +4,61 @@
 
 (function () {
 
+  // ── ОНБОРДИНГ ──────────────────────────────
+  function initOnboarding() {
+    var screen = document.getElementById("onboardingScreen");
+    if (!screen) return;
+
+    screen.style.display = "";
+    screen.classList.remove("onboarding-screen--hidden");
+
+    // Если онбординг уже пройден — скрыть сразу
+    if (localStorage.getItem("heroLifeOnboardingDone")) {
+      screen.style.display = "none";
+      return;
+    }
+
+    // Показать онбординг
+    screen.classList.remove("onboarding-screen--hidden");
+
+    function goToSlide(n) {
+      for (var i = 1; i <= 4; i++) {
+        var slide = document.getElementById("slide" + i);
+        if (!slide) continue;
+        if (i === n) {
+          slide.classList.remove("onboarding-slide--hidden");
+        } else {
+          slide.classList.add("onboarding-slide--hidden");
+        }
+      }
+    }
+
+    function finishOnboarding() {
+      localStorage.setItem("heroLifeOnboardingDone", "1");
+      screen.style.display = "none";
+    }
+
+    // Кнопки "Далее"
+    var btn1 = document.getElementById("slide1Btn");
+    var btn2 = document.getElementById("slide2Btn");
+    var btn3 = document.getElementById("slide3Btn");
+    var btn4 = document.getElementById("slide4Btn");
+
+    if (btn1) btn1.addEventListener("click", function() { goToSlide(2); });
+    if (btn2) btn2.addEventListener("click", function() { goToSlide(3); });
+    if (btn3) btn3.addEventListener("click", function() { goToSlide(4); });
+    if (btn4) btn4.addEventListener("click", finishOnboarding);
+
+    // Кнопки "Пропустить"
+    var skip1 = document.getElementById("onboardingSkip");
+    var skip2 = document.getElementById("onboardingSkip2");
+    var skip3 = document.getElementById("onboardingSkip3");
+
+    if (skip1) skip1.addEventListener("click", finishOnboarding);
+    if (skip2) skip2.addEventListener("click", finishOnboarding);
+    if (skip3) skip3.addEventListener("click", finishOnboarding);
+  }
+
   // ── ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ──────────────────
   let P           = null;
   let currentTab  = "hero";
@@ -1450,6 +1505,12 @@
   if (!document.querySelector('[data-group="pet"].selected')) {
     var catCard = document.querySelector('[data-group="pet"][data-value="cat"]');
     if (catCard) selCard(catCard);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initOnboarding);
+  } else {
+    setTimeout(initOnboarding, 100);
   }
 
 })();
