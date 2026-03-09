@@ -368,24 +368,30 @@
   }
 
   // ── ИЗБРАННОЕ И УМНЫЙ ПОДБОР ─────────────
-  function toggleFavorite(questId) {
+function toggleFavorite(questId) {
     if (!P) return;
     var fav = P.favoriteQuests;
     if (!fav) P.favoriteQuests = fav = [];
     var i = fav.indexOf(questId);
     if (i !== -1) fav.splice(i, 1);
     else fav.push(questId);
+
+    // Сохраняем только выполненные — новый избранный добавится сверху
+    var doneIds = [];
+    if (Array.isArray(P.todayQuestIds)) {
+      P.todayQuestIds.forEach(function(id) {
+        if (P.quests && P.quests[id]) doneIds.push(id);
+      });
+    }
+    P.todayQuestIds = doneIds;
+
     if (window.save) window.save();
     buildQuests();
   }
 
   function getSmartQuests() {
     const allQ = QUESTS.concat(P.customQuests || []);
-    const uncompleted = allQ.filter(function(q) {
-      return !(P.quests && P.quests[q.id]);
-    });
     const ids = {};
-    const favIds = P.favoriteQuests || [];
 
     function addUnique(q) {
       if (!ids[q.id]) { ids[q.id] = q; }
@@ -395,21 +401,58 @@
       return shuffled.slice(0, n);
     }
 
-    // 0. До 5 избранных первыми
+    // Если список на сегодня уже сформирован — используем его
+    if (P.todayQuestIds && Array.isArray(P.todayQuestIds) && P.todayQuestIds.length >= 7) {
+      var result = [];
+      P.todayQuestIds.forEach(function(id) {
+        var q = allQ.find(function(x) { return x.id === id; });
+        if (q) {
+          if (P.dailyChallengeId === q.id) {
+            q = Object.assign({}, q, {
+              coins: (q.coins || 0) * 2,
+              isDailyChallenge: true
+            });
+          }
+          result.push(q);
+        }
+      });
+      if (result.length >= 7) return result;
+    }
+
+    // Добавляем уже выполненные сегодня — они должны остаться в списке
+    if (Array.isArray(P.todayQuestIds)) {
+      P.todayQuestIds.forEach(function(id) {
+        if (P.quests && P.quests[id]) {
+          var q = allQ.find(function(x) { return x.id === id; });
+          if (q) addUnique(q);
+        }
+      });
+    }
+
+    // Невыполненные квесты
+    const uncompleted = allQ.filter(function(q) {
+      return !(P.quests && P.quests[q.id]);
+    });
+    const favIds = P.favoriteQuests || [];
+
+    // 0. До 5 избранных невыполненных
     var addedFav = 0;
     for (var f = 0; f < favIds.length && addedFav < 5; f++) {
       var q = allQ.find(function(x) { return x.id === favIds[f]; });
-      if (q && !ids[q.id]) { addUnique(q); addedFav++; }
+      if (q && !ids[q.id] && !(P.quests && P.quests[q.id])) {
+        addUnique(q);
+        addedFav++;
+      }
     }
 
-    // 1. Два случайных невыполненных (не избранных)
+    // 1. Случайные невыполненные (не избранные)
     const notFav = uncompleted.filter(function(q) {
-      return favIds.indexOf(q.id) === -1;
+      return favIds.indexOf(q.id) === -1 && !ids[q.id];
     });
     pickRandom(notFav, 2).forEach(addUnique);
 
     // 2. Два квеста для отстающего стата
-    let minStat = null, minVal = 999;
+    var minStat = null, minVal = 999;
     STAT_KEYS.forEach(function(k) {
       const v = P.stats[k] || 0;
       if (v < minVal) { minVal = v; minStat = k; }
@@ -421,16 +464,16 @@
       pickRandom(forStat, 2).forEach(addUnique);
     }
 
-    // 3. Добираем случайные до 6 квестов
+    // 3. Добираем случайные до 6
     while (Object.keys(ids).length < 6) {
-      const rest3 = uncompleted.filter(function(q) { return !ids[q.id]; });
-      if (rest3.length === 0) break;
-      var one = pickRandom(rest3, 1)[0];
+      const rest = uncompleted.filter(function(q) { return !ids[q.id]; });
+      if (rest.length === 0) break;
+      var one = pickRandom(rest, 1)[0];
       if (one) addUnique(one);
       else break;
     }
 
-    // 4. Вызов дня — один квест с x2 монеты (седьмой)
+    // 4. Вызов дня — седьмой квест x2 монеты
     const forChallenge = uncompleted.filter(function(q) { return !ids[q.id]; });
     const challenge = pickRandom(forChallenge, 1)[0];
     if (challenge) {
@@ -443,7 +486,13 @@
     }
 
     var result = Object.keys(ids).map(function(id) { return ids[id]; });
-    return result.slice(0, 7);
+    result = result.slice(0, 7);
+
+    // Сохраняем список на сегодня
+    P.todayQuestIds = result.map(function(q) { return q.id; });
+    save();
+
+    return result;
   }
 
   function buildSmartQuests() {
@@ -738,6 +787,21 @@
     // Отметить квест
     P.quests[id] = true;
 
+    // ── СБОР СТАТИСТИКИ ───────────────────
+    // Считаем сколько раз выполнен этот квест
+    if (!P.questHistory) P.questHistory = {};
+    P.questHistory[id] = (P.questHistory[id] || 0) + 1;
+
+    // Лучший день (максимум квестов за один день)
+    const todayDone = Object.keys(P.quests).length;
+    if (todayDone > (P.bestDay || 0)) P.bestDay = todayDone;
+
+    // Суммарный прирост статов за всё время
+    if (!P.statHistory) P.statHistory = {};
+    Object.keys(q.stats || {}).forEach(function(k) {
+      P.statHistory[k] = (P.statHistory[k] || 0) + (q.stats[k] || 0);
+    });
+
     // Скрыть подсказку
     const hint = $("questsHint");
     if (hint) hint.classList.add("hidden");
@@ -808,6 +872,12 @@
     P.history[todayStr]  = {good: doneGood, bad: 0};
     P.totalDays          = (P.totalDays || 0) + 1;
     P.totalQuests        = (P.totalQuests || 0) + doneGood;
+
+    // Лучшая серия за всё время
+    if ((P.streak || 0) > (P.bestStreak || 0)) {
+      P.bestStreak = P.streak || 0;
+    }
+
     P.totalCoinsEarned   = (P.totalCoinsEarned || 0) + earnedCoins;
 
     save();
@@ -839,6 +909,7 @@
     P.doubleCoinsActive  = false;
     P.dragonDailyBonusUsed = false;
     P.quests             = {};
+    P.todayQuestIds      = null;
     P.dayCompleted       = false;
     P.lastVisitDate      = todayStr;
 
@@ -1463,6 +1534,19 @@ if (P.favoriteQuests.indexOf(newQuestId) === -1) {
   if (shuffleSmartBtn) {
     shuffleSmartBtn.addEventListener("click", function() {
       if (currentQuestView !== "smart") return;
+      if (!P) return;
+
+      // Сохраняем только выполненные квесты
+      var doneIds = [];
+      if (Array.isArray(P.todayQuestIds)) {
+        P.todayQuestIds.forEach(function(id) {
+          if (P.quests && P.quests[id]) doneIds.push(id);
+        });
+      }
+
+      // Сбрасываем список — выполненные сохранятся через P.quests
+      P.todayQuestIds = doneIds;
+      save();
       buildQuests();
     });
   }

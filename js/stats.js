@@ -119,6 +119,91 @@ function renderStats() {
   if (elDays)   elDays.textContent   = "📅 Всего дней: "      + td;
   if (elQuests) elQuests.textContent = "✅ Всего квестов: "   + tq;
   if (elCoins)  elCoins.textContent  = "💰 Всего заработано: " + tc;
+
+  // ── РЕКОРДЫ ────────────────────────────
+  var recBlock = document.getElementById("statsRecords");
+  if (recBlock) {
+    var bestStreak = P.bestStreak || P.streak || 0;
+    var bestDay    = P.bestDay    || 0;
+    recBlock.innerHTML =
+      '<div class="stats-record-item">🔥 Лучшая серия: <strong>' + bestStreak + ' дн.</strong></div>' +
+      '<div class="stats-record-item">⚡ Лучший день: <strong>' + bestDay + ' квестов</strong></div>';
+  }
+
+  // ── ТОП-3 КВЕСТА ───────────────────────
+  var topBlock = document.getElementById("statsTopQuests");
+  if (topBlock) {
+    var qh = P.questHistory || {};
+    var allQ = (window.QUESTS || []).concat(P.customQuests || []);
+
+    var sorted = Object.keys(qh)
+      .map(function(id) {
+        var quest = allQ.find(function(q) { return q.id === id; });
+        return { id: id, count: qh[id], quest: quest };
+      })
+      .filter(function(x) { return x.quest; })
+      .sort(function(a, b) { return b.count - a.count; })
+      .slice(0, 3);
+
+    if (sorted.length === 0) {
+      topBlock.innerHTML = '<div class="stats-empty">Выполни квесты чтобы увидеть топ 🌱</div>';
+    } else {
+      var medals = ["🥇", "🥈", "🥉"];
+      topBlock.innerHTML = sorted.map(function(item, i) {
+        return '<div class="stats-top-item">' +
+          medals[i] + ' ' +
+          (item.quest.icon || "") + ' ' +
+          (item.quest.title || item.id) +
+          ' <span class="stats-top-count">× ' + item.count + '</span>' +
+          '</div>';
+      }).join("");
+    }
+  }
+
+  // ── ТВОЙ СТИЛЬ (АРХЕТИП) ───────────────
+  var styleBlock = document.getElementById("statsStyle");
+  if (styleBlock) {
+    var sh = P.statHistory || {};
+    var topStat = null;
+    var topVal  = 0;
+
+    Object.keys(sh).forEach(function(k) {
+      if (sh[k] > topVal) { topVal = sh[k]; topStat = k; }
+    });
+
+    var archetypes = {
+      health:        { label: "🌿 {Хранительница|Хранитель} Здоровья",   desc: "Ты заботишься о теле и восстановлении" },
+      intelligence:  { label: "📚 {Мудрая|Мудрый}",                       desc: "Ты стремишься к знаниям и росту" },
+      strength:      { label: "⚔️ {Воительница|Воитель}",                 desc: "Ты действуешь и преодолеваешь" },
+      charisma:      { label: "✨ Душа компании",                          desc: "Ты строишь отношения и вдохновляешь" },
+      discipline:    { label: "🛡️ {Несгибаемая|Несгибаемый}",             desc: "Ты держишь слово данное себе" },
+      energy:        { label: "⚡ Источник силы",                          desc: "Ты умеешь восстанавливаться и двигаться" }
+    };
+
+    if (topStat && archetypes[topStat]) {
+      var arch = archetypes[topStat];
+      var label = window.applyGender ? window.applyGender(arch.label) : arch.label;
+      styleBlock.innerHTML =
+        '<div class="stats-archetype-label">' + label + '</div>' +
+        '<div class="stats-archetype-desc">' + arch.desc + '</div>';
+    } else {
+      styleBlock.innerHTML = '<div class="stats-empty">Выполни несколько квестов чтобы узнать свой стиль 🌱</div>';
+    }
+  }
+
+  // ── РОСТ СТАТОВ ────────────────────────
+  var growthBlock = document.getElementById("statsGrowth");
+  if (growthBlock) {
+    var sh2 = P.statHistory || {};
+    var STAT_ICONS_LOCAL = window.STAT_ICONS || {};
+    var parts = Object.keys(STAT_ICONS_LOCAL).map(function(k) {
+      var val = sh2[k] || 0;
+      return '<span class="stats-growth-item">' +
+        STAT_ICONS_LOCAL[k] + ' +' + val +
+        '</span>';
+    });
+    growthBlock.innerHTML = parts.join("");
+  }
 }
 
 // Вычислить стадию streak с учётом пропусков
