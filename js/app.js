@@ -353,10 +353,6 @@
     currentFilter = statKey;
     document.querySelectorAll(".quest-item").forEach(function(item) {
       if (statKey === "all") { item.style.display = ""; return; }
-      if (["easy","medium","hard"].indexOf(statKey) !== -1) {
-        item.style.display = item.getAttribute("data-difficulty") === statKey ? "" : "none";
-        return;
-      }
       const cats = item.getAttribute("data-categories") || "";
       item.style.display = cats.indexOf(statKey) !== -1 ? "" : "none";
     });

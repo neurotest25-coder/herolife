@@ -200,7 +200,22 @@ body {
 .pet-play-btn:disabled { background: rgba(40,43,72,0.95); color: var(--text-muted); cursor: default; }
 
 .quest-sub-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
-.quest-sub-tab { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 8px 12px; font-size: 0.9rem; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.quest-sub-tab {
+  flex: 1;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .quest-sub-tab:hover { border-color: var(--accent-soft); color: var(--text-main); }
 .quest-sub-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(230,194,0,0.1); }
 .quest-sub-pane { display: none; }

@@ -87,143 +87,185 @@ const MILESTONE_PHRASES = {
 const QUESTS = [
   {id:"q1", type:"good", icon:"💧", title:"Стакан воды после пробуждения",
     desc:"Сразу после будильника", tip:"Тело теряет за ночь до 1л воды",
-    coins:5, difficulty:"easy", alignment:"neutral", stats:{health:1,energy:1}},
+    coins:5, alignment:"neutral", stats:{health:1,energy:1}},
 
   {id:"q2", type:"good", icon:"😴", title:"Лечь спать до 23:00",
     desc:"Будильник-напоминание на 22:30", tip:"Каждый час сна до полуночи = два после",
-    coins:10, difficulty:"medium", alignment:"devil", stats:{health:2,energy:1}},
+    coins:10, alignment:"devil", stats:{health:2,energy:1}},
 
   {id:"q3", type:"good", icon:"🚶", title:"Прогулка 15-30 минут",
     desc:"После обеда или работы", tip:"20 мин на улице снижают кортизол на 25%",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{health:2,energy:1}},
+    coins:10, alignment:"angel", stats:{health:2,energy:1}},
 
   {id:"q4", type:"good", icon:"🍽️", title:"Осознанный приём пищи",
     desc:"Не у экрана, не на бегу", tip:"Еда у экрана: ешь на 30% больше",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{health:2}},
+    coins:10, alignment:"angel", stats:{health:2}},
 
   {id:"q5", type:"good", icon:"🏋️", title:"Тренировка 20+ минут",
     desc:"Любая: зарядка, йога, бег", tip:"Лучшая тренировка — та что делаешь",
-    coins:20, difficulty:"hard", alignment:"devil", stats:{health:2,strength:2}},
+    coins:20, alignment:"devil", stats:{health:2,strength:2}},
 
   {id:"q6", type:"good", icon:"☀️", title:"Выйти на солнце на 10 минут",
     desc:"До обеда", tip:"80% россиян — дефицит витамина D",
-    coins:5, difficulty:"easy", alignment:"neutral", stats:{health:1,energy:1}},
+    coins:5, alignment:"neutral", stats:{health:1,energy:1}},
 
   {id:"q7", type:"good", icon:"📖", title:"Прочитать 10 страниц книги",
     desc:"Перед сном вместо телефона", tip:"10 стр/день = 12 книг в год",
-    coins:10, difficulty:"medium", alignment:"neutral", stats:{intelligence:2}},
+    coins:10, alignment:"neutral", stats:{intelligence:2}},
 
   {id:"q8", type:"good", icon:"📝", title:"Записать 3 задачи на сегодня",
     desc:"Утром после кофе. Ровно 3, не 10", tip:"Мозг не держит больше 3-4 приоритетов",
-    coins:5, difficulty:"easy", alignment:"neutral", stats:{intelligence:1,discipline:1}},
+    coins:5, alignment:"neutral", stats:{intelligence:1,discipline:1}},
 
   {id:"q9", type:"good", icon:"🎧", title:"Подкаст или аудиокнига 15 мин",
     desc:"В дороге, на прогулке, при уборке", tip:"Обучение без отдельного времени",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{intelligence:2}},
+    coins:10, alignment:"angel", stats:{intelligence:2}},
 
   {id:"q10", type:"good", icon:"📓", title:"Дневник: мысли или рефлексия",
     desc:"Вечером, 5-10 минут", tip:"Экспрессивное письмо снижает тревогу на 40%",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{intelligence:2,health:1}},
+    coins:10, alignment:"angel", stats:{intelligence:2,health:1}},
 
   {id:"q11", type:"good", icon:"💻", title:"1 урок или видео по обучению",
     desc:"Выделить 30 мин заранее", tip:"Один урок — прогресс. Не весь курс за день",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{intelligence:3}},
+    coins:15, alignment:"devil", stats:{intelligence:3}},
 
   {id:"q12", type:"good", icon:"🤸", title:"Утренняя разминка 5-10 минут",
     desc:"После стакана воды", tip:"5 минут движения = двигатель на день",
-    coins:10, difficulty:"easy", alignment:"neutral", stats:{strength:1,energy:2}},
+    coins:10, alignment:"neutral", stats:{strength:1,energy:2}},
 
   {id:"q13", type:"good", icon:"⚔️", title:"Первый шаг в отложенном деле",
     desc:"Только 5 минут! Первый час дня", tip:"Не закончить а НАЧАТЬ. 80% продолжат",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{strength:3,discipline:1}},
+    coins:15, alignment:"devil", stats:{strength:3,discipline:1}},
 
   {id:"q14", type:"good", icon:"🛑", title:"Мягко отказать в ненужном",
     desc:"В момент просьбы", tip:"Каждое ненужное да = нет себе",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{strength:3,charisma:1}},
+    coins:15, alignment:"devil", stats:{strength:3,charisma:1}},
 
-  {id:"q15", type:"good", icon:"🧊", title:"Холодное умывание или контрастный душ",
+  {id:"q15", type:"good", icon:"🚿", title:"Холодное умывание или контрастный душ",
     desc:"Утром при умывании", tip:"Блуждающий нерв → прилив бодрости",
-    coins:10, difficulty:"medium", alignment:"devil", stats:{strength:2,energy:1}},
+    coins:10, alignment:"devil", stats:{strength:2,energy:1}},
 
-  {id:"q16", type:"good", icon:"🧹", title:"Порядок в одной зоне 15 мин",
+  {id:"q16", type:"good", icon:"🌟", title:"Порядок в одной зоне 15 мин",
     desc:"Один ящик, одна полка", tip:"Внешний порядок = внутренний порядок",
-    coins:10, difficulty:"easy", alignment:"neutral", stats:{strength:1,discipline:1}},
+    coins:10, alignment:"neutral", stats:{strength:1,discipline:1}},
 
   {id:"q17", type:"good", icon:"🦁", title:"Сделать одну вещь которая пугает",
     desc:"1-2 раза в неделю", tip:"Одно страшное дело в неделю — за год ты другой человек",
-    coins:25, difficulty:"hard", alignment:"devil", stats:{strength:4,charisma:2}},
+    coins:25, alignment:"devil", stats:{strength:4,charisma:2}},
 
   {id:"q18", type:"good", icon:"💖", title:"Отметить что в себе нравится",
     desc:"Утром или перед сном", tip:"Тренировка замечать хорошее в себе",
-    coins:10, difficulty:"easy", alignment:"angel", stats:{charisma:2,health:1}},
+    coins:10, alignment:"angel", stats:{charisma:2,health:1}},
 
   {id:"q19", type:"good", icon:"🙏", title:"Принять комплимент словом спасибо",
     desc:"Когда скажут приятное", tip:"Обесценивание комплимента = обесценивание себя",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{charisma:3}},
+    coins:10, alignment:"angel", stats:{charisma:3}},
 
   {id:"q20", type:"good", icon:"📞", title:"Написать или позвонить кому-то {первой|первым}",
     desc:"В обед или вечером", tip:"Качество отношений — предиктор счастья #1",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{charisma:2,health:1}},
+    coins:10, alignment:"angel", stats:{charisma:2,health:1}},
 
   {id:"q21", type:"good", icon:"🏆", title:"Рассказать о своём достижении",
     desc:"1-2 раза в неделю", tip:"Видимость заслуг — навык, не хвастовство",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{charisma:3,strength:1}},
+    coins:15, alignment:"devil", stats:{charisma:3,strength:1}},
 
   {id:"q22", type:"good", icon:"🧘", title:"30 минут наедине по СВОЕМУ выбору",
     desc:"Вечером или в выходные", tip:"Одиночество по выбору = роскошь",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{charisma:2,energy:1}},
+    coins:10, alignment:"angel", stats:{charisma:2,energy:1}},
 
-  {id:"q23", type:"good", icon:"🪞", title:"{Поймала|Поймал} сравнение — запиши достижение",
+  {id:"q23", type:"good", icon:"✨", title:"{Поймала|Поймал} сравнение — запиши достижение",
     desc:"В момент сравнения с другими", tip:"Перенаправить внимание на себя",
-    coins:15, difficulty:"medium", alignment:"angel", stats:{charisma:3,intelligence:1}},
+    coins:15, alignment:"angel", stats:{charisma:3,intelligence:1}},
 
   {id:"q24", type:"good", icon:"🛏️", title:"Заправить кровать",
     desc:"Сразу после подъёма", tip:"Первая завершённая задача = цепочка побед. 30 секунд",
-    coins:5, difficulty:"easy", alignment:"neutral", stats:{discipline:1}},
+    coins:5, alignment:"neutral", stats:{discipline:1}},
 
   {id:"q25", type:"good", icon:"✅", title:"Выполнить 3 из запланированных задач",
     desc:"Вечером подвести итог", tip:"3 из 5 = успех. Антиперфекционизм",
-    coins:10, difficulty:"medium", alignment:"neutral", stats:{discipline:2,intelligence:1}},
+    coins:10, alignment:"neutral", stats:{discipline:2,intelligence:1}},
 
   {id:"q26", type:"good", icon:"🎯", title:"1 час фокуса без отвлечений",
     desc:"Своё продуктивное время", tip:"1 час фокуса = 3 часа с отвлечениями",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{discipline:3,intelligence:1}},
+    coins:15, alignment:"devil", stats:{discipline:3,intelligence:1}},
 
   {id:"q27", type:"good", icon:"🎒", title:"Подготовить вещи на завтра",
     desc:"Перед сном, 10 минут", tip:"Подарок завтрашней себе",
-    coins:10, difficulty:"easy", alignment:"neutral", stats:{discipline:2}},
+    coins:10, alignment:"neutral", stats:{discipline:2}},
 
   {id:"q28", type:"good", icon:"🛡️", title:"Защитить своё дело от чужой просьбы",
     desc:"Когда возникнет ситуация", tip:"Твой план — обещание {самой себе|самому себе}",
-    coins:15, difficulty:"hard", alignment:"devil", stats:{discipline:3,strength:1}},
+    coins:15, alignment:"devil", stats:{discipline:3,strength:1}},
 
   {id:"q29", type:"good", icon:"⏳", title:"Перед покупкой подождать 24 часа",
     desc:"В момент импульса", tip:"Через 24ч дофамин спадёт",
-    coins:10, difficulty:"medium", alignment:"devil", stats:{discipline:2}},
+    coins:10, alignment:"devil", stats:{discipline:2}},
 
   {id:"q30", type:"good", icon:"⏰", title:"По первому будильнику без snooze",
     desc:"Утро", tip:"5 snooze = 5 прерванных циклов сна",
-    coins:10, difficulty:"medium", alignment:"devil", stats:{energy:2}},
+    coins:10, alignment:"devil", stats:{energy:2}},
 
   {id:"q31", type:"good", icon:"🤫", title:"5 минут тишины без телефона",
     desc:"В любое время", tip:"5 минут тишины = перезагрузка",
-    coins:10, difficulty:"easy", alignment:"angel", stats:{energy:2,intelligence:1}},
+    coins:10, alignment:"angel", stats:{energy:2,intelligence:1}},
 
   {id:"q32", type:"good", icon:"💤", title:"Дневной отдых 15-20 минут",
     desc:"После обеда 13-15", tip:"NASA: 20 мин = +34% продуктивности",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{energy:3}},
+    coins:10, alignment:"angel", stats:{energy:3}},
 
   {id:"q33", type:"good", icon:"📵", title:"Вечер без экранов",
     desc:"Книга, рукоделие, общение. За 1ч до сна", tip:"Экраны = ложный отдых",
-    coins:10, difficulty:"medium", alignment:"angel", stats:{energy:2,intelligence:1}},
+    coins:10, alignment:"angel", stats:{energy:2,intelligence:1}},
 
   {id:"q34", type:"good", icon:"💃", title:"Потанцевать 5 минут под любимое",
     desc:"При упадке энергии", tip:"Движение + музыка = мгновенная перезагрузка",
-    coins:10, difficulty:"easy", alignment:"angel", stats:{energy:2,charisma:1}},
+    coins:10, alignment:"angel", stats:{energy:2,charisma:1}},
 
   {id:"q35", type:"good", icon:"🙏", title:"Записать 3 благодарности за сегодня",
     desc:"Вечером, последнее перед сном", tip:"Доказано: +25% счастья за 2 недели",
-    coins:10, difficulty:"easy", alignment:"angel", stats:{energy:1,charisma:1,health:1}}
+    coins:10, alignment:"angel", stats:{energy:1,charisma:1,health:1}},
+
+  {id:"q36", type:"good", icon:"🤍",
+    title:"Назови одно желание которое давно откладываешь",
+    desc:"Просто назови. Не надо выполнять — просто признай.",
+    tip:"Мы часто запрещаем себе даже желать. Назвать желание вслух — уже первый шаг к себе.",
+    coins:10, alignment:"angel",
+    stats:{charisma:2, health:1}},
+
+  {id:"q37", type:"good", icon:"💭",
+    title:"Запиши мысль которая чаще всего тебя критикует",
+    desc:"Одна фраза. Та что крутится в голове.",
+    tip:"Когда называешь тревожную мысль — она теряет власть над тобой. Это работает.",
+    coins:15, alignment:"angel",
+    stats:{intelligence:2, charisma:2}},
+
+  {id:"q38", type:"good", icon:"🎁",
+    title:"Сделай что-то приятное без причины",
+    desc:"Не за достижение. Не заслужив. Просто так.",
+    tip:"Радость не нужно зарабатывать. Попробуй сегодня.",
+    coins:10, alignment:"angel",
+    stats:{health:1, energy:2}},
+
+  {id:"q39", type:"good", icon:"🙅",
+    title:"Откажи в одной просьбе без объяснений",
+    desc:"Просто скажи нет. Без извинений и оправданий.",
+    tip:"Каждый отказ другим — это согласие с собой. Это не эгоизм, это граница.",
+    coins:15, alignment:"devil",
+    stats:{strength:2, discipline:2}},
+
+  {id:"q40", type:"good", icon:"👂",
+    title:"Спроси себя — что моё тело просит прямо сейчас?",
+    desc:"Остановись на минуту. Тепло? Движение? Тишина? Еда?",
+    tip:"Тело посылает сигналы весь день. Мы просто не слышим. Одна минута внимания меняет многое.",
+    coins:10, alignment:"angel",
+    stats:{health:2, energy:1}},
+
+  {id:"q41", type:"good", icon:"💌",
+    title:"Скажи себе доброе слово которое давно ждёшь",
+    desc:"Одно слово или фраза. Та что хотела услышать от кого-то.",
+    tip:"Мы ждём одобрения от других годами. Но можем дать его себе прямо сейчас.",
+    coins:15, alignment:"angel",
+    stats:{charisma:3, health:1}}
 ];
 
 // ── ВДОХНОВЕНИЕ ────────────────────────────
