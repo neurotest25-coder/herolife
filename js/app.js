@@ -475,11 +475,11 @@
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
             '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' +
-              q.title +
+			  applyGender(q.title) +
               (q.isDailyChallenge ? ' <span class="quest-daily-challenge">⚡ x2</span>' : "") +
             '</div>' +
             '<div class="quest-details" id="details-' + q.id + '" style="display:none;">' +
-              '<div class="quest-desc">' + (q.desc || "") + '</div>' +
+              '<div class="quest-desc">' + applyGender(q.desc || "") + '</div>' +
               (tip ? '<div class="quest-tip-text">💡 ' + tip + '</div>' : "") +
               '<div class="quest-stats good">' + statsText + '</div>' +
               '<div class="quest-meta">' +
@@ -548,7 +548,7 @@
     if (mysticAdvice) {
       if (mysticQuestId) {
         const q = allQ.find(function(x) { return x.id === mysticQuestId; });
-        mysticAdvice.textContent = q ? "🐈 Мистик советует: " + q.title : "";
+        mysticAdvice.textContent = q ? "🐈 Мистик советует: " + applyGender(q.title) : "";
         mysticAdvice.style.display = q ? "block" : "none";
       } else {
         mysticAdvice.style.display = "none";
@@ -582,11 +582,11 @@
           '<span class="quest-icon">' + q.icon + '</span>' +
           '<div class="quest-text">' +
             '<div class="quest-title' + (done ? " quest-title--done" : "") + '">' +
-              q.title +
+              applyGender(q.title) +
               (q.isDailyChallenge ? ' <span class="quest-daily-challenge">⚡ x2</span>' : "") +
             '</div>' +
             '<div class="quest-details" id="details-' + q.id + '" style="display:none;">' +
-              '<div class="quest-desc">' + (q.desc || "") + '</div>' +
+              '<div class="quest-desc">' + applyGender(q.desc || "") + '</div>' +
               (tip ? '<div class="quest-tip-text">💡 ' + tip + '</div>' : "") +
               '<div class="quest-stats good">' + statsText + '</div>' +
               '<div class="quest-meta">' +

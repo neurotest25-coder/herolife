@@ -15,7 +15,7 @@ body {
   background: radial-gradient(circle at top, #283049 0, #0f1020 40%, #050510 100%);
   color: var(--text-main);
   min-height: 100vh;
-  padding: 30px 20px 70px;
+  padding: 30px 20px 60px;
 }
 .page-wrap { width: 100%; max-width: 520px; margin: 0 auto; }
 .hero-card {
@@ -449,7 +449,13 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding-bottom: 80px;
+  padding-bottom: 16px;
+}
+
+@media (max-width: 480px) {
+  .add-custom-quest-block {
+    padding-bottom: 16px;
+  }
 }
 .add-custom-quest-btn {
   border: 1px solid #2ecc71;
