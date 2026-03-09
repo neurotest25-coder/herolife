@@ -64,7 +64,7 @@ function renderInspiration() {
       '<div class="inspiration-daily-btns">' +
         (done ? "" : '<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>') +
         '<button type="button" class="inspiration-btn-done" data-insp-id="' + dailyCard.id + '" ' +
-          (done ? "disabled" : "") + '>' + (done ? "Выполнено ✓" : "✅ Готово!") + '</button>' +
+          (done ? "disabled" : "") + '>' + (done ? "✓ Готово" : "Готово") + '</button>' +
         '<button type="button" class="inspiration-btn-switch" data-insp-switch ' +
           (canSwitch ? "" : "disabled") + '>🔄 Заменить карту</button>' +
       '</div>';
@@ -133,7 +133,7 @@ function showInspirationDetail(cardId) {
       '<div class="inspiration-detail-actions">' +
         (done ? "" : '<div class="inspiration-detail-hint">Выполни задание и нажми кнопку ⬇️</div>') +
         '<button type="button" class="inspiration-btn-done" data-insp-id="' + c.id + '" ' +
-          (done ? "disabled" : "") + '>' + (done ? "Выполнено ✓" : "✅ Готово!") + '</button>' +
+          (done ? "disabled" : "") + '>' + (done ? "✓ Готово" : "Готово") + '</button>' +
       '</div>';
   }
   var categories = document.getElementById("inspirationCategories");

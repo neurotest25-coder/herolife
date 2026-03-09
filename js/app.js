@@ -268,8 +268,8 @@
     const pathLeft  = $("pathScaleLeft");
     const pathTitle = $("pathScaleTitle");
     const pathRight = $("pathScaleRight");
-    if (pathLeft)  pathLeft.textContent  = "🔥 Путь Воли: " + devil;
-    if (pathRight) pathRight.textContent = "✨ Путь Созидания: " + angel;
+    if (pathLeft)  pathLeft.textContent  = "😈 Путь Воли: " + devil;
+    if (pathRight) pathRight.textContent = "😇 Путь Созидания: " + angel;
     if (pathTitle) {
       const diff = angel - devil;
       if      (diff >  100) { pathTitle.textContent = applyGender("✨ {Хранительница|Хранитель} Созидания"); pathTitle.style.display = "block"; }
@@ -395,18 +395,18 @@
 
     // 0. До 3 избранных первыми
     var addedFav = 0;
-    for (var f = 0; f < favIds.length && addedFav < 3; f++) {
+    for (var f = 0; f < favIds.length && addedFav < 4; f++) {
       var q = allQ.find(function(x) { return x.id === favIds[f]; });
       if (q && !ids[q.id]) { addUnique(q); addedFav++; }
     }
 
-    // 1. Два случайных лёгких невыполненных
-    const easy = uncompleted.filter(function(q) {
-      return (q.difficulty || "medium") === "easy";
+    // 1. Два случайных невыполненных (не избранных)
+    const notFav = uncompleted.filter(function(q) {
+      return favIds.indexOf(q.id) === -1;
     });
-    pickRandom(easy, 2).forEach(addUnique);
+    pickRandom(notFav, 2).forEach(addUnique);
 
-    // 2. Стат с минимальным значением — два квеста качающих его
+    // 2. Два квеста для отстающего стата
     let minStat = null, minVal = 999;
     STAT_KEYS.forEach(function(k) {
       const v = P.stats[k] || 0;
@@ -414,26 +414,19 @@
     });
     if (minStat) {
       const forStat = uncompleted.filter(function(q) {
-        return q.stats && q.stats[minStat];
+        return q.stats && q.stats[minStat] && !ids[q.id];
       });
       pickRandom(forStat, 2).forEach(addUnique);
     }
 
-    // 3. Один случайный невыполненный (никогда не выполнял — из оставшихся)
+    // 3. Один случайный из оставшихся
     const rest3 = uncompleted.filter(function(q) { return !ids[q.id]; });
     const one = pickRandom(rest3, 1)[0];
     if (one) addUnique(one);
 
-    // 4. Один случайный невыполненный любой сложности
-    const rest4 = uncompleted.filter(function(q) { return !ids[q.id]; });
-    const oneAny = pickRandom(rest4, 1)[0];
-    if (oneAny) addUnique(oneAny);
-
-    // 5. Вызов дня — один hard, награда x2
-    const hard = uncompleted.filter(function(q) {
-      return (q.difficulty || "medium") === "hard";
-    });
-    const challenge = pickRandom(hard, 1)[0];
+    // 4. Вызов дня — один квест с x2 монеты
+    const forChallenge = uncompleted.filter(function(q) { return !ids[q.id]; });
+    const challenge = pickRandom(forChallenge, 1)[0];
     if (challenge) {
       const copy = Object.assign({}, challenge, {
         coins: (challenge.coins || 0) * 2,
@@ -443,7 +436,8 @@
       P.dailyChallengeId = challenge.id;
     }
 
-    return Object.keys(ids).map(function(id) { return ids[id]; });
+    var result = Object.keys(ids).map(function(id) { return ids[id]; });
+    return result.slice(0, 7);
   }
 
   function buildSmartQuests() {
@@ -658,6 +652,11 @@
     let questCoins = q.coins || 0;
     if (q.isDailyChallenge || (P.dailyChallengeId && P.dailyChallengeId === q.id)) questCoins *= 2;
     if (P.doubleCoinsActive) questCoins *= 2;
+    if (P.sealActive) {
+      questCoins *= 3;
+      P.sealActive = false;
+      popup("🎯 Печать цели сработала! x3 монеты", "good");
+    }
 
     let dogBonus = false;
     if ((P.petStage || 0) === 1 && P.petType === "dog" &&
@@ -694,8 +693,12 @@
 
     // XP и очки пути
     P.xp = (P.xp || 0) + 10;
-    if (q.alignment === "angel") P.angelPoints = (P.angelPoints || 0) + 1;
-    else if (q.alignment === "devil") P.devilPoints = (P.devilPoints || 0) + 1;
+    if (q.alignment === "angel") {
+      var angelAdd = P.amuletActive ? 2 : 1;
+      P.angelPoints = (P.angelPoints || 0) + angelAdd;
+    } else if (q.alignment === "devil") {
+      P.devilPoints = (P.devilPoints || 0) + 1;
+    }
 
     // Питомец
     P.petMood = cl((P.petMood || 3) + 1, 0, 10);
@@ -1231,12 +1234,6 @@
       return;
     }
 
-    // Клик по строке квеста
-    const questRow = e.target.closest(".quest-item");
-    if (questRow) {
-      const id = questRow.dataset.questId;
-      if (id) doQuest(id);
-    }
 
     // Удалить кастомный квест
     const del = e.target.closest(".quest-delete-btn") ||

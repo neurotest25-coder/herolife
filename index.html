@@ -259,11 +259,9 @@
                   <span id="questsProgressText">✅ 0/35 выполнено</span>
                   <button type="button" id="quickEndDayBtn" class="quick-end-day-btn">🌙 Завершить</button>
                 </div>
-                <div id="shuffleSmartWrap" class="shuffle-smart-wrap" style="display:none;">
-                  <button type="button" id="shuffleSmartBtn" class="shuffle-smart-btn">🔄 Другая подборка</button>
-                </div>
+               
                 <section class="quests-section">
-                  <div class="quests-title"><span>📜</span><span>Ежедневные квесты</span></div>
+                  
                   <div class="quests-date" id="questsDate"></div>
                   <div class="quests-hint" id="questsHint">👆 Отмечай привычки!</div>
 
@@ -284,7 +282,11 @@
                   <div class="quest-counter" id="questCounter">Выполнено: 0/35</div>
 
                   <div class="add-custom-quest-block">
+				   <div class="quest-bottom-divider"></div>
+				   <div class="quest-bottom-btns">
+				     <button type="button" id="shuffleSmartBtn" class="add-custom-quest-btn">🔄 Другая подборка</button>
                     <button type="button" class="add-custom-quest-btn" id="addCustomQuestBtn">➕ Добавить свой квест</button>
+				   </div>
                     <div class="helper-text" id="customQuestLimitMsg" style="display:none;">Максимум пользовательских квестов: 10/10</div>
 
                     <div class="add-custom-quest-form" id="customQuestForm" style="display:none; margin-top:10px;">
