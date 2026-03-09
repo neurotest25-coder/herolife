@@ -895,8 +895,74 @@
       doubleCoinsActive: false, dragonDailyBonusUsed: false,
       history: {}, totalDays: 0, totalQuests: 0, totalCoinsEarned: 0,
       completedCards: {}, dailyCard: null,
-      dailyCardDate: null, dailyCardSwitched: false
+      dailyCardDate: null, dailyCardSwitched: false,
+      eveningShownToday: null
     };
+  }
+
+  function showEveningReminder() {
+    if (!P) return;
+    
+    // Проверяем условия
+    const hour = new Date().getHours();
+    if (hour < 20) return; // только после 20:00
+    if (P.dayCompleted) return; // день уже завершён
+    if (P.eveningShownToday === today()) return; // уже показали
+    
+    // Считаем выполненные квесты
+    const allQ = QUESTS.concat(P.customQuests || []);
+    const doneCount = allQ.filter(function(q) {
+      return P.quests && P.quests[q.id];
+    }).length;
+    
+    if (doneCount === 0) return; // нечего показывать
+    
+    // Запоминаем что показали
+    P.eveningShownToday = today();
+    save();
+    
+    // Считаем заработанные монеты
+    const earnedCoins = allQ
+      .filter(function(q) { return P.quests && P.quests[q.id]; })
+      .reduce(function(s, q) { return s + (q.coins || 0); }, 0);
+
+    // Собираем статы за день
+    const statsParts = [];
+    STAT_KEYS.forEach(function(k) {
+      const v = P.stats[k] || 0;
+      if (v > 0) statsParts.push(STAT_ICONS[k] + v);
+    });
+
+    // Вечерние фразы (рандом)
+    const phrases = [
+      "Посмотри сколько {сделала|сделал} за день! 🌙",
+      "{Ты молодец|Ты молодец}! День прожит не зря 💜",
+      applyGender("{Гордишься собой?|Гордишься собой?}") + " Есть за что! ✨",
+      (P.petName || "Питомец") + " доволен и сыт 🐾",
+      "Небольшой итог перед сном... 🌙"
+    ];
+    const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+    const petName = P.petName || "Питомец";
+
+    // Показываем оверлей итогов дня
+    const textEl = $("endDayText");
+    if (textEl) {
+      textEl.innerHTML =
+        '<div style="font-size:1.1rem; margin-bottom:12px;">' + 
+          applyGender(phrase) + 
+        '</div>' +
+        'Квестов выполнено: <strong>' + doneCount + '</strong> ✅<br><br>' +
+        'Монет заработано: <strong>+' + earnedCoins + '💰</strong><br><br>' +
+        '<div style="font-size:0.9rem; color: var(--text-muted); margin-top:8px;">' +
+          'Хочешь завершить день официально?<br>' +
+          petName + ' уже засыпает... 🌙' +
+        '</div>';
+    }
+
+    const overlay = $("endDayOverlay");
+    const title = overlay && overlay.querySelector(".overlay-title");
+    if (title) title.textContent = "🌙 Вечерний итог";
+    if (overlay) overlay.classList.add("overlay--visible");
   }
 
   // ── ПОКАЗАТЬ ЭКРАН ПЕРСОНАЖА ──────────────
@@ -926,6 +992,10 @@
     buildQuests();
     render();
     showGreeting(useComeback || false);
+    // Показать вечернее напоминание если после 20:00
+    setTimeout(function() {
+      showEveningReminder();
+    }, 1000);
   }
 
   // ── ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ──────────────────
@@ -1024,6 +1094,7 @@
         if (P.dragonDailyBonusUsed == null) P.dragonDailyBonusUsed = false;
         if (P.angelPoints == null) P.angelPoints = 0;
         if (P.devilPoints == null) P.devilPoints = 0;
+        if (P.eveningShownToday == null) P.eveningShownToday = null;
 
         checkPetEvolution(P);
         save();
