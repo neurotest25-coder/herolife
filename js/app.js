@@ -1000,6 +1000,7 @@
     // Показать случайное мини-событие один раз после загрузки
     setTimeout(function() {
       if (window.checkRandomEvent) window.checkRandomEvent();
+	  if(window.checkLetters) window.checkLetters();
     }, 500);
   }
 

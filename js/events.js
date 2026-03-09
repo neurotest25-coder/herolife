@@ -336,12 +336,69 @@ if (window.showQuestToast) {
     showEventPopup(eventObj);
   }
 
- // Экспортируем внешние функции
+  // ── ПИСЬМА ИЗ БУДУЩЕГО ──────────────────
+  function checkLetters() {
+    if (!window.LETTERS || !window.LETTERS.length) return;
+    var P = getP();
+    if (!P) return;
+
+    if (!Array.isArray(P.shownLetters)) P.shownLetters = [];
+
+    var letter = null;
+
+    for (var i = 0; i < window.LETTERS.length; i++) {
+      var L = window.LETTERS[i];
+
+      // Уже показано — пропустить
+      if (P.shownLetters.indexOf(L.id) !== -1) continue;
+
+      // Проверить триггер
+      var triggered = false;
+
+      if (L.trigger === "streak") {
+        triggered = (P.streak || 0) >= L.value;
+      } else if (L.trigger === "level") {
+        triggered = (P.level || 1) >= L.value;
+      } else if (L.trigger === "boss") {
+        var defeated = Array.isArray(P.defeatedBosses) ? P.defeatedBosses : [];
+        triggered = defeated.indexOf(L.value) !== -1;
+      }
+
+      if (triggered) {
+        letter = L;
+        break;
+      }
+    }
+
+    if (!letter) return;
+
+    // Пометить как показанное
+    P.shownLetters.push(letter.id);
+    setP(P);
+    if (window.save) window.save();
+
+    // Показать как событие с одной кнопкой
+    var letterEvent = {
+      icon: letter.icon,
+      text: "✉️ Письмо из будущего\n\n" + letter.text,
+      choices: [
+        {label: "Принять с благодарностью", reward: letter.reward}
+      ]
+    };
+
+    // Задержка чтобы не конфликтовать с другими попапами
+    setTimeout(function() {
+      showEventPopup(letterEvent);
+    }, 1000);
+  }
+
+  // Экспортируем внешние функции
   window.checkRandomEvent = checkRandomEvent;
   window.checkReactionEvent = checkReactionEvent;
   window.showEventToast = showEventToast;
   window.formatEventReward = formatReward;
   window.showEventPopup = showEventPopup;
+  window.checkLetters = checkLetters;
 
 })(); 
 
