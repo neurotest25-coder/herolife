@@ -267,6 +267,7 @@
 
                   <div class="filter-row" id="questFilterRow">
                     <button type="button" class="filter-btn active" data-filter="all" title="Все квесты">Все</button>
+					<button type="button" class="filter-btn" data-filter="custom" title="Мои квесты">⭐ Мои</button>
                     <button type="button" class="filter-btn" data-filter="strength" title="Сила">💪</button>
                     <button type="button" class="filter-btn" data-filter="intelligence" title="Интеллект">🧠</button>
                     <button type="button" class="filter-btn" data-filter="health" title="Здоровье">❤️</button>
@@ -289,18 +290,18 @@
 				   </div>
                     <div class="helper-text" id="customQuestLimitMsg" style="display:none;">Максимум пользовательских квестов: 10/10</div>
 
-                    <div class="add-custom-quest-form" id="customQuestForm" style="display:none; margin-top:10px;">
+                    <div class="add-custom-quest-form" id="customQuestForm" style="display: none; margin-top: 10px;">
                       <div class="character-divider-title" style="margin-top:0;">── ➕ Новый квест ──</div>
 
                       <div class="field" id="customQuestTitleField">
                         <label class="field-label" for="customQuestTitle"><span>Название</span></label>
-                        <input id="customQuestTitle" class="text-input" type="text" maxlength="30" placeholder="Название квеста" />
-                        <div class="error-text" id="customQuestTitleError">Введите название</div>
+                        <input id="customQuestTitle" class="text-input" type="text" maxlength="30" placeholder="Название квеста">
+                        <div class="error-text" id="customQuestTitleError" style="display: none;">Введите название</div>
                       </div>
 
                       <div class="field">
                         <label class="field-label" for="customQuestDesc"><span>Описание</span></label>
-                        <input id="customQuestDesc" class="text-input" type="text" maxlength="50" placeholder="Например: 30 минут" />
+                        <input id="customQuestDesc" class="text-input" type="text" maxlength="50" placeholder="Например: 30 минут">
                       </div>
 
                       <div class="field">
@@ -315,36 +316,22 @@
                       </div>
 
                       <div class="field">
-                        <label class="field-label" for="customQuestDifficulty"><span>Сложность</span></label>
-                        <select id="customQuestDifficulty" class="text-input">
-                          <option value="easy">🟢 Лёгкая</option>
-                          <option value="medium">🟡 Средняя</option>
-                          <option value="hard">🔴 Сложная</option>
-                        </select>
-                      </div>
-
-                      <div class="field">
-                        <label class="field-label" for="customQuestAlignment"><span>Выравнивание</span></label>
+                        <label class="field-label" for="customQuestAlignment"><span>Путь развития</span></label>
                         <select id="customQuestAlignment" class="text-input">
-                          <option value="neutral">— Нейтральное</option>
+                          <option value="neutral">⚖️ Нейтральное</option>
                           <option value="angel">😇 Созидание</option>
                           <option value="devil">😈 Воля</option>
                         </select>
                       </div>
 
                       <div class="field">
-                        <label class="field-label" for="customQuestTip"><span>Подсказка (опционально)</span></label>
-                        <input id="customQuestTip" class="text-input" type="text" maxlength="80" placeholder="Совет или факт" />
-                      </div>
-
-                      <div class="field">
                         <label class="field-label" for="customQuestCoins"><span>Монеты</span></label>
-                        <input id="customQuestCoins" class="text-input" type="number" min="5" max="30" value="15" />
+                        <input id="customQuestCoins" class="text-input" type="number" min="5" max="30" value="15">
                         <div class="helper-text">от 5 до 30</div>
                       </div>
 
                       <div class="field">
-                        <label class="field-label" for="customQuestStat1"><span>Стат 1</span></label>
+                        <label class="field-label" for="customQuestStat1"><span>Стат</span></label>
                         <select id="customQuestStat1" class="text-input">
                           <option value="health">❤️ Здоровье</option>
                           <option value="intelligence">🧠 Интеллект</option>
@@ -353,27 +340,12 @@
                           <option value="discipline">🛡️ Дисциплина</option>
                           <option value="energy">⚡ Энергия</option>
                         </select>
-                        <input id="customQuestBonus1" class="text-input" type="number" min="1" max="5" value="2" style="width:60px; margin-top:4px;" />
-                        <span class="helper-text" style="display:inline;"> от 1 до 5</span>
-                      </div>
-
-                      <div class="field">
-                        <label class="field-label" for="customQuestStat2"><span>Стат 2</span></label>
-                        <select id="customQuestStat2" class="text-input">
-                          <option value="">— нет —</option>
-                          <option value="health">❤️ Здоровье</option>
-                          <option value="intelligence">🧠 Интеллект</option>
-                          <option value="strength">💪 Сила</option>
-                          <option value="charisma">✨ Харизма</option>
-                          <option value="discipline">🛡️ Дисциплина</option>
-                          <option value="energy">⚡ Энергия</option>
-                        </select>
-                        <input id="customQuestBonus2" class="text-input" type="number" min="1" max="5" value="2" style="width:60px; margin-top:4px;" />
+                        <input id="customQuestBonus1" class="text-input" type="number" min="1" max="5" value="2" style="width:60px; margin-top:4px;">
                         <span class="helper-text" style="display:inline;"> от 1 до 5</span>
                       </div>
 
                       <div class="cta-wrap" style="margin-top:10px;">
-                        <button type="button" class="cta-button" id="customQuestAddBtn"><span>Добавить</span></button>
+                        <button type="button" class="add-custom-quest-btn" id="customQuestAddBtn"><span>Добавить</span></button>
                         <button type="button" class="reset-btn" id="customQuestCancelBtn"><span>Отмена</span></button>
                       </div>
                     </div>

@@ -351,10 +351,16 @@
   // ── ФИЛЬТР КВЕСТОВ ────────────────────────
   function applyFilter(statKey) {
     currentFilter = statKey;
-    document.querySelectorAll(".quest-item").forEach(function(item) {
-      if (statKey === "all") { item.style.display = ""; return; }
-      const cats = item.getAttribute("data-categories") || "";
-      item.style.display = cats.indexOf(statKey) !== -1 ? "" : "none";
+    var items = document.querySelectorAll(".quest-item");
+    items.forEach(function(item) {
+      if (statKey === "all") {
+        item.style.display = "";
+      } else if (statKey === "custom") {
+        item.style.display = item.dataset.isCustom === "1" ? "" : "none";
+      } else {
+        var cats = (item.dataset.categories || "").split(",");
+        item.style.display = cats.indexOf(statKey) !== -1 ? "" : "none";
+      }
     });
     document.querySelectorAll(".filter-btn").forEach(function(btn) {
       btn.classList.toggle("active", btn.dataset.filter === statKey);
@@ -389,9 +395,9 @@
       return shuffled.slice(0, n);
     }
 
-    // 0. До 3 избранных первыми
+    // 0. До 5 избранных первыми
     var addedFav = 0;
-    for (var f = 0; f < favIds.length && addedFav < 4; f++) {
+    for (var f = 0; f < favIds.length && addedFav < 5; f++) {
       var q = allQ.find(function(x) { return x.id === favIds[f]; });
       if (q && !ids[q.id]) { addUnique(q); addedFav++; }
     }
@@ -463,7 +469,7 @@
         (done ? " quest-item--good-done" : "");
       div.dataset.questId    = q.id;
       div.dataset.categories = Object.keys(q.stats || {}).join(",");
-      div.dataset.difficulty = diff;
+      div.dataset.isCustom   = q.custom ? "1" : "0";
 
       div.innerHTML =
         starBtn +
@@ -570,7 +576,7 @@
         (isMystic ? " quest-item--mystic"   : "");
       div.dataset.questId    = q.id;
       div.dataset.categories = Object.keys(q.stats || {}).join(",");
-      div.dataset.difficulty = diff;
+      div.dataset.isCustom   = q.custom ? "1" : "0";
 
       div.innerHTML =
         starBtn +
@@ -592,6 +598,7 @@
             '</div>' +
           '</div>' +
         '</div>' +
+        (q.custom ? '<button type="button" class="quest-delete-btn" data-delete-id="' + q.id + '" title="Удалить квест">🗑️</button>' : '') +
         '<button class="quest-btn quest-btn--good' + (done ? " quest-btn--done" : "") + '" style="border-radius:20px" ' +
           (done || P.dayCompleted ? "disabled" : "") + '>' +
           (done ? "✓ Готово" : "Готово") +
@@ -1092,6 +1099,11 @@ setTimeout(function() {
 
         // Защита от undefined полей
         if (!P.customQuests)    P.customQuests    = [];
+        P.customQuests.forEach(function(q) {
+          if (q && q.id && q.id.indexOf("custom_") === 0 && !q.custom) {
+            q.custom = true;
+          }
+        });
         if (!P.favoriteQuests)  P.favoriteQuests  = [];
         if (!P.inventory)       P.inventory       = {};
         if (P.streak     == null) P.streak        = 0;
@@ -1326,11 +1338,21 @@ setTimeout(function() {
     const del = e.target.closest(".quest-delete-btn") ||
                 e.target.closest(".quest-delete-link");
     if (del) {
-      const id = del.dataset.del;
-      if (id && confirm("Удалить квест?")) {
-        P.customQuests = (P.customQuests || []).filter(function(q) { return q.id !== id; });
-        save(); buildQuests(); render();
-      }
+      var id = del.getAttribute("data-delete-id") || del.dataset.del;
+      if (!id) return;
+
+      if (!window.confirm("Удалить этот квест?")) return;
+
+      P.customQuests = (P.customQuests || []).filter(function(q) {
+        return q.id !== id;
+      });
+      P.favoriteQuests = (P.favoriteQuests || []).filter(function(fid) {
+        return fid !== id;
+      });
+      if (P.quests) delete P.quests[id];
+
+      save(); buildQuests(); render();
+      return;
     }
 
     // Магазин — купить
@@ -1381,9 +1403,7 @@ setTimeout(function() {
 
       const desc       = descInput   ? (descInput.value   || "").trim().slice(0, 50) : "";
       const emoji      = emojiSelect && emojiSelect.value ? emojiSelect.value : "⭐";
-      const difficulty = diffSelect  && diffSelect.value  ? diffSelect.value  : "easy";
       const alignment  = alignSelect && alignSelect.value ? alignSelect.value : "neutral";
-      const tip        = tipInput    ? (tipInput.value    || "").trim().slice(0, 80) : "";
 
       let coins = 15;
       if (coinsInput && coinsInput.value !== "") {
@@ -1400,22 +1420,17 @@ setTimeout(function() {
       }
       stats[key1] = b1;
 
-      const key2 = statSelect2 ? statSelect2.value : "";
-      if (key2) {
-        let b2 = 2;
-        if (bonusInput2 && bonusInput2.value !== "") {
-          const v = parseInt(bonusInput2.value, 10);
-          if (!isNaN(v)) b2 = cl(v, 1, 5);
-        }
-        stats[key2] = b2;
-      }
-
       if (!P.customQuests) P.customQuests = [];
-      P.customQuests.push({
-        id: "custom_" + Date.now(),
-        type: "good", icon: emoji, title, desc, tip,
-        coins, difficulty, alignment, stats, custom: true
-      });
+      var newQuestId = "custom_" + Date.now();
+P.customQuests.push({
+  id: newQuestId,
+  type: "good", icon: emoji, title, desc,
+  coins, alignment, stats, custom: true
+});
+if (!P.favoriteQuests) P.favoriteQuests = [];
+if (P.favoriteQuests.indexOf(newQuestId) === -1) {
+  P.favoriteQuests.push(newQuestId);
+}
       save(); buildQuests(); render(); updateCustomQuestLimit();
       if (addForm) addForm.style.display = "none";
     });
