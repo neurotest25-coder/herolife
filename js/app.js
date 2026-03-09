@@ -419,12 +419,16 @@
       pickRandom(forStat, 2).forEach(addUnique);
     }
 
-    // 3. Один случайный из оставшихся
-    const rest3 = uncompleted.filter(function(q) { return !ids[q.id]; });
-    const one = pickRandom(rest3, 1)[0];
-    if (one) addUnique(one);
+    // 3. Добираем случайные до 6 квестов
+    while (Object.keys(ids).length < 6) {
+      const rest3 = uncompleted.filter(function(q) { return !ids[q.id]; });
+      if (rest3.length === 0) break;
+      var one = pickRandom(rest3, 1)[0];
+      if (one) addUnique(one);
+      else break;
+    }
 
-    // 4. Вызов дня — один квест с x2 монеты
+    // 4. Вызов дня — один квест с x2 монеты (седьмой)
     const forChallenge = uncompleted.filter(function(q) { return !ids[q.id]; });
     const challenge = pickRandom(forChallenge, 1)[0];
     if (challenge) {
