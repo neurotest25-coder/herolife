@@ -6,6 +6,9 @@
 const SK = "heroLifeProfile";
 const STAT_KEYS = ["health","intelligence","strength","charisma","discipline","energy"];
 const STAT_ICONS = {health:"❤️",intelligence:"🧠",strength:"💪",charisma:"✨",discipline:"🛡️",energy:"⚡"};
+window.STAT_KEYS = STAT_KEYS;
+window.STAT_ICONS = STAT_ICONS;
+
 const STAT_EL = {
   health:{v:"vHP",b:"bHP"},
   intelligence:{v:"vINT",b:"bINT"},
@@ -526,3 +529,5 @@ const EVENTS = {
       ]}
   ]
 };
+
+window.EVENTS = EVENTS;

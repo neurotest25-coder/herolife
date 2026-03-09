@@ -739,6 +739,7 @@
     buildQuests();
     render();
     checkPetEvolution(P);
+    if (window.checkReactionEvent) window.checkReactionEvent();
   }
 
   // ── ЗАВЕРШИТЬ ДЕНЬ ────────────────────────
@@ -996,6 +997,10 @@
     setTimeout(function() {
       showEveningReminder();
     }, 1000);
+    // Показать случайное мини-событие один раз после загрузки
+    setTimeout(function() {
+      if (window.checkRandomEvent) window.checkRandomEvent();
+    }, 500);
   }
 
   // ── ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ──────────────────
