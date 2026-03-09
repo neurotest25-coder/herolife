@@ -1345,3 +1345,83 @@ body {
     font-size: 0.85rem;
   }
 }
+/* ── РЕЗЕРВНАЯ КОПИЯ ─────────────────────── */
+.backup-section {
+  margin-top: 24px;
+  padding: 18px 16px;
+  background: rgba(6, 8, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.backup-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.backup-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.backup-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.backup-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.backup-btn--export {
+  background: transparent;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+}
+
+.backup-btn--export:hover {
+  background: #2ecc71;
+  color: #041306;
+}
+
+.backup-btn--import {
+  background: transparent;
+  border: 1px solid rgba(230, 194, 0, 0.6);
+  color: var(--accent);
+}
+
+.backup-btn--import:hover {
+  background: rgba(230, 194, 0, 0.15);
+  border-color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .backup-buttons {
+    grid-template-columns: 1fr;
+  }
+}

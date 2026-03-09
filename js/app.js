@@ -990,18 +990,28 @@
     const questsDate = $("questsDate");
     if (questsDate) questsDate.textContent = "📅 " + fmtDate();
 
-    buildQuests();
-    render();
-    showGreeting(useComeback || false);
-    // Показать вечернее напоминание если после 20:00
-    setTimeout(function() {
-      showEveningReminder();
-    }, 1000);
-    // Показать случайное мини-событие один раз после загрузки
-    setTimeout(function() {
-      if (window.checkRandomEvent) window.checkRandomEvent();
-	  if(window.checkLetters) window.checkLetters();
-    }, 500);
+buildQuests();
+render();
+showGreeting(useComeback || false);
+
+// Сначала проверяем письма из будущего
+setTimeout(function() {
+  if (window.checkLetters) window.checkLetters();
+}, 500);
+
+// Потом мини-событие, только если сейчас нет открытого попапа
+setTimeout(function() {
+  if (!document.getElementById("event-popup")) {
+    if (window.checkRandomEvent) window.checkRandomEvent();
+  }
+}, 2200);
+
+// Потом вечернее напоминание, тоже только если экран свободен
+setTimeout(function() {
+  if (!document.getElementById("event-popup")) {
+    showEveningReminder();
+  }
+}, 3500);
   }
 
   // ── ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ──────────────────
@@ -1536,11 +1546,86 @@
     });
   });
 
+  // Кнопки резервной копии
+  var exportBtn = document.getElementById("exportBtn");
+  var importBtn = document.getElementById("importBtn");
+  if (exportBtn) exportBtn.addEventListener("click", exportData);
+  if (importBtn) importBtn.addEventListener("click", importData);
+
+  // ── ЭКСПОРТ / ИМПОРТ ДАННЫХ ───────────────
+  function exportData() {
+    var P = window.getP ? window.getP() : null;
+    if (!P) return;
+
+    var date = new Date().toISOString().slice(0, 10);
+    var filename = "herolife-backup-" + date + ".json";
+    var json = JSON.stringify(P, null, 2);
+
+    var blob = new Blob([json], {type: "application/json"});
+    var url = URL.createObjectURL(blob);
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showQuestToast("💾 Копия сохранена!", filename, "good");
+  }
+
+  function importData() {
+    var input = document.getElementById("importFileInput");
+    if (!input) return;
+
+    input.onchange = function(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          var data = JSON.parse(ev.target.result);
+
+          // Проверка что это валидный профиль HeroLife
+          if (!data.heroName || !data.stats) {
+            showQuestToast("❌ Ошибка!", "Файл не похож на резервную копию HeroLife", "bad");
+            return;
+          }
+
+          var confirmRestore = window.confirm(
+            "Загрузить резервную копию?\n\n" +
+            "Герой: " + data.heroName + "\n" +
+            "Уровень: " + (data.level || 1) + "\n" +
+            "Серия: " + (data.streak || 0) + " дней\n\n" +
+            "Текущий прогресс будет заменён."
+          );
+
+          if (!confirmRestore) return;
+
+          localStorage.setItem("heroLifeProfile", JSON.stringify(data));
+          window.location.reload();
+
+        } catch(err) {
+          showQuestToast("❌ Ошибка!", "Не удалось прочитать файл", "bad");
+        }
+      };
+      reader.readAsText(file);
+
+      // Сбросить input чтобы можно было загрузить тот же файл повторно
+      input.value = "";
+    };
+
+    input.click();
+  }
 
   // ── ГЛОБАЛЬНЫЙ ЭКСПОРТ ────────────────────
   // Делаем функции доступными для других файлов
   window.save         = save;
   window.render       = render;
+  window.exportData   = exportData;
+  window.importData   = importData;
   window.buildQuests  = buildQuests;
   window.popup        = popup;
   window.cl           = cl;

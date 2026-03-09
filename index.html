@@ -439,6 +439,21 @@
                   <div id="statsTotalQuests">✅ Всего квестов: 0</div>
                   <div id="statsTotalCoins">💰 Всего заработано: 0</div>
                 </div>
+
+                <div class="backup-section">
+                  <div class="backup-title">💾 Резервная копия</div>
+                  <div class="backup-hint">Сохрани прогресс в файл или восстанови из файла</div>
+                  <div class="backup-buttons">
+                    <button type="button" class="backup-btn backup-btn--export" id="exportBtn">
+                      📥 Сохранить копию
+                    </button>
+                    <button type="button" class="backup-btn backup-btn--import" id="importBtn">
+                      📤 Загрузить копию
+                    </button>
+                  </div>
+                  <input type="file" id="importFileInput" accept=".json" style="display:none;">
+                </div>
+
               </section>
             </div>
 
