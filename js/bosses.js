@@ -487,13 +487,13 @@ function showBossDetail(bossId) {
     }
   }
 
-  detailEl.innerHTML =
-    "<button type=\"button\" class=\"boss-detail-back\" id=\"bossDetailBackBtn\">← Назад</button>" +
+	detailEl.innerHTML =
     "<div class=\"boss-detail-emoji\">" + boss.emoji + "</div>" +
     "<div class=\"boss-detail-name\">" + boss.name + "</div>" +
     "<div class=\"boss-detail-story\" style=\"text-align:center;white-space:pre-line;\">" + (typeof window.applyGender === "function" ? window.applyGender(boss.story) : boss.story) + "</div>" +
     "<div class=\"boss-detail-reqs\">" + reqsHtml + "</div>" +
-    "<div class=\"boss-detail-actions\">" + btnHtml + btnExtra + "</div>";
+    "<div class=\"boss-detail-actions\">" + btnHtml + btnExtra + "</div>" +
+    "<button type=\"button\" id=\"bossDetailBackBtn\" style=\"margin-top:16px;width:100%;padding:12px;border-radius:999px;border:1px solid #2ecc71;background:transparent;color:#2ecc71;font-size:0.9rem;font-weight:600;cursor:pointer;\">← Назад к карте</button>";
 
   detailEl.dataset.currentBossId = bossId;
 
