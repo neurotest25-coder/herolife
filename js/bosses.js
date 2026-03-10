@@ -456,7 +456,10 @@ function showBossDetail(bossId) {
   if (!listEl || !detailEl) return;
 
   listEl.style.display = "none";
-  detailEl.style.display = "block";
+detailEl.style.display = "block";
+detailEl.style.paddingTop = "0";
+var headerEl = document.getElementById("bossHeader");
+if (headerEl) headerEl.style.display = "none";
 
   var stats = profile.stats || {};
   var reqsHtml = "";
@@ -488,7 +491,7 @@ function showBossDetail(bossId) {
   }
 
 	detailEl.innerHTML =
-    "<div class=\"boss-detail-emoji\">" + boss.emoji + "</div>" +
+    "<div class=\"boss-detail-emoji\" style=\"margin-top:0;\">" + boss.emoji + "</div>" +
     "<div class=\"boss-detail-name\">" + boss.name + "</div>" +
     "<div class=\"boss-detail-story\" style=\"text-align:center;white-space:pre-line;\">" + (typeof window.applyGender === "function" ? window.applyGender(boss.story) : boss.story) + "</div>" +
     "<div class=\"boss-detail-reqs\">" + reqsHtml + "</div>" +
