@@ -107,6 +107,173 @@ var BOSSES = [
   }
 ];
 
+// ── НАРРАТИВ ПОСЛЕ ПОБЕДЫ НАД БОССАМИ ──────
+var BOSS_NARRATIVES = {
+  1: [
+    {
+      emoji: "🌅",
+      text: "Туман рассеялся.\n\nВпервые за долгое время\nты видишь королевство ясно.\nХолмы, леса, далёкие башни.\n\nОказывается, мир вокруг\nвсегда был таким красивым."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} принюхивается к свежему воздуху.\n\nКажется, ему тоже нравится\nмир без тумана.\n\nОн смотрит на тебя и мурлычет.\nЭто его способ сказать: «Идём дальше»."
+    },
+    {
+      emoji: "💫",
+      text: "Но на горизонте — что-то блестит.\n\nЛедяная крепость.\nГоворят, там живёт тот,\nкто заставляет откладывать всё на потом.\n\nКристальная Прокрастинация ждёт."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Ты {победила|победил} своего первого врага.\n\nТитул получен: {Пробудившаяся|Пробудившийся}\n\nЭто только начало.\nНо какое начало."
+    }
+  ],
+  2: [
+    {
+      emoji: "💎",
+      text: "Лёд треснул. Крепость осыпается.\n\nВсе те дела, что были заморожены —\nначинают оттаивать.\n\nТы чувствуешь это?\nЛёгкость. Движение. Свобода начинать."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} поймал осколок льда.\n\nИграет с ним, подбрасывает лапой.\nДаже лёд может стать игрушкой,\nесли ты {победила|победил} того,\nкто его создал."
+    },
+    {
+      emoji: "🌑",
+      text: "Дальше на пути — Долина Усталости.\n\nТам всегда сумерки.\nТам живёт Тень, которая шепчет:\n«Ты {устала|устал}. Остановись. Не надо.»\n\nНо ты уже знаешь:\nотдых и сдача — разные вещи."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Ледяная крепость пала.\n\nТитул получен: {Сокрушительница|Сокрушитель} Льда\n\nТы умеешь начинать.\nТеперь научишься отдыхать."
+    }
+  ],
+  3: [
+    {
+      emoji: "🌙",
+      text: "Тень растворилась в лунном свете.\n\nТы {поняла|понял} главное:\nотдых — не слабость.\nОтдых — это часть пути.\n\nДолина наполнилась тёплым светом."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} свернулся клубком рядом.\n\nОн уже давно это знал.\nОтдыхать — нормально.\nСпать — важно.\nПросто быть — достаточно."
+    },
+    {
+      emoji: "🕸️",
+      text: "Но впереди — Лес Сомнений.\n\nТам паутина из мыслей:\n«А вдруг не получится?»\n«А что подумают другие?»\n«А может не стоит?»\n\nПаутина Сомнений ткёт свои нити\nкаждую ночь. Но ты уже не та."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Долина Усталости освобождена.\n\nТитул получен: {Познавшая|Познавший} Тишину\n\nТеперь ты умеешь не только идти,\nно и останавливаться."
+    }
+  ],
+  4: [
+    {
+      emoji: "🦋",
+      text: "Паутина порвана.\n\nИз неё вылетели бабочки.\nОказывается, под сомнениями\nвсегда прятались мечты.\n\nТы просто боялась их увидеть."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} ловит бабочку.\n\nПромахивается. Пробует снова.\nНе сомневается ни секунды.\n\nМожет, в этом и секрет?"
+    },
+    {
+      emoji: "💫",
+      text: "Впереди — Зеркальный Дворец.\n\nТам живёт та, что носит твоё лицо,\nно говорит чужим голосом:\n«Ты недостаточно хороша.\nТы притворяешься.\nСкоро все узнают.»\n\nСамозванка. Самый личный враг."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Лес Сомнений позади.\n\nТитул получен: {Разрубившая|Разрубивший} Узел\n\nСомнения не исчезли навсегда.\nНо теперь ты знаешь:\nможно действовать даже с ними."
+    }
+  ],
+  5: [
+    {
+      emoji: "💫",
+      text: "Зеркало треснуло.\n\nЗа ним — не самозванка.\nЗа ним — ты. {Настоящая|Настоящий}.\n\nБез масок, без ролей, без чужих ожиданий.\nПросто ты. И этого достаточно."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} смотрит на тебя\nкак смотрел с первого дня.\n\nДля него ты никогда\nне была самозванкой.\nТы всегда была — ты."
+    },
+    {
+      emoji: "💔",
+      text: "За Зеркальным Дворцом — Каменная Стена.\n\nЕё построил Хранитель Стены.\nОн убедил тебя, что безопаснее\nне чувствовать. Не открываться. Не пускать.\n\nНо стена защищает не только от боли.\nОна защищает и от жизни."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Зеркальный Дворец пуст.\n\nТитул получен: {Подлинная|Подлинный}\n\nЗапомни это чувство.\nВ дни когда забудешь —\nвернись сюда."
+    }
+  ],
+  6: [
+    {
+      emoji: "💖",
+      text: "Стена рухнула.\n\nЗа ней — не опасность.\nЗа ней — тёплый свет\nи люди, которые ждали.\n\nОказывается, мир по ту сторону\nне враждебный. Он просто живой."
+    },
+    {
+      emoji: "🐱",
+      text: "{petName} первым\nпрошёл через пролом в стене.\n\nОбернулся. Позвал.\nОн всегда знал:\nза стеной лучше."
+    },
+    {
+      emoji: "👑",
+      text: "Впереди — последний враг.\n\nСерая Королева.\nАпатия. Бессмысленность. Пустота.\n\nОна не кричит. Не нападает.\nОна просто шепчет:\n«Зачем?»\n\nНо ты знаешь зачем.\nТы прошла весь этот путь."
+    },
+    {
+      emoji: "✨",
+      title: "Победа!",
+      text: "Каменная Стена — больше не преграда.\n\nТитул получен: Открытое Сердце\n\nОстался один враг.\nПоследний. Самый тихий.\nСамый опасный."
+    }
+  ],
+  7: {
+    angel: [
+      {
+        emoji: "🌟",
+        text: "Серая Королева склонила голову.\n\nНе от силы. От света.\nТвой свет. Тот что ты несла\nчерез все семь битв.\n\nКоролевство наполнилось золотом рассвета."
+      },
+      {
+        emoji: "🐱",
+        text: "{petName} подошёл к трону\nи лёг у твоих ног.\n\nПуть пройден.\nНо он знает:\nсамое интересное только начинается."
+      },
+      {
+        emoji: "👑",
+        title: "Финал: Путь Созидания",
+        text: "Титул получен: {Светлая Правительница|Светлый Правитель}\n\nТы выбрала путь Созидания.\nМягкость, забота, свет.\n\nЭто не конец истории.\nЭто начало новой главы."
+      }
+    ],
+    devil: [
+      {
+        emoji: "🔥",
+        text: "Серая Королева сломлена.\n\nНе светом — волей.\nТвоя дисциплина, твоя сила, твой огонь\nоказались сильнее пустоты.\n\nКоролевство дрожит от мощи."
+      },
+      {
+        emoji: "🐱",
+        text: "{petName} смотрит на тебя\nс уважением и лёгким страхом.\n\nНо ты знаешь:\nсила без жестокости — это власть.\nА власть над собой — высшая из всех."
+      },
+      {
+        emoji: "👑",
+        title: "Финал: Путь Воли",
+        text: "Титул получен: {Тёмная Властительница|Тёмный Властитель}\n\nТы выбрала путь Воли.\nДисциплина, сила, решимость.\n\nЭто не конец истории.\nЭто начало нового правления."
+      }
+    ],
+    balance: [
+      {
+        emoji: "⚖️",
+        text: "Серая Королева посмотрела на тебя.\n\nИ увидела то, чего не ожидала:\nни свет, ни тьму.\nБаланс.\n\nСамый редкий и самый сильный путь."
+      },
+      {
+        emoji: "🐱",
+        text: "{petName} сел между светом и тенью.\n\nРовно посередине.\nКак всегда. Как ты."
+      },
+      {
+        emoji: "👑",
+        title: "Финал: Путь Баланса",
+        text: "Титул получен: {Хранительница|Хранитель} Баланса\n\nТы не выбирала сторону.\nТы стала чем-то большим.\n\nЭто не конец истории.\nЭто начало гармонии."
+      }
+    ]
+  }
+};
+
+window.BOSS_NARRATIVES = BOSS_NARRATIVES;
+
 /**
  * Возвращает статус босса для данного профиля.
  * @param {number} bossId - id босса (1-7)
@@ -225,6 +392,7 @@ function defeatBoss(bossId, profile) {
 
   if (typeof window.save === "function") window.save();
   if (typeof window.render === "function") window.render();
+  buildBossList();
 }
 
 var STAT_ICONS_BOSS = { health: "❤️", intelligence: "🧠", strength: "💪", charisma: "✨", discipline: "🛡️", energy: "⚡" };
@@ -263,7 +431,7 @@ function buildBossList() {
     var reqStr = reqParts.join(" ");
 
     card.innerHTML =
-      "<div class=\"boss-card-title\">" + boss.emoji + " " + boss.name + "</div>" +
+      "<div class=\"boss-card-title\" style=\"text-align:center;\">" + boss.emoji + " " + boss.name + "</div>" +
       "<div class=\"boss-card-region\">" + boss.region + "</div>" +
       "<div class=\"boss-card-status\">" + statusText + "</div>" +
       "<div class=\"boss-card-reqs\">" + reqStr + "</div>";
@@ -358,6 +526,72 @@ function startBossFight(bossId, isHard) {
   bossFightResult(bossId, isVictory);
 }
 
+function showBossNarrative(bossId, profile, onFinish) {
+  var narratives = window.BOSS_NARRATIVES;
+  if (!narratives) { if (onFinish) onFinish(); return; }
+
+  // Для босса 7 определяем финал по alignment
+  var slides;
+  if (bossId === 7) {
+    var angel = profile.angelPoints || 0;
+    var devil = profile.devilPoints || 0;
+    var diff  = angel - devil;
+    if      (diff >  100) slides = narratives[7].angel;
+    else if (diff < -100) slides = narratives[7].devil;
+    else                  slides = narratives[7].balance;
+  } else {
+    slides = narratives[bossId];
+  }
+
+  if (!slides || !slides.length) { if (onFinish) onFinish(); return; }
+
+  var petName = profile.petName || "Питомец";
+  var currentSlide = 0;
+
+  // Создаём оверлей
+  var overlay = document.createElement("div");
+  overlay.id = "narrativeOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.92);";
+
+  function renderSlide() {
+    var slide = slides[currentSlide];
+    var isLast = currentSlide === slides.length - 1;
+
+    var text = slide.text || "";
+    text = text.replace(/\{petName\}/g, petName);
+    if (typeof window.applyGender === "function") text = window.applyGender(text);
+    text = text.replace(/\n/g, "<br>");
+
+    var titleHtml = slide.title
+      ? "<div style='font-size:1.1rem;font-weight:700;color:#e6c200;margin-bottom:12px;text-align:center;'>" + slide.title + "</div>"
+      : "";
+
+    overlay.innerHTML =
+      "<div style='max-width:380px;width:100%;background:rgba(6,8,30,0.98);border:1px solid rgba(230,194,0,0.4);border-radius:18px;padding:28px 22px;text-align:center;'>" +
+        "<div style='font-size:3rem;margin-bottom:16px;'>" + (slide.emoji || "✨") + "</div>" +
+        titleHtml +
+        "<div style='font-size:0.92rem;color:rgba(255,255,255,0.88);line-height:1.7;margin-bottom:24px;text-align:center;'>" + text + "</div>" +
+        "<div style='font-size:0.75rem;color:rgba(255,255,255,0.3);margin-bottom:12px;'>" + (currentSlide + 1) + " / " + slides.length + "</div>" +
+        "<button id='narrativeNextBtn' style='width:100%;padding:13px;border-radius:12px;border:1px solid rgba(230,194,0,0.5);background:rgba(230,194,0,0.1);color:#f7f7ff;font-size:0.95rem;font-weight:600;cursor:pointer;'>" +
+          (isLast ? "Завершить ✨" : "Продолжить →") +
+        "</button>" +
+      "</div>";
+
+    document.getElementById("narrativeNextBtn").addEventListener("click", function() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        renderSlide();
+      } else {
+        document.body.removeChild(overlay);
+        if (onFinish) onFinish();
+      }
+    });
+  }
+
+  document.body.appendChild(overlay);
+  renderSlide();
+}
+
 function bossFightResult(bossId, isVictory) {
   var profile = typeof window.getP === "function" ? window.getP() : null;
   if (!profile) return;
@@ -376,13 +610,27 @@ function bossFightResult(bossId, isVictory) {
     victoryText = reward.victoryText || (typeof boss.victoryText === "string" ? boss.victoryText : boss.victoryText.balance);
     victoryText = typeof window.applyGender === "function" ? window.applyGender(victoryText) : victoryText;
     var rewardTitle = typeof window.applyGender === "function" ? window.applyGender(reward.title || "") : (reward.title || "");
+
     detailEl.innerHTML =
       "<button type=\"button\" class=\"boss-detail-back\" id=\"bossDetailBackBtn\">← Назад</button>" +
       "<div class=\"boss-detail-emoji\">" + boss.emoji + "</div>" +
       "<div class=\"boss-result-title\">Победа!</div>" +
       "<div class=\"boss-detail-story boss-result-text\">" + victoryText + "</div>" +
       "<div class=\"boss-detail-reward\">Титул: " + rewardTitle + ", +" + (reward.coins || 0) + " 💰</div>" +
-      "<button type=\"button\" class=\"boss-detail-btn\" id=\"bossResultBackBtn\">← Вернуться к карте</button>";
+      "<button type=\"button\" class=\"boss-detail-btn boss-detail-btn--fight\" id=\"bossNarrativeBtn\">Продолжить историю →</button>";
+
+    // Показать нарратив после победы
+    var narrativeBtn = document.getElementById("bossNarrativeBtn");
+    if (narrativeBtn && window.BOSS_NARRATIVES) {
+      narrativeBtn.addEventListener("click", function() {
+        showBossNarrative(bossId, profile, function() {
+          var listEl = document.getElementById("bossList");
+          if (listEl) listEl.style.display = "";
+          detailEl.style.display = "none";
+        });
+      });
+    }
+
   } else {
     detailEl.innerHTML =
       "<button type=\"button\" class=\"boss-detail-back\" id=\"bossDetailBackBtn\">← Назад</button>" +
