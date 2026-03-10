@@ -9,95 +9,116 @@
 <body>
   <div id="onboardingScreen" class="onboarding-screen">
 
-  <!-- Экран 1 -->
+  <!-- Экран 1 — Зов -->
   <div class="onboarding-slide" id="slide1">
     <button class="onboarding-skip" id="onboardingSkip">Пропустить</button>
-    <div class="onboarding-emoji">🏰</div>
-    <h2 class="onboarding-title">Добро пожаловать в HeroLife!</h2>
+    <div class="onboarding-emoji">🌫️</div>
+    <h2 class="onboarding-title">Ты чувствуешь это?</h2>
     <p class="onboarding-text">
-      Ты когда-нибудь бросала трекер привычек на третий день?<br><br>
-      Мы тоже. Поэтому сделали игру 🎮<br><br>
-      Здесь мытьё посуды даёт +1💪<br>
-      а сон до 23:00 побеждает Серую Королеву
+      Дни похожи один на другой.<br>
+      Списки, планы, обещания себе —<br>
+      и снова всё сначала.<br><br>
+      Но сегодня что-то изменилось.<br>
+      Сегодня ты здесь.
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot onboarding-dot--active"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
     </div>
-    <button class="onboarding-btn" id="slide1Btn">Звучит интересно →</button>
+    <button class="onboarding-btn" id="slide1Btn">Продолжить →</button>
   </div>
 
-  <!-- Экран 2 -->
+  <!-- Экран 2 — Мир -->
   <div class="onboarding-slide onboarding-slide--hidden" id="slide2">
     <button class="onboarding-skip" id="onboardingSkip2">Пропустить</button>
-    <div class="onboarding-emoji">⚔️</div>
-    <h2 class="onboarding-title">Выполняй квесты — прокачивай себя</h2>
+    <div class="onboarding-emoji">🏰</div>
+    <h2 class="onboarding-title">Добро пожаловать в Королевство</h2>
     <p class="onboarding-text">
-      Обычные дела дают реальный результат:<br><br>
-      💧 Стакан воды = +1❤️ здоровья <br>
-      🚶 Прогулка = +2❤️ +1⚡ энергии<br>
-      📖 10 страниц книги = +2🧠 интеллекта<br><br>
-      Даже один квест в день —<br>
-      это уже победа 💜
-	  <br><br>
-	  ✨ Созидание 😇 — забота, рост, гармония<br>
-	  🔥 Воля 😈  — дисциплина, сила, порядок<br>
-	  Оба пути ведут к победе!
+      Здесь у каждой проблемы есть имя и лицо.<br><br>
+      Прокрастинация — ледяная крепость.<br>
+      Усталость — тень в тёмной долине.<br>
+      Сомнения — паутина в древнем лесу.<br><br>
+      Семь врагов ждут тебя.
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot onboarding-dot--active"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
     </div>
-    <button class="onboarding-btn" id="slide2Btn">Дальше →</button>
+    <button class="onboarding-btn" id="slide2Btn">Продолжить →</button>
   </div>
 
-  <!-- Экран 3 -->
+  <!-- Экран 3 — Путь -->
   <div class="onboarding-slide onboarding-slide--hidden" id="slide3">
     <button class="onboarding-skip" id="onboardingSkip3">Пропустить</button>
-    <div class="onboarding-emoji">🐱</div>
-    <h2 class="onboarding-title">Твой питомец уже ждёт!</h2>
+    <div class="onboarding-emoji">⚔️</div>
+    <h2 class="onboarding-title">Каждый день — маленький квест</h2>
     <p class="onboarding-text">
-      Кот, пёс или дракон —<br>
-      он растёт вместе с тобой 🐉<br><br>
-      Заботишься о себе →<br>
-      он становится сильнее<br><br>
-      Он никогда не осудит.<br>
-      Но будет очень рад тебя видеть 💜
+      Стакан воды, прогулка, страница книги.<br><br>
+      Каждый квест делает тебя сильнее.<br>
+      Каждый стат приближает к победе.<br><br>
+      ❤️ 🧠 💪 ✨ 🛡️ ⚡
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot onboarding-dot--active"></span>
       <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
     </div>
-    <button class="onboarding-btn" id="slide3Btn">Дальше →</button>
+    <button class="onboarding-btn" id="slide3Btn">Продолжить →</button>
   </div>
 
-  <!-- Экран 4 -->
+  <!-- Экран 4 — Спутник -->
   <div class="onboarding-slide onboarding-slide--hidden" id="slide4">
-    <div class="onboarding-emoji">✨</div>
-    <h2 class="onboarding-title">Всё готово!</h2>
+    <button class="onboarding-skip" id="onboardingSkip4">Пропустить</button>
+    <div class="onboarding-emoji">🐱</div>
+    <h2 class="onboarding-title">Тебя будет ждать питомец</h2>
     <p class="onboarding-text">
-      Твой питомец ждёт.<br>
-      Первый квест займёт 2 минуты.<br><br>
-      Начнём? 🐾
+      Кот, пёс или дракон — выбирай.<br><br>
+      Он растёт вместе с тобой.<br>
+      Радуется твоим победам.<br>
+      Никогда не осуждает.<br><br>
+      А в трудные дни — просто будет рядом. 💜
     </p>
     <div class="onboarding-dots">
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot"></span>
       <span class="onboarding-dot onboarding-dot--active"></span>
+      <span class="onboarding-dot"></span>
     </div>
-    <button class="onboarding-btn onboarding-btn--final" id="slide4Btn">
-      Создать персонажа! 🚀
+    <button class="onboarding-btn" id="slide4Btn">Продолжить →</button>
+  </div>
+
+  <!-- Экран 5 — Начало пути -->
+  <div class="onboarding-slide onboarding-slide--hidden" id="slide5">
+    <div class="onboarding-emoji">👑</div>
+    <h2 class="onboarding-title">Серая Королева ждёт</h2>
+    <p class="onboarding-text">
+      Апатия. Потеря смысла. Пустота.<br><br>
+      Но до неё ещё далеко.<br>
+      Сейчас — только первый шаг.<br><br>
+      Ты готова?
+    </p>
+    <div class="onboarding-dots">
+      <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
+      <span class="onboarding-dot onboarding-dot--active"></span>
+    </div>
+    <button class="onboarding-btn onboarding-btn--final" id="slide5Btn">
+      Начать путь ✨
     </button>
   </div>
 
-  </div>
+</div>
 
   <!-- ═══ ОВЕРЛЕИ ═══ -->
   <div id="levelUpOverlay" class="overlay">

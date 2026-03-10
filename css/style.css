@@ -1089,7 +1089,8 @@ body {
 #slide1 { background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
 #slide2 { background: linear-gradient(160deg, #1a1a2e 0%, #2d1b69 50%, #11998e 100%); }
 #slide3 { background: linear-gradient(160deg, #2d1b69 0%, #8b2fc9 50%, #e91e8c 100%); }
-#slide4 { background: linear-gradient(160deg, #f7971e 0%, #ffd200 50%, #f7971e 100%); }
+#slide4 { background: linear-gradient(160deg, #1a1a2e 0%, #4a3a6e 50%, #7c5295 100%); }
+#slide5 { background: linear-gradient(160deg, #1a1a2e 0%, #2d1b47 50%, #4a1942 100%); }
 
 .onboarding-emoji {
   font-size: 5rem;

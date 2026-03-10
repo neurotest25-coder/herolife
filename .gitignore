@@ -16,3 +16,8 @@ desktop.ini
 
 # Node.js на будущее
 node_modules/ 
+
+# Контекст для AI / Cursor (не пушим в Git)
+context/
+
+.cursor/

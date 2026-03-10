@@ -22,7 +22,7 @@
     screen.classList.remove("onboarding-screen--hidden");
 
     function goToSlide(n) {
-      for (var i = 1; i <= 4; i++) {
+      for (var i = 1; i <= 5; i++) {
         var slide = document.getElementById("slide" + i);
         if (!slide) continue;
         if (i === n) {
@@ -43,20 +43,24 @@
     var btn2 = document.getElementById("slide2Btn");
     var btn3 = document.getElementById("slide3Btn");
     var btn4 = document.getElementById("slide4Btn");
+	var btn5 = document.getElementById("slide5Btn");
 
     if (btn1) btn1.addEventListener("click", function() { goToSlide(2); });
     if (btn2) btn2.addEventListener("click", function() { goToSlide(3); });
     if (btn3) btn3.addEventListener("click", function() { goToSlide(4); });
-    if (btn4) btn4.addEventListener("click", finishOnboarding);
+	if (btn4) btn4.addEventListener("click", function() { goToSlide(5); });
+    if (btn5) btn5.addEventListener("click", finishOnboarding);
 
     // Кнопки "Пропустить"
     var skip1 = document.getElementById("onboardingSkip");
     var skip2 = document.getElementById("onboardingSkip2");
     var skip3 = document.getElementById("onboardingSkip3");
+	var skip4 = document.getElementById("onboardingSkip4");
 
     if (skip1) skip1.addEventListener("click", finishOnboarding);
     if (skip2) skip2.addEventListener("click", finishOnboarding);
     if (skip3) skip3.addEventListener("click", finishOnboarding);
+	if (skip4) skip4.addEventListener("click", finishOnboarding);
   }
 
   // ── ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ──────────────────
@@ -1498,6 +1502,14 @@ P.customQuests.push({
   type: "good", icon: emoji, title, desc,
   coins, alignment, stats, custom: true
 });
+// Сбрасываем сегодняшний список чтобы новый квест попал в Сегодня
+var doneIds = [];
+if (Array.isArray(P.todayQuestIds)) {
+  P.todayQuestIds.forEach(function(id) {
+    if (P.quests && P.quests[id]) doneIds.push(id);
+  });
+}
+P.todayQuestIds = doneIds;
 if (!P.favoriteQuests) P.favoriteQuests = [];
 if (P.favoriteQuests.indexOf(newQuestId) === -1) {
   P.favoriteQuests.push(newQuestId);
